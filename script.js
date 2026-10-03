@@ -211,6 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initPrescriptionModal();
   initLightboxModal();
   initAudioSystem();
+  initBackgroundMusic();
   initActionButtons();
 });
 
@@ -304,6 +305,10 @@ function initEntranceDoors() {
     mainEntrance.classList.add('opened');
     playHospitalEntranceSound();
     triggerHospitalCelebrationConfetti();
+
+    try {
+      sessionStorage.setItem('autoplayHospitalMusic', 'true');
+    } catch (e) {}
 
     // Reacción festiva del muñeco 3D del Dr. Armando
     const mascotImg = document.getElementById('doctorMascotImg');
@@ -513,6 +518,12 @@ function initClinicDoors() {
         door.classList.add('opened');
         playDoorChimeSound();
         triggerDoorConfetti(e.clientX, e.clientY);
+
+        // Si la música de fondo está en pausa por bloqueo de autoplay, iniciarla
+        const bgAudio = document.getElementById('ambientAudio');
+        if (bgAudio && bgAudio.paused && soundEnabled) {
+          bgAudio.play().catch(() => {});
+        }
       } else {
         // Cerrar puerta si se toca de nuevo
         door.classList.remove('opened');
@@ -704,13 +715,97 @@ function initActionButtons() {
 // ========================================================
 function initAudioSystem() {
   const btnAudio = document.getElementById('btnAudioToggle');
+  const ambientAudio = document.getElementById('ambientAudio');
   if (!btnAudio) return;
 
   btnAudio.addEventListener('click', () => {
     soundEnabled = !soundEnabled;
     btnAudio.innerHTML = soundEnabled ? '<span class="icon">🔊</span>' : '<span class="icon">🔇</span>';
     btnAudio.style.opacity = soundEnabled ? '1' : '0.6';
+
+    if (ambientAudio) {
+      if (soundEnabled) {
+        ambientAudio.play().catch(() => {});
+      } else {
+        ambientAudio.pause();
+      }
+    }
   });
+}
+
+// ========================================================
+// 9.5. REPRODUCTOR MUSICAL DEL PABELLÓN (PHOTOGRAPH - ED SHEERAN)
+// ========================================================
+function initBackgroundMusic() {
+  const audio = document.getElementById('ambientAudio');
+  const player = document.getElementById('hospitalMusicPlayer');
+  const eqBars = document.getElementById('musicEqBars');
+  const statusIcon = document.getElementById('musicStatusIcon');
+  const btnHeaderAudio = document.getElementById('btnAudioToggle');
+
+  if (!audio) return;
+
+  // Solo configurar en el pabellón de consultorios
+  const isConsultorios = document.body.classList.contains('page-consultorios') || document.getElementById('doorsContainer');
+  if (!isConsultorios) return;
+
+  if (!audio.getAttribute('src')) {
+    audio.src = 'musica.mp3';
+  }
+  audio.loop = true;
+  audio.volume = 0.65;
+
+  const updateMusicUI = (isPlaying) => {
+    if (player) player.classList.toggle('playing', isPlaying);
+    if (eqBars) eqBars.classList.toggle('active', isPlaying);
+    if (statusIcon) statusIcon.textContent = isPlaying ? '⏸️' : '▶️';
+    if (btnHeaderAudio) {
+      btnHeaderAudio.innerHTML = isPlaying ? '<span class="icon">🔊</span>' : '<span class="icon">🔇</span>';
+      btnHeaderAudio.style.opacity = isPlaying ? '1' : '0.6';
+    }
+  };
+
+  const attemptPlay = () => {
+    if (!soundEnabled) return;
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        updateMusicUI(true);
+      }).catch(() => {
+        updateMusicUI(false);
+      });
+    }
+  };
+
+  // Intentar reproducir automáticamente al cargar la página
+  attemptPlay();
+
+  // Desbloqueo universal al primer toque / interacción en pantalla (móviles)
+  const onUserTouch = () => {
+    if (audio.paused && soundEnabled) {
+      attemptPlay();
+    }
+  };
+  document.addEventListener('click', onUserTouch, { passive: true, once: true });
+  document.addEventListener('touchstart', onUserTouch, { passive: true, once: true });
+
+  // Control directo al tocar el reproductor musical
+  if (player) {
+    player.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (audio.paused) {
+        soundEnabled = true;
+        attemptPlay();
+      } else {
+        audio.pause();
+        updateMusicUI(false);
+      }
+    });
+  }
+
+  // Sincronizar eventos de audio nativos
+  audio.addEventListener('play', () => updateMusicUI(true));
+  audio.addEventListener('pause', () => updateMusicUI(false));
 }
 
 function getAudioContext() {

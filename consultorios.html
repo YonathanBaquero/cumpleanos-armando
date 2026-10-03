@@ -19,7 +19,7 @@
   <link rel="preload" as="image" href="armando-doctor-3d.webp" type="image/webp" fetchpriority="high">
 
   <!-- Estilos del Hospital -->
-  <link rel="stylesheet" href="styles.css?v=armando-v14">
+  <link rel="stylesheet" href="styles.css?v=armando-v15">
 </head>
 <body class="page-consultorios">
 
@@ -99,6 +99,25 @@
       <p class="hallway-desc">
         Toca cada una de las puertas para ingresar a su respectivo consultorio y descubrir cada foto y dedicatoria especial 🚪👇
       </p>
+
+      <!-- Reproductor Musical del Pabellón (Photograph - Ed Sheeran) -->
+      <div class="hospital-music-player" id="hospitalMusicPlayer" title="Toca para reproducir o pausar la canción">
+        <div class="music-disc-icon">
+          <span class="disc-symbol">💿</span>
+        </div>
+        <div class="music-info">
+          <span class="music-label">Música del Pabellón 🩺</span>
+          <span class="music-track-name">Photograph • Ed Sheeran</span>
+        </div>
+        <div class="music-playback-controls">
+          <div class="music-equalizer-bars" id="musicEqBars">
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <button class="btn-music-toggle" id="btnMusicPlayPause" aria-label="Reproducir o pausar música">
+            <span class="play-icon" id="musicStatusIcon">▶️</span>
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- Contenedor del Pasillo con las Puertas de Consultorios (14 salas temáticas) -->
@@ -217,10 +236,10 @@
     </div>
   </div>
 
-  <!-- Sonido de fondo opcional -->
-  <audio id="ambientAudio" preload="none"></audio>
+  <!-- Música de fondo del pabellón -->
+  <audio id="ambientAudio" src="musica.mp3" preload="auto" loop></audio>
 
   <!-- Script principal del hospital -->
-  <script src="script.js?v=armando-v14"></script>
+  <script src="script.js?v=armando-v15"></script>
 </body>
 </html>

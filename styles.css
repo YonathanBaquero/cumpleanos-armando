@@ -530,9 +530,8 @@ body {
   flex: 1;
   width: 100%;
   max-width: 540px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: block;
+  text-align: center;
 }
 
 .doors-focus-badge {
@@ -764,20 +763,24 @@ body {
 
 /* MARCO 3D DE LAS PUERTAS HOSPITALARIAS */
 .main-entrance-3d {
-  flex: 1;
+  flex: none;
   width: 100%;
   max-width: 540px;
   height: 380px;
+  min-height: 380px;
   perspective: 1400px;
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  display: block;
+  margin: 0 auto;
 }
 
 .door-frame-3d {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 380px;
+  min-height: 380px;
   border: 12px solid #94a3b8;
   border-top: 18px solid #cbd5e1;
   border-bottom: 12px solid #64748b;
@@ -787,7 +790,7 @@ body {
     0 15px 40px rgba(15, 23, 42, 0.15),
     inset 0 0 15px rgba(15, 23, 42, 0.1);
   overflow: hidden;
-  display: flex;
+  display: block;
 }
 
 /* PUERTAS BATIENTES HOSPITALARIAS DOBLES */
@@ -795,6 +798,8 @@ body {
   position: absolute;
   top: 0;
   bottom: 0;
+  height: 100%;
+  min-height: 100%;
   width: 50%;
   z-index: 5;
   background: linear-gradient(145deg, #ffffff 0%, #f1f5f9 50%, #e2e8f0 100%);
@@ -1958,8 +1963,10 @@ body {
   }
 
   .doors-column-wrapper {
-    width: 100%;
-    max-width: 100%;
+    width: 100% !important;
+    max-width: 440px !important;
+    display: block !important;
+    margin: 0 auto !important;
   }
 
   .doors-focus-badge {
@@ -1970,13 +1977,30 @@ body {
 
   .main-entrance-3d {
     width: 100% !important;
-    max-width: 100% !important;
-    height: 310px !important;
+    max-width: 440px !important;
+    height: 330px !important;
+    min-height: 330px !important;
     display: block !important;
     visibility: visible !important;
     position: relative !important;
     margin: 0 auto !important;
     box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15) !important;
+  }
+
+  .door-frame-3d {
+    width: 100% !important;
+    height: 330px !important;
+    min-height: 330px !important;
+    display: block !important;
+    position: relative !important;
+    visibility: visible !important;
+  }
+
+  .hospital-double-door {
+    height: 100% !important;
+    min-height: 100% !important;
+    display: flex !important;
+    visibility: visible !important;
   }
 
   .hospital-hallway-section {
@@ -2033,40 +2057,80 @@ body {
     height: 130px;
   }
 
+  .doors-column-wrapper {
+    width: 100% !important;
+    max-width: 350px !important;
+    display: block !important;
+    margin: 0 auto !important;
+  }
+
   .main-entrance-3d {
-    height: 280px !important;
+    width: 100% !important;
+    max-width: 350px !important;
+    height: 310px !important;
+    min-height: 310px !important;
+    display: block !important;
+    visibility: visible !important;
+    position: relative !important;
+    margin: 0 auto !important;
   }
 
   .door-frame-3d {
-    border: 8px solid #94a3b8;
-    border-top: 12px solid #cbd5e1;
-    border-bottom: 8px solid #64748b;
+    width: 100% !important;
+    height: 310px !important;
+    min-height: 310px !important;
+    display: block !important;
+    visibility: visible !important;
+    border: 8px solid #94a3b8 !important;
+    border-top: 12px solid #cbd5e1 !important;
+    border-bottom: 8px solid #64748b !important;
+    position: relative !important;
+  }
+
+  .hospital-double-door {
+    height: 100% !important;
+    min-height: 100% !important;
+    display: flex !important;
+    visibility: visible !important;
   }
 
   .door-panel-body {
-    padding: 10px 8px 8px;
+    height: 100% !important;
+    min-height: 100% !important;
+    padding: 10px 8px 8px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
   }
 
   .hospital-glass-window {
-    max-height: 140px;
-    width: 92%;
+    flex: 1 !important;
+    max-height: 140px !important;
+    min-height: 100px !important;
+    width: 92% !important;
+    display: flex !important;
   }
 
   .door-medical-emblem .medical-cross-svg {
-    width: 28px;
-    height: 28px;
+    width: 28px !important;
+    height: 28px !important;
   }
 
   .emblem-text {
-    font-size: 0.6rem;
+    font-size: 0.6rem !important;
+  }
+
+  .hospital-panic-bar {
+    height: 24px !important;
+    margin: 6px 0 !important;
   }
 
   .panic-bar-label {
-    font-size: 0.5rem;
-    letter-spacing: 0.5px;
+    font-size: 0.5rem !important;
+    letter-spacing: 0.5px !important;
   }
 
   .hospital-kickplate {
-    height: 36px;
+    height: 36px !important;
   }
 }

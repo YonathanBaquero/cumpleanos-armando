@@ -1281,23 +1281,17 @@ function initPrescriptionWall() {
     sendLikeToGoogleSheets(item.id, userName);
   };
 
-  // Enviar Me Gusta a Google Sheets
+  // Enviar Me Gusta a Google Sheets (usamos GET para compatibilidad móvil total)
   async function sendLikeToGoogleSheets(rxId, userName) {
     const scriptUrl = getGoogleScriptUrl();
     if (!scriptUrl) return;
 
     try {
-      await fetch(scriptUrl, {
-        method: 'POST',
+      const getUrl = `${scriptUrl}${scriptUrl.includes('?') ? '&' : '?'}action=like&id=${encodeURIComponent(rxId)}&user=${encodeURIComponent(userName)}&t=${Date.now()}`;
+      await fetch(getUrl, {
+        method: 'GET',
         mode: 'no-cors',
-        headers: {
-          'Content-Type': 'text/plain;charset=utf-8'
-        },
-        body: JSON.stringify({
-          action: 'like',
-          id: rxId,
-          userName: userName
-        })
+        cache: 'no-store'
       });
     } catch (err) {
       console.warn('Error al sincronizar like con Google Sheets:', err);

@@ -1,30 +1,33 @@
 /* ========================================================
-   ESTILOS GENERALES Y TEMA HOSPITALARIO
+   ESTILOS GENERALES Y TEMA HOSPITALARIO CLARO (LIVIANO)
    ======================================================== */
 :root {
-  --primary-teal: #028090;
-  --primary-teal-dark: #005f73;
-  --primary-teal-light: #02c39a;
-  --medical-cyan: #00f2fe;
-  --medical-blue: #0a84ff;
-  --emergency-red: #ff3366;
-  --emergency-red-glow: rgba(255, 51, 102, 0.45);
-  --gold-accent: #ffd166;
+  --primary-teal: #0284c7;
+  --primary-teal-dark: #0369a1;
+  --primary-teal-light: #38bdf8;
+  --medical-cyan: #06b6d4;
+  --medical-blue: #0284c7;
+  --emergency-red: #ef4444;
+  --emergency-red-glow: rgba(239, 68, 68, 0.35);
+  --gold-accent: #d97706;
   
-  --bg-dark: #0a0f1d;
-  --bg-darker: #060913;
-  --bg-card: rgba(15, 23, 42, 0.85);
+  --bg-main: #f0f7fa;
+  --bg-surface: #ffffff;
+  --bg-surface-subtle: #f8fafc;
+  --bg-card: #ffffff;
+  --border-subtle: #e2e8f0;
+  --border-medical: #bae6fd;
   
-  --text-primary: #ffffff;
-  --text-secondary: #94a3b8;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
   --text-muted: #64748b;
   
   --font-main: 'Montserrat', sans-serif;
   --font-serif: 'Playfair Display', serif;
   --font-hand: 'Caveat', cursive;
   
-  --door-wood: #203a43;
-  --door-border: #4facfe;
+  --door-wood: #ffffff;
+  --door-border: #38bdf8;
   --radius-card: 20px;
   --radius-door: 14px;
 }
@@ -38,11 +41,11 @@
 
 body {
   font-family: var(--font-main);
-  background-color: var(--bg-dark);
+  background-color: #f1f6fa;
   background-image: 
-    radial-gradient(circle at 10% 20%, rgba(2, 128, 144, 0.15) 0%, transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(255, 51, 102, 0.12) 0%, transparent 40%),
-    linear-gradient(180deg, #060913 0%, #0d1527 50%, #060913 100%);
+    radial-gradient(circle at 12% 15%, rgba(2, 132, 199, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 88% 85%, rgba(16, 185, 129, 0.08) 0%, transparent 45%),
+    linear-gradient(180deg, #f8fafc 0%, #eef5f8 50%, #f1f5f9 100%);
   background-attachment: fixed;
   color: var(--text-primary);
   min-height: 100vh;
@@ -58,11 +61,11 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(6, 11, 23, 0.88);
+  background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1.5px solid rgba(0, 242, 254, 0.25);
-  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
+  border-bottom: 1.5px solid #e2e8f0;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
   padding: 10px 20px;
   display: flex;
   align-items: center;
@@ -80,9 +83,9 @@ body {
   position: relative;
   width: 28px;
   height: 28px;
-  background: #ff3366;
+  background: #ef4444;
   border-radius: 6px;
-  box-shadow: 0 0 14px rgba(255, 51, 102, 0.8);
+  box-shadow: 0 0 14px rgba(239, 68, 68, 0.6);
   animation: pulseCross 2.4s ease-in-out infinite;
 }
 
@@ -107,8 +110,8 @@ body {
 }
 
 @keyframes pulseCross {
-  0%, 100% { transform: scale(1); box-shadow: 0 0 12px rgba(255, 51, 102, 0.6); }
-  50% { transform: scale(1.1); box-shadow: 0 0 22px rgba(255, 51, 102, 0.95); }
+  0%, 100% { transform: scale(1); box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
+  50% { transform: scale(1.08); box-shadow: 0 0 18px rgba(239, 68, 68, 0.85); }
 }
 
 .brand-text {
@@ -117,28 +120,28 @@ body {
 }
 
 .hospital-name {
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   font-weight: 800;
   letter-spacing: 1px;
-  color: #00f2fe;
+  color: #0284c7;
   text-transform: uppercase;
 }
 
 .hospital-sub {
   font-size: 0.76rem;
   font-weight: 600;
-  color: #ffd166;
+  color: #334155;
 }
 
 /* MONITOR ECG VITAL */
 .ecg-monitor {
   display: flex;
   align-items: center;
-  background: #02121b;
-  border: 1px solid rgba(0, 242, 254, 0.4);
+  background: #f0f9ff;
+  border: 1.5px solid #bae6fd;
   border-radius: 20px;
   padding: 4px 14px;
-  box-shadow: inset 0 0 10px rgba(0, 242, 254, 0.3);
+  box-shadow: inset 0 0 8px rgba(2, 132, 199, 0.08);
 }
 
 .ecg-screen {
@@ -154,7 +157,7 @@ body {
 
 .ecg-line {
   fill: none;
-  stroke: #00f2fe;
+  stroke: #0284c7;
   stroke-width: 2.5;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -164,18 +167,17 @@ body {
 }
 
 @keyframes ecgPulse {
-  0% { stroke-dashoffset: 200; }
-  100% { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: 0; }
 }
 
 .ecg-text {
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: #00f2fe;
-  letter-spacing: 0.5px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: #0369a1;
+  letter-spacing: 1px;
 }
 
-/* ACCIONES SUPERIORES */
+/* BOTONES DEL HEADER */
 .header-actions {
   display: flex;
   align-items: center;
@@ -186,12 +188,12 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #1e293b;
   padding: 7px 14px;
   border-radius: 20px;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.25s ease;
@@ -200,29 +202,36 @@ body {
 
 .btn-top:hover,
 .btn-top:active {
-  background: rgba(0, 242, 254, 0.2);
-  border-color: #00f2fe;
+  background: #e2e8f0;
+  border-color: #94a3b8;
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.1);
 }
 
 .btn-prescription {
-  background: linear-gradient(135deg, #028090, #005f73);
-  border-color: #00f2fe;
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  border-color: #0284c7;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+}
+
+.btn-prescription:hover {
+  background: linear-gradient(135deg, #0369a1, #075985);
+  box-shadow: 0 6px 16px rgba(2, 132, 199, 0.4);
 }
 
 .btn-whatsapp {
   background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
   border-color: #25d366;
   color: #ffffff;
-  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.35);
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
 }
 
 .btn-whatsapp:hover,
 .btn-whatsapp:active {
   background: linear-gradient(135deg, #2ee071 0%, #16a085 100%);
   border-color: #2ee071;
-  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+  box-shadow: 0 6px 18px rgba(37, 211, 102, 0.55);
   transform: translateY(-2px);
 }
 
@@ -232,17 +241,17 @@ body {
 }
 
 .btn-back-entrance {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.25);
-  color: #a5f3fc;
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #0369a1;
   text-decoration: none;
 }
 
 .btn-back-entrance:hover,
 .btn-back-entrance:active {
-  background: rgba(0, 242, 254, 0.25);
-  border-color: #00f2fe;
-  color: #ffffff;
+  background: #e0f2fe;
+  border-color: #38bdf8;
+  color: #0284c7;
 }
 
 .btn-sound {
@@ -259,7 +268,7 @@ body {
   display: flex;
   justify-content: center;
   position: relative;
-  background: radial-gradient(circle at center 20%, rgba(2, 128, 144, 0.25) 0%, transparent 70%);
+  background: radial-gradient(circle at center 20%, rgba(2, 132, 199, 0.08) 0%, transparent 70%);
 }
 
 .facade-container {
@@ -271,18 +280,17 @@ body {
   text-align: center;
 }
 
-/* LETRERO LUMINOSO */
+/* LETRERO PRINCIPAL */
 .hospital-sign-board {
   position: relative;
   width: 100%;
-  background: linear-gradient(135deg, #0f1f38 0%, #081120 100%);
-  border: 3px solid #00f2fe;
+  background: linear-gradient(145deg, #ffffff 0%, #f0fdfa 100%);
+  border: 2px solid #bae6fd;
   border-radius: 24px;
   padding: 24px 20px 22px;
   box-shadow: 
-    0 0 35px rgba(0, 242, 254, 0.35),
-    inset 0 0 20px rgba(0, 242, 254, 0.15),
-    0 15px 40px rgba(0, 0, 0, 0.7);
+    0 10px 35px rgba(2, 132, 199, 0.12),
+    0 2px 8px rgba(15, 23, 42, 0.04);
   margin-bottom: 25px;
 }
 
@@ -292,8 +300,8 @@ body {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #ff70a6, #ff0055);
-  box-shadow: 0 0 20px #ff0055;
+  background: radial-gradient(circle at 35% 35%, #ff70a6, #ef4444);
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.8);
   animation: beaconFlash 1.6s ease-in-out infinite;
 }
 
@@ -302,27 +310,15 @@ body {
 
 @keyframes beaconFlash {
   0%, 100% { opacity: 0.4; transform: scale(0.9); }
-  50% { opacity: 1; transform: scale(1.15); box-shadow: 0 0 30px #ff0055, 0 0 50px #ff0055; }
-}
-
-.sign-top-tag {
-  display: inline-block;
-  background: #ff3366;
-  color: #ffffff;
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  padding: 4px 16px;
-  border-radius: 20px;
-  margin-bottom: 10px;
-  box-shadow: 0 0 15px rgba(255, 51, 102, 0.6);
+  50% { opacity: 1; transform: scale(1.15); box-shadow: 0 0 25px #ef4444, 0 0 40px #ef4444; }
 }
 
 .sign-title {
   font-size: clamp(1.7rem, 4.5vw, 2.6rem);
   font-weight: 900;
   letter-spacing: 1px;
-  background: linear-gradient(135deg, #ffffff 30%, #a5f3fc 100%);
+  color: #0f172a;
+  background: linear-gradient(135deg, #0f172a 30%, #0284c7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 6px;
@@ -330,7 +326,7 @@ body {
 
 .sign-subtitle {
   font-size: 0.98rem;
-  color: var(--text-secondary);
+  color: #475569;
   margin-bottom: 14px;
 }
 
@@ -338,38 +334,38 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(255, 209, 102, 0.15);
-  border: 1.5px solid var(--gold-accent);
+  background: #f0fdf4;
+  border: 1.5px solid #86efac;
   padding: 8px 22px;
   border-radius: 30px;
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.12);
 }
 
 .badge-label {
   font-size: 0.75rem;
   font-weight: 700;
-  color: #ffd166;
+  color: #15803d;
   letter-spacing: 1px;
 }
 
 .badge-name {
   font-size: 1.18rem;
   font-weight: 800;
-  color: #ffffff;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  color: #0f172a;
 }
 
 /* ========================================================
-   FACHADA 3D DEL EDIFICIO DEL HOSPITAL (IMAGEN Y DETALLES)
+   FACHADA DEL EDIFICIO DEL HOSPITAL (IMAGEN Y DETALLES)
    ======================================================== */
 .hospital-building-showcase {
   width: 100%;
-  background: #091220;
-  border: 3px solid rgba(0, 242, 254, 0.45);
+  background: #ffffff;
+  border: 2px solid #bae6fd;
   border-radius: 28px;
   overflow: hidden;
   box-shadow: 
-    0 25px 60px rgba(0, 0, 0, 0.85),
-    0 0 35px rgba(0, 242, 254, 0.25);
+    0 20px 50px rgba(2, 132, 199, 0.12),
+    0 4px 15px rgba(15, 23, 42, 0.05);
   margin-bottom: 30px;
   position: relative;
 }
@@ -379,7 +375,7 @@ body {
   width: 100%;
   max-height: 480px;
   overflow: hidden;
-  background: #020617;
+  background: #f1f5f9;
 }
 
 .hospital-hero-photo {
@@ -399,7 +395,7 @@ body {
 .hospital-photo-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(6, 11, 23, 0.15) 0%, rgba(6, 11, 23, 0.35) 60%, #091220 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 65%, rgba(248, 250, 252, 0.85) 95%, #f8fafc 100%);
   pointer-events: none;
 }
 
@@ -412,7 +408,7 @@ body {
   width: 160px;
   height: 160px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 51, 102, 0.35) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(239, 68, 68, 0.35) 0%, transparent 70%);
   filter: blur(12px);
   pointer-events: none;
   animation: pulseNeon 3s ease-in-out infinite;
@@ -430,7 +426,7 @@ body {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(0, 242, 254, 0.6) 0%, transparent 75%);
+  background: radial-gradient(circle, rgba(2, 132, 199, 0.6) 0%, transparent 75%);
   filter: blur(8px);
   pointer-events: none;
   animation: beaconAmbulance 1.2s ease-in-out infinite alternate;
@@ -441,47 +437,13 @@ body {
   100% { opacity: 0.95; transform: scale(1.3); }
 }
 
-.hospital-status-tag {
-  position: absolute;
-  top: 16px;
-  right: 18px;
-  background: rgba(6, 11, 23, 0.85);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid #00f2fe;
-  color: #00f2fe;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 1px;
-  padding: 6px 14px;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-}
-
-.live-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #00f2fe;
-  box-shadow: 0 0 8px #00f2fe;
-  animation: liveDotPulse 1.5s infinite;
-}
-
-@keyframes liveDotPulse {
-  0%, 100% { opacity: 0.5; transform: scale(0.9); }
-  50% { opacity: 1; transform: scale(1.3); }
-}
-
 /* ========================================================
    PORTAL DE ACCESO Y PUERTAS HOSPITALARIAS REALISTAS 3D
    ======================================================== */
 .entrance-gateway {
-  padding: 18px 20px 26px;
-  background: #080f1d;
-  border-top: 1px solid rgba(0, 242, 254, 0.2);
+  padding: 20px 20px 28px;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
 }
 
 .door-operator-header {
@@ -493,25 +455,24 @@ body {
   max-width: 580px;
   margin: 0 auto 16px;
   padding: 8px 16px;
-  background: linear-gradient(90deg, #0d1e33 0%, #162c47 50%, #0d1e33 100%);
-  border: 1px solid #334e68;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
 }
 
 .emergency-header-badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: #ff3366;
+  color: #dc2626;
   font-size: 0.76rem;
   font-weight: 800;
   letter-spacing: 1.2px;
-  text-shadow: 0 0 10px rgba(255, 51, 102, 0.4);
 }
 
 .cross-badge-mini {
-  background: #ff3366;
+  background: #ef4444;
   color: #ffffff;
   width: 18px;
   height: 18px;
@@ -527,11 +488,11 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid #10b981;
-  color: #10b981;
+  background: #dcfce7;
+  border: 1px solid #22c55e;
+  color: #15803d;
   font-size: 0.72rem;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.8px;
   padding: 4px 12px;
   border-radius: 20px;
@@ -541,8 +502,8 @@ body {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #10b981;
-  box-shadow: 0 0 10px #10b981;
+  background: #22c55e;
+  box-shadow: 0 0 10px #22c55e;
   animation: sensorBreathe 1.6s ease-in-out infinite alternate;
 }
 
@@ -567,15 +528,14 @@ body {
   position: relative;
   width: 100%;
   height: 100%;
-  border: 12px solid #1e293b;
-  border-top: 18px solid #334155;
-  border-bottom: 12px solid #0f172a;
+  border: 12px solid #94a3b8;
+  border-top: 18px solid #cbd5e1;
+  border-bottom: 12px solid #64748b;
   border-radius: 14px;
-  background: #030812;
+  background: #e2e8f0;
   box-shadow: 
-    0 25px 60px rgba(0, 0, 0, 0.9),
-    inset 0 0 30px rgba(0, 0, 0, 0.95),
-    0 0 20px rgba(0, 242, 254, 0.15);
+    0 15px 40px rgba(15, 23, 42, 0.15),
+    inset 0 0 15px rgba(15, 23, 42, 0.1);
   overflow: hidden;
   display: flex;
 }
@@ -587,9 +547,9 @@ body {
   bottom: 0;
   width: 50%;
   z-index: 5;
-  background: linear-gradient(145deg, #1b3548 0%, #102436 45%, #0b1a28 100%);
-  border: 2px solid #243b53;
-  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6), 0 8px 25px rgba(0, 0, 0, 0.7);
+  background: linear-gradient(145deg, #ffffff 0%, #f1f5f9 50%, #e2e8f0 100%);
+  border: 2px solid #94a3b8;
+  box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.8), 0 4px 15px rgba(15, 23, 42, 0.12);
   display: flex;
   transition: transform 1.25s cubic-bezier(0.2, 0.9, 0.3, 1), box-shadow 1s ease;
   transform-style: preserve-3d;
@@ -597,13 +557,13 @@ body {
 
 .door-left {
   left: 0;
-  border-right: 2px solid #08111b;
+  border-right: 2px solid #64748b;
   transform-origin: left center;
 }
 
 .door-right {
   right: 0;
-  border-left: 2px solid #08111b;
+  border-left: 2px solid #64748b;
   transform-origin: right center;
 }
 
@@ -625,8 +585,8 @@ body {
   max-height: 195px;
   width: 88%;
   margin: 0 auto;
-  background: linear-gradient(180deg, rgba(14, 45, 70, 0.65) 0%, rgba(7, 22, 38, 0.85) 100%);
-  border: 3px solid #334e68;
+  background: linear-gradient(180deg, rgba(224, 242, 254, 0.85) 0%, rgba(186, 230, 253, 0.95) 100%);
+  border: 3px solid #38bdf8;
   border-radius: 10px;
   position: relative;
   overflow: hidden;
@@ -635,9 +595,8 @@ body {
   align-items: center;
   justify-content: center;
   box-shadow: 
-    inset 0 0 20px rgba(0, 242, 254, 0.25),
-    inset 0 2px 4px rgba(255, 255, 255, 0.2),
-    0 4px 12px rgba(0, 0, 0, 0.5);
+    inset 0 0 20px rgba(56, 189, 248, 0.3),
+    0 2px 8px rgba(15, 23, 42, 0.08);
 }
 
 .glass-reflection-streak {
@@ -646,7 +605,7 @@ body {
   left: -70%;
   width: 240%;
   height: 240%;
-  background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.18) 50%, transparent 60%);
+  background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.35) 50%, transparent 60%);
   pointer-events: none;
 }
 
@@ -660,14 +619,14 @@ body {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  opacity: 0.5;
+  opacity: 0.65;
   pointer-events: none;
 }
 
 .frosted-safety-stripes span {
   height: 2px;
-  background: rgba(255, 255, 255, 0.85);
-  box-shadow: 0 0 3px rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 3px rgba(255, 255, 255, 0.8);
 }
 
 /* Emblema Médico Real en la Ventana */
@@ -683,15 +642,14 @@ body {
 .medical-cross-svg {
   width: 40px;
   height: 40px;
-  filter: drop-shadow(0 3px 8px rgba(230, 57, 70, 0.7));
+  filter: drop-shadow(0 3px 8px rgba(239, 68, 68, 0.5));
 }
 
 .emblem-text {
   font-size: 0.74rem;
   font-weight: 900;
   letter-spacing: 2px;
-  color: #ffffff;
-  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.9);
+  color: #0f172a;
 }
 
 /* BARRA ANTIPÁNICO DE ACERO INOXIDABLE (HORIZONTAL PUSH BAR) */
@@ -708,22 +666,19 @@ body {
 .panic-bar-bracket {
   width: 10px;
   height: 22px;
-  background: linear-gradient(180deg, #94a3b8 0%, #475569 100%);
+  background: linear-gradient(180deg, #94a3b8 0%, #64748b 100%);
   border: 1px solid #cbd5e1;
   border-radius: 2px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
 .panic-bar-core {
   flex: 1;
   height: 18px;
   margin: 0 4px;
-  background: linear-gradient(180deg, #f8fafc 0%, #cbd5e1 35%, #94a3b8 70%, #64748b 100%);
-  border: 1px solid #f1f5f9;
+  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 35%, #cbd5e1 70%, #94a3b8 100%);
+  border: 1px solid #cbd5e1;
   border-radius: 4px;
-  box-shadow: 
-    0 4px 8px rgba(0, 0, 0, 0.6),
-    inset 0 1px 1px #ffffff;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -732,7 +687,7 @@ body {
 .panic-bar-label {
   font-size: 0.64rem;
   font-weight: 900;
-  color: #1e293b;
+  color: #0f172a;
   letter-spacing: 2px;
 }
 
@@ -740,14 +695,14 @@ body {
 .hospital-kickplate {
   height: 52px;
   width: 100%;
-  background: linear-gradient(180deg, #94a3b8 0%, #cbd5e1 25%, #64748b 70%, #475569 100%);
-  border: 1px solid #e2e8f0;
+  background: linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 35%, #94a3b8 80%, #64748b 100%);
+  border: 1px solid #cbd5e1;
   border-radius: 5px;
   position: relative;
   overflow: hidden;
   box-shadow: 
     inset 0 1.5px 2px rgba(255, 255, 255, 0.8),
-    0 4px 8px rgba(0, 0, 0, 0.5);
+    0 2px 6px rgba(15, 23, 42, 0.12);
 }
 
 .kickplate-screw {
@@ -755,7 +710,7 @@ body {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #334155;
+  background: #64748b;
   box-shadow: inset 0 1px 1px #000, 0 1px 1px #fff;
 }
 .screw-tl { top: 4px; left: 5px; }
@@ -769,7 +724,7 @@ body {
   left: 0;
   right: 0;
   height: 40%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, transparent 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, transparent 100%);
 }
 
 /* JUNTA DE GOMA CENTRAL (ASTRAGAL) */
@@ -778,8 +733,8 @@ body {
   top: 0;
   bottom: 0;
   width: 4px;
-  background: #09121d;
-  box-shadow: 0 0 3px rgba(0,0,0,0.8);
+  background: #64748b;
+  box-shadow: 0 0 3px rgba(0,0,0,0.3);
   z-index: 3;
 }
 .astragal-left { right: 0; }
@@ -790,19 +745,19 @@ body {
    ======================================================== */
 .main-entrance-3d.opened .door-left {
   transform: rotateY(-112deg);
-  box-shadow: 20px 10px 40px rgba(0, 0, 0, 0.85);
+  box-shadow: 15px 10px 30px rgba(15, 23, 42, 0.35);
 }
 
 .main-entrance-3d.opened .door-right {
   transform: rotateY(112deg);
-  box-shadow: -20px 10px 40px rgba(0, 0, 0, 0.85);
+  box-shadow: -15px 10px 30px rgba(15, 23, 42, 0.35);
 }
 
 /* INTERIOR DEL HOSPITAL REVELADO TRAS ABRIR LAS PUERTAS */
 .entrance-interior-glow {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at center, #11324d 0%, #061320 85%);
+  background: radial-gradient(circle at center, #ffffff 0%, #e0f2fe 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -818,22 +773,26 @@ body {
 .interior-stetho-pulse {
   font-size: 2.8rem;
   margin-bottom: 8px;
-  filter: drop-shadow(0 0 15px #00f2fe);
+  filter: drop-shadow(0 0 10px #0284c7);
   animation: pulseBeat 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes pulseBeat {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.12); }
 }
 
 .interior-welcome-title {
   font-size: clamp(1.2rem, 3.5vw, 1.6rem);
   font-weight: 900;
-  color: #00f2fe;
+  color: #0284c7;
   letter-spacing: 0.8px;
   margin-bottom: 8px;
-  text-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
 }
 
 .interior-welcome-desc {
-  font-size: 0.86rem;
-  color: #cbd5e1;
+  font-size: 0.88rem;
+  color: #334155;
   line-height: 1.45;
   margin-bottom: 16px;
 }
@@ -847,98 +806,33 @@ body {
 }
 
 .btn-interior-enter {
-  background: linear-gradient(135deg, #00f2fe 0%, #0284c7 100%);
-  color: #061524;
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  color: #ffffff;
+  text-decoration: none;
   border: none;
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   font-weight: 800;
   letter-spacing: 0.5px;
-  padding: 10px 18px;
+  padding: 11px 20px;
   border-radius: 20px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(2, 132, 199, 0.35);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .btn-interior-enter:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 242, 254, 0.6);
-}
-
-.btn-interior-close {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  color: #94a3b8;
-  font-size: 0.78rem;
-  font-weight: 600;
-  padding: 8px 14px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-}
-
-.btn-interior-close:hover {
-  background: rgba(255, 255, 255, 0.16);
-  color: #ffffff;
-}
-
-/* BOTÓN DE ENTRADA PRINCIPAL */
-.entrance-action-wrapper {
-  margin-top: 5px;
-}
-
-.btn-enter-hospital {
-  position: relative;
-  background: linear-gradient(135deg, #ff3366 0%, #d62246 100%);
-  color: #ffffff;
-  border: none;
-  padding: 16px 36px;
-  font-size: 1.05rem;
-  font-weight: 800;
-  letter-spacing: 1px;
-  border-radius: 35px;
-  cursor: pointer;
-  box-shadow: 0 10px 30px rgba(255, 51, 102, 0.5);
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  transition: transform 0.25s, box-shadow 0.25s;
-}
-
-.btn-enter-hospital:hover,
-.btn-enter-hospital:active {
-  transform: scale(1.05);
-  box-shadow: 0 14px 40px rgba(255, 51, 102, 0.7);
-}
-
-.btn-enter-pulse {
-  position: absolute;
-  inset: -6px;
-  border-radius: 40px;
-  border: 2px solid #ff3366;
-  opacity: 0;
-  animation: ringPulse 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
-}
-
-@keyframes ringPulse {
-  0% { transform: scale(0.95); opacity: 0.8; }
-  100% { transform: scale(1.2); opacity: 0; }
-}
-
-.entrance-hint {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-top: 10px;
+  box-shadow: 0 6px 20px rgba(2, 132, 199, 0.55);
 }
 
 /* ========================================================
    SECCIÓN 2: EL PASILLO DE CONSULTORIOS DEL HOSPITAL
    ======================================================== */
 .hospital-hallway-section {
-  padding: 50px 20px 80px;
+  padding: 40px 20px 80px;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -952,27 +846,27 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(0, 242, 254, 0.1);
-  border: 1px solid rgba(0, 242, 254, 0.3);
+  background: #e0f2fe;
+  border: 1.5px solid #38bdf8;
   padding: 6px 18px;
   border-radius: 20px;
   font-size: 0.8rem;
-  font-weight: 700;
-  color: #00f2fe;
+  font-weight: 800;
+  color: #0284c7;
   letter-spacing: 1px;
   margin-bottom: 12px;
 }
 
 .hallway-title {
   font-size: clamp(1.8rem, 3.5vw, 2.5rem);
-  font-weight: 800;
-  color: #ffffff;
+  font-weight: 900;
+  color: #0f172a;
   margin-bottom: 8px;
 }
 
 .hallway-desc {
   font-size: 0.96rem;
-  color: var(--text-secondary);
+  color: #475569;
   max-width: 600px;
   margin: 0 auto;
 }
@@ -986,25 +880,29 @@ body {
 
 /* TARJETA DEL CONSULTORIO */
 .clinic-room-card {
-  background: var(--bg-card);
-  border: 1px solid rgba(56, 189, 248, 0.25);
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
   border-radius: var(--radius-card);
   overflow: hidden;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  box-shadow: 
+    0 10px 30px rgba(15, 23, 42, 0.08),
+    0 2px 6px rgba(15, 23, 42, 0.04);
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s, border-color 0.3s;
+  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
 
 .clinic-room-card:hover {
-  border-color: rgba(0, 242, 254, 0.5);
+  border-color: #38bdf8;
+  box-shadow: 0 16px 40px rgba(2, 132, 199, 0.15);
+  transform: translateY(-4px);
 }
 
 /* RÓTULO DEL CONSULTORIO */
 .room-signboard {
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-  border-bottom: 2px solid #0284c7;
-  padding: 12px 18px;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-bottom: 2px solid #bae6fd;
+  padding: 13px 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1013,14 +911,14 @@ body {
 .room-number {
   font-size: 0.82rem;
   font-weight: 800;
-  color: #38bdf8;
+  color: #0284c7;
   letter-spacing: 1px;
 }
 
 .room-specialty {
   font-size: 0.86rem;
   font-weight: 700;
-  color: #ffd166;
+  color: #0f172a;
 }
 
 /* ENSAMBLAJE DE LA PUERTA Y EL INTERIOR 3D */
@@ -1029,18 +927,18 @@ body {
   min-height: 480px;
   perspective: 1400px;
   transform-style: preserve-3d;
-  background: #020617;
+  background: #f8fafc;
 }
 
 /* INTERIOR DE LA SALA (DETRÁS DE LA PUERTA) */
 .room-interior {
   position: absolute;
   inset: 0;
-  padding: 20px 18px 24px;
+  padding: 22px 18px 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: radial-gradient(circle at 50% 20%, rgba(2, 128, 144, 0.25) 0%, #050b14 85%);
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
   z-index: 1;
   overflow-y: auto;
 }
@@ -1051,7 +949,7 @@ body {
   left: 20%;
   right: 20%;
   height: 60px;
-  background: radial-gradient(ellipse at top, rgba(0, 242, 254, 0.35) 0%, transparent 70%);
+  background: radial-gradient(ellipse at top, rgba(2, 132, 199, 0.15) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -1064,9 +962,9 @@ body {
   overflow: hidden;
   border: 3px solid #38bdf8;
   box-shadow: 
-    0 10px 25px rgba(0, 0, 0, 0.6),
-    0 0 15px rgba(56, 189, 248, 0.25);
-  background: #0f172a;
+    0 8px 20px rgba(15, 23, 42, 0.12),
+    0 0 12px rgba(56, 189, 248, 0.2);
+  background: #f1f5f9;
 }
 
 .room-photo {
@@ -1085,8 +983,8 @@ body {
   position: absolute;
   bottom: 8px;
   right: 8px;
-  background: rgba(0, 0, 0, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   color: #ffffff;
   padding: 4px 10px;
   border-radius: 14px;
@@ -1111,11 +1009,11 @@ body {
 
 .room-tag {
   align-self: flex-start;
-  background: rgba(255, 209, 102, 0.15);
-  border: 1px solid var(--gold-accent);
-  color: var(--gold-accent);
+  background: #fef3c7;
+  border: 1px solid #fde68a;
+  color: #b45309;
   font-size: 0.72rem;
-  font-weight: 700;
+  font-weight: 800;
   padding: 2px 10px;
   border-radius: 12px;
 }
@@ -1123,46 +1021,51 @@ body {
 .room-headline {
   font-size: 1.15rem;
   font-weight: 800;
-  color: #ffffff;
+  color: #0f172a;
   line-height: 1.25;
 }
 
 .room-text {
   font-size: 0.88rem;
-  color: #cbd5e1;
+  color: #334155;
   line-height: 1.45;
   font-style: italic;
 }
 
 /* HISTORIA CLÍNICA */
 .clinical-chart {
-  background: rgba(15, 23, 42, 0.85);
-  border: 1px dashed rgba(56, 189, 248, 0.4);
+  background: #f0f9ff;
+  border: 1.5px solid #bae6fd;
   border-radius: 10px;
   padding: 8px 12px;
   font-size: 0.78rem;
-  color: #94a3b8;
+  color: #0369a1;
   display: flex;
   flex-direction: column;
   gap: 3px;
   margin-top: 4px;
 }
 
-.clinical-chart strong {
-  color: #38bdf8;
+.chart-item {
+  color: #0369a1;
+  font-weight: 600;
+}
+
+.chart-item strong {
+  color: #0f172a;
 }
 
 .btn-mini-celebrate {
-  margin-top: 8px;
-  background: linear-gradient(135deg, #ffd166, #ff9f1c);
-  color: #0f172a;
+  margin-top: 10px;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #ffffff;
   border: none;
-  padding: 10px 14px;
-  border-radius: 20px;
-  font-weight: 800;
   font-size: 0.82rem;
+  font-weight: 800;
+  padding: 10px;
+  border-radius: 18px;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(255, 209, 102, 0.4);
+  box-shadow: 0 4px 15px rgba(217, 119, 6, 0.35);
   transition: transform 0.2s;
 }
 
@@ -1186,13 +1089,12 @@ body {
 .door-exterior {
   width: 100%;
   height: 100%;
-  background: linear-gradient(145deg, #1e3a5f 0%, #112238 60%, #0b1726 100%);
-  border: 4px solid #38bdf8;
+  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 50%, #e2e8f0 100%);
+  border: 3.5px solid #38bdf8;
   border-radius: var(--radius-door);
   box-shadow: 
-    0 15px 35px rgba(0, 0, 0, 0.8),
-    inset 0 0 25px rgba(0, 0, 0, 0.6),
-    inset 0 2px 4px rgba(255, 255, 255, 0.2);
+    0 12px 30px rgba(15, 23, 42, 0.12),
+    inset 0 0 15px rgba(56, 189, 248, 0.12);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1207,8 +1109,8 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(255, 209, 102, 0.5);
+  background: #f0fdf4;
+  border: 1px solid #86efac;
   padding: 6px 14px;
   border-radius: 20px;
 }
@@ -1217,8 +1119,8 @@ body {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #ffd166;
-  box-shadow: 0 0 10px #ffd166;
+  background: #22c55e;
+  box-shadow: 0 0 10px #22c55e;
   animation: pulseDot 1.8s ease-in-out infinite;
 }
 
@@ -1230,20 +1132,20 @@ body {
 .status-label {
   font-size: 0.72rem;
   font-weight: 800;
-  color: #ffd166;
+  color: #15803d;
   letter-spacing: 1px;
 }
 
-/* VENTANA CIRCULAR O RECTANGULAR DE LA PUERTA */
+/* VENTANA CIRCULAR DE LA PUERTA */
 .door-window {
   width: 130px;
   height: 130px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, rgba(56, 189, 248, 0.35) 0%, rgba(15, 23, 42, 0.9) 70%);
-  border: 5px solid #38bdf8;
+  background: radial-gradient(circle at 35% 35%, #e0f2fe 0%, #bae6fd 70%);
+  border: 4px solid #0284c7;
   box-shadow: 
-    0 6px 18px rgba(0, 0, 0, 0.6),
-    inset 0 0 15px rgba(56, 189, 248, 0.4);
+    0 6px 18px rgba(2, 132, 199, 0.2),
+    inset 0 0 15px rgba(2, 132, 199, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1254,7 +1156,7 @@ body {
 .clinic-window-cross-svg {
   width: 44px;
   height: 44px;
-  filter: drop-shadow(0 2px 8px rgba(255, 51, 102, 0.8));
+  filter: drop-shadow(0 2px 8px rgba(239, 68, 68, 0.6));
 }
 
 .window-reflection {
@@ -1263,22 +1165,22 @@ body {
   left: 15%;
   width: 70%;
   height: 35%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.25) 0%, transparent 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, transparent 100%);
   border-radius: 50px 50px 0 0;
   transform: rotate(-30deg);
 }
 
-/* NÚMERO DE CONSULTORIO METÁLICO */
+/* NÚMERO DE CONSULTORIO */
 .door-room-badge {
   font-size: 1.8rem;
   font-weight: 900;
-  color: #f8fafc;
-  background: #0f172a;
+  color: #ffffff;
+  background: #0284c7;
   border: 2px solid #38bdf8;
   padding: 4px 20px;
   border-radius: 10px;
   letter-spacing: 2px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3);
 }
 
 /* MANIJA METÁLICA DE LA PUERTA */
@@ -1297,97 +1199,44 @@ body {
 .handle-bar {
   width: 14px;
   height: 100%;
-  background: linear-gradient(to right, #64748b, #f8fafc 50%, #475569);
+  background: linear-gradient(to right, #94a3b8, #f8fafc 50%, #64748b);
   border-radius: 8px;
   box-shadow: 
-    -4px 4px 12px rgba(0, 0, 0, 0.7),
+    -2px 3px 8px rgba(15, 23, 42, 0.25),
     inset 0 1px 2px #ffffff;
 }
 
 /* PLACA DE EMPUJE */
 .door-push-plate {
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 2px;
-  color: #94a3b8;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 6px;
-  width: 60%;
-  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 2.5px;
+  color: #1e293b;
+  background: linear-gradient(180deg, #f8fafc, #cbd5e1);
+  padding: 6px 24px;
+  border-radius: 4px;
+  border: 1px solid #94a3b8;
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.1);
 }
 
 /* EFECTO DE APERTURA 3D DE LA PUERTA */
 .clinic-door-3d.opened {
   transform: rotateY(-118deg);
-  box-shadow: -15px 10px 40px rgba(0, 0, 0, 0.9);
+  box-shadow: -15px 10px 40px rgba(15, 23, 42, 0.35);
 }
 
 .clinic-door-3d.opened .door-status-light {
-  border-color: #06d6a0;
+  border-color: #0284c7;
+  background: #e0f2fe;
 }
 
 .clinic-door-3d.opened .status-dot {
-  background: #06d6a0;
-  box-shadow: 0 0 10px #06d6a0;
+  background: #0284c7;
+  box-shadow: 0 0 10px #0284c7;
 }
 
 .clinic-door-3d.opened .status-label {
-  color: #06d6a0;
-}
-
-/* ========================================================
-   BANNER INFERIOR DE WHATSAPP
-   ======================================================== */
-.hospital-footer-banner {
-  margin-top: 50px;
-}
-
-.footer-card {
-  background: linear-gradient(135deg, #0d2836 0%, #061520 100%);
-  border: 2px solid #00f2fe;
-  border-radius: 20px;
-  padding: 24px 28px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
-  flex-wrap: wrap;
-}
-
-.footer-icon { font-size: 2.8rem; }
-
-.footer-content h3 {
-  font-size: 1.25rem;
-  color: #ffffff;
-  margin-bottom: 4px;
-}
-
-.footer-content p {
-  font-size: 0.9rem;
-  color: #94a3b8;
-}
-
-.btn-share-wa {
-  background: #25d366;
-  color: #ffffff;
-  border: none;
-  padding: 14px 26px;
-  border-radius: 30px;
-  font-size: 0.95rem;
-  font-weight: 800;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
-  transition: transform 0.2s, box-shadow 0.2s;
-  white-space: nowrap;
-}
-
-.btn-share-wa:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.65);
+  color: #0369a1;
 }
 
 /* ========================================================
@@ -1397,7 +1246,7 @@ body {
   position: fixed;
   inset: 0;
   z-index: 1000;
-  background: rgba(3, 7, 18, 0.85);
+  background: rgba(15, 23, 42, 0.7);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   display: flex;
@@ -1421,8 +1270,8 @@ body {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 1px solid rgba(0,0,0,0.2);
-  background: rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0,0,0,0.15);
+  background: rgba(0, 0, 0, 0.05);
   font-size: 1.1rem;
   color: #334155;
   display: flex;
@@ -1434,9 +1283,9 @@ body {
 }
 
 .btn-close-modal:hover {
-  background: #ff3366;
+  background: #ef4444;
   color: #ffffff;
-  border-color: #ff3366;
+  border-color: #ef4444;
 }
 
 /* HOJA DE RECETA MÉDICA (PRESCRIPTION SHEET) */
@@ -1450,8 +1299,8 @@ body {
   max-height: 90vh;
   overflow-y: auto;
   padding: 30px 28px 24px;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
-  border: 1px solid #e2e8f0;
+  box-shadow: 0 25px 60px rgba(15, 23, 42, 0.35);
+  border: 1px solid #cbd5e1;
   transform: scale(0.92) translateY(20px);
   transition: transform 0.35s cubic-bezier(0.2, 0.85, 0.35, 1.15);
 }
@@ -1464,7 +1313,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 2px solid #028090;
+  border-bottom: 2px solid #0284c7;
   padding-bottom: 14px;
   margin-bottom: 16px;
 }
@@ -1477,7 +1326,7 @@ body {
 
 .rx-cross {
   font-size: 2rem;
-  color: #028090;
+  color: #0284c7;
 }
 
 .rx-institution h4 {
@@ -1495,7 +1344,7 @@ body {
   font-family: var(--font-serif);
   font-size: 2.2rem;
   font-weight: 700;
-  color: #028090;
+  color: #0284c7;
 }
 
 .prescription-patient-info {
@@ -1521,7 +1370,7 @@ body {
 .presc-title {
   font-size: 0.94rem;
   font-weight: 800;
-  color: #028090;
+  color: #0284c7;
   margin-bottom: 10px;
   letter-spacing: 0.5px;
 }
@@ -1563,7 +1412,7 @@ body {
 .sig-handwriting {
   font-family: var(--font-hand);
   font-size: 1.4rem;
-  color: #028090;
+  color: #0284c7;
   font-weight: 700;
 }
 
@@ -1582,19 +1431,19 @@ body {
 .official-seal {
   width: 90px;
   height: 90px;
-  border: 3px solid #ff3366;
+  border: 3px solid #ef4444;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   transform: rotate(-12deg);
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
 .seal-inner {
   width: 78px;
   height: 78px;
-  border: 1px dashed #ff3366;
+  border: 1px dashed #ef4444;
   border-radius: 50%;
   display: flex;
   flex-direction: column;
@@ -1602,7 +1451,7 @@ body {
   justify-content: center;
   font-size: 0.58rem;
   font-weight: 800;
-  color: #ff3366;
+  color: #ef4444;
   text-align: center;
   line-height: 1.2;
 }
@@ -1613,7 +1462,7 @@ body {
 }
 
 .btn-print-presc {
-  background: #028090;
+  background: #0284c7;
   color: #ffffff;
   border: none;
   padding: 10px 22px;
@@ -1625,7 +1474,7 @@ body {
 }
 
 .btn-print-presc:hover {
-  background: #005f73;
+  background: #0369a1;
 }
 
 /* LIGHTBOX DE FOTO GRANDE */
@@ -1637,13 +1486,13 @@ body {
 
 .lightbox-card {
   position: relative;
-  background: #0f172a;
-  border: 2px solid #38bdf8;
+  background: #ffffff;
+  border: 2px solid #bae6fd;
   border-radius: 18px;
   max-width: 640px;
   width: 100%;
   overflow: hidden;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 25px 60px rgba(15, 23, 42, 0.4);
   transform: scale(0.92);
   transition: transform 0.3s;
 }
@@ -1655,7 +1504,7 @@ body {
 .lightbox-image-wrapper {
   width: 100%;
   max-height: 420px;
-  background: #020617;
+  background: #0f172a;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1670,32 +1519,32 @@ body {
 
 .lightbox-caption {
   padding: 16px 20px;
-  background: #0f172a;
-  border-top: 1px solid rgba(56, 189, 248, 0.3);
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
 }
 
 .lightbox-caption h3 {
   font-size: 1.15rem;
-  color: #38bdf8;
+  color: #0284c7;
   margin-bottom: 4px;
 }
 
 .lightbox-caption p {
   font-size: 0.88rem;
-  color: #cbd5e1;
+  color: #334155;
 }
 
 .lightbox-nav {
   display: flex;
   justify-content: space-between;
   padding: 0 20px 16px;
-  background: #0f172a;
+  background: #ffffff;
 }
 
 .lightbox-btn-nav {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #1e293b;
   padding: 6px 16px;
   border-radius: 16px;
   font-size: 0.82rem;
@@ -1706,27 +1555,20 @@ body {
 
 .lightbox-btn-nav:hover {
   background: #0284c7;
-  border-color: #38bdf8;
+  color: #ffffff;
+  border-color: #0284c7;
 }
 
 /* ========================================================
-   ADAPTACIONES RESPONSIVAS MÓVILES
+   RESPONSIVIDAD MÓVIL
    ======================================================== */
-@media (max-width: 680px) {
+@media (max-width: 768px) {
   .hospital-top-bar {
     padding: 8px 12px;
   }
 
-  .hospital-name {
-    font-size: 0.72rem;
-  }
-
-  .hospital-sub {
-    font-size: 0.68rem;
-  }
-
   .ecg-monitor {
-    display: none; /* Ocultar en pantallas muy estrechas para no saturar la barra */
+    display: none;
   }
 
   .btn-top .btn-text {
@@ -1748,29 +1590,19 @@ body {
   }
 
   .sign-title {
-    font-size: 1.45rem;
+    font-size: 1.55rem;
   }
 
-  .hospital-building-showcase {
-    border-radius: 18px;
-    margin-bottom: 22px;
-  }
-
-  .hospital-photo-container {
-    max-height: 260px;
-  }
-
-  .entrance-gateway {
-    padding: 12px 10px 18px;
+  .sign-subtitle {
+    font-size: 0.84rem;
   }
 
   .main-entrance-3d {
-    height: 260px;
+    height: 330px;
   }
 
-  .btn-enter-hospital {
-    padding: 14px 24px;
-    font-size: 0.9rem;
+  .hospital-hallway-section {
+    padding: 30px 12px 60px;
   }
 
   .hallway-corridor {
@@ -1778,17 +1610,35 @@ body {
     gap: 28px;
   }
 
-  .clinic-door-3d.opened {
-    transform: rotateY(-105deg);
+  .room-door-assembly {
+    min-height: 460px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-entrance-3d {
+    height: 300px;
   }
 
-  .prescription-sheet {
-    padding: 22px 18px 18px;
+  .hospital-glass-window {
+    max-height: 160px;
   }
 
-  .footer-card {
-    flex-direction: column;
-    text-align: center;
-    padding: 20px 16px;
+  .door-medical-emblem .medical-cross-svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .emblem-text {
+    font-size: 0.65rem;
+  }
+
+  .panic-bar-label {
+    font-size: 0.55rem;
+    letter-spacing: 1px;
+  }
+
+  .hospital-kickplate {
+    height: 42px;
   }
 }

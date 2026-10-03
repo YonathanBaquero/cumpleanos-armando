@@ -205,6 +205,7 @@ let audioContext = null;
 document.addEventListener('DOMContentLoaded', () => {
   renderClinicRooms();
   initEntranceDoors();
+  initDoctorMascot();
   initClinicDoors();
   initShareWhatsApp();
   initPrescriptionModal();
@@ -304,6 +305,16 @@ function initEntranceDoors() {
     playHospitalEntranceSound();
     triggerHospitalCelebrationConfetti();
 
+    // Reacción festiva del muñeco 3D del Dr. Armando
+    const mascotImg = document.getElementById('doctorMascotImg');
+    const mascotSpeechText = document.getElementById('mascotSpeechText');
+    if (mascotImg) {
+      mascotImg.classList.add('doll-celebrating');
+    }
+    if (mascotSpeechText) {
+      mascotSpeechText.textContent = '"¡Adelante! ¡Bienvenido a mis consultorios! 🏥✨"';
+    }
+
     if (btnEnterLabel) {
       btnEnterLabel.textContent = '¡INGRESANDO AL HOSPITAL...!';
     }
@@ -333,6 +344,60 @@ function initEntranceDoors() {
       navigateToConsultorios();
     });
   }
+}
+
+// ========================================================
+// 3.5. MUÑECO 3D DEL DR. ARMANDO (ANFITRIÓN INTERACTIVO)
+// ========================================================
+function initDoctorMascot() {
+  const mascotCard = document.getElementById('doctorMascotContainer');
+  const mascotImg = document.getElementById('doctorMascotImg');
+  const mascotSpeechText = document.getElementById('mascotSpeechText');
+
+  if (!mascotCard || !mascotImg) return;
+
+  const doctorQuotes = [
+    "¡Hola! Soy el Dr. Armando 🩺 ¡Toca mis puertas para entrar a los consultorios!",
+    "¡Diagnóstico oficial: Hoy es día de fiesta, abrazos y mucho pastel! 🎂🎉",
+    "¡Prescripción médica: 100 dosis de alegría y risas sin límite! 😄💊",
+    "¡Signos vitales al 100%: ritmo cardíaco acelerado de felicidad! ❤️🩺",
+    "¡Hoy no atiendo consultas, hoy celebro mi cumpleaños con ustedes! 🥳✨",
+    "¡Toca las puertas dobles a mi lado para ver mis fotos y recuerdos! 🚪👇"
+  ];
+  let quoteIndex = 0;
+
+  mascotCard.addEventListener('click', () => {
+    // Si ya está animando, reiniciar animación
+    mascotImg.classList.remove('doll-celebrating');
+    void mascotImg.offsetWidth;
+    mascotImg.classList.add('doll-celebrating');
+
+    // Reproducir tono musical alegre
+    playDoorChimeSound();
+
+    // Lanzar confeti desde la posición del muñeco
+    if (typeof confetti === 'function') {
+      const rect = mascotCard.getBoundingClientRect();
+      const originX = (rect.left + rect.width / 2) / window.innerWidth;
+      const originY = (rect.top + rect.height / 2) / window.innerHeight;
+      confetti({
+        particleCount: 40,
+        spread: 70,
+        origin: { x: Math.max(0.1, Math.min(0.9, originX)), y: Math.max(0.1, Math.min(0.9, originY)) },
+        colors: ['#0284c7', '#38bdf8', '#ef4444', '#10b981', '#f59e0b']
+      });
+    }
+
+    // Cambiar frase del muñeco
+    quoteIndex = (quoteIndex + 1) % doctorQuotes.length;
+    if (mascotSpeechText) {
+      mascotSpeechText.style.opacity = '0';
+      setTimeout(() => {
+        mascotSpeechText.textContent = `"${doctorQuotes[quoteIndex]}"`;
+        mascotSpeechText.style.opacity = '1';
+      }, 150);
+    }
+  });
 }
 
 // ========================================================

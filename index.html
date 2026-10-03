@@ -16,7 +16,7 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <!-- Estilos del Hospital -->
-  <link rel="stylesheet" href="styles.css?v=armando-v8">
+  <link rel="stylesheet" href="styles.css?v=armando-v9">
 </head>
 <body>
 
@@ -108,7 +108,32 @@
             </div>
           </div>
 
-          <div class="main-entrance-3d" id="mainHospitalEntrance" title="Toca para abrir las puertas del hospital">
+          <!-- Escenario de Entrada: Muñeco 3D del Dr. Armando y Puertas Hospitalarias -->
+          <div class="entrance-stage-wrapper">
+
+            <!-- Muñeco 3D del Dr. Armando Médico Anfitrión -->
+            <aside class="doctor-mascot-card" id="doctorMascotContainer" title="¡Toca al Dr. Armando para saludarlo!">
+              <div class="mascot-speech-bubble" id="mascotSpeech">
+                <span class="speech-quote" id="mascotSpeechText">"¡Hola! Soy el Dr. Armando 🩺 ¡Toca mis puertas para entrar a los consultorios!"</span>
+                <span class="speech-hint-tap">✨ Tócame para interactuar</span>
+                <span class="speech-arrow"></span>
+              </div>
+              <div class="mascot-figure-stage">
+                <div class="mascot-halo"></div>
+                <img src="armando-doctor-3d.png" alt="Muñeco 3D del Dr. Armando Médico" class="doctor-mascot-doll" id="doctorMascotImg">
+                <div class="mascot-pedestal-shadow"></div>
+              </div>
+              <div class="mascot-nametag">
+                <div class="nametag-badge-icon">👨‍⚕️</div>
+                <div class="nametag-info">
+                  <span class="nametag-title">DR. ARMANDO</span>
+                  <span class="nametag-role">Médico Especialista en Alegría 🩺</span>
+                </div>
+              </div>
+            </aside>
+
+            <!-- Puertas Dobles Hospitalarias 3D -->
+            <div class="main-entrance-3d" id="mainHospitalEntrance" title="Toca para abrir las puertas del hospital">
             <div class="door-frame-3d">
               
               <!-- Puerta Izquierda -->
@@ -209,6 +234,7 @@
 
             </div>
           </div>
+          </div> <!-- Fin .entrance-stage-wrapper -->
         </div>
 
       </div>
@@ -306,6 +332,6 @@
   <audio id="ambientAudio" preload="none"></audio>
 
   <!-- Script principal del hospital -->
-  <script src="script.js?v=armando-v8"></script>
+  <script src="script.js?v=armando-v9"></script>
 </body>
 </html>

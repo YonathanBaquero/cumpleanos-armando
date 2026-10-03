@@ -512,12 +512,226 @@ body {
   100% { opacity: 1; transform: scale(1.3); }
 }
 
+/* ========================================================
+   ESCENARIO DE LA ENTRADA: MUÑECO 3D DEL DR. ARMANDO Y PUERTAS
+   ======================================================== */
+.entrance-stage-wrapper {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 28px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* TARJETA / STAND DEL MUÑECO 3D */
+.doctor-mascot-card {
+  flex: 0 0 260px;
+  max-width: 270px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.3s ease;
+  z-index: 10;
+}
+
+.doctor-mascot-card:hover {
+  transform: translateY(-4px);
+}
+
+/* BURBUJA DE DIÁLOGO DEL MUÑECO */
+.mascot-speech-bubble {
+  position: relative;
+  background: #ffffff;
+  border: 2px solid #38bdf8;
+  border-radius: 16px;
+  padding: 12px 14px 10px;
+  box-shadow: 
+    0 8px 24px rgba(2, 132, 199, 0.15),
+    0 2px 6px rgba(15, 23, 42, 0.05);
+  margin-bottom: 12px;
+  text-align: center;
+  animation: floatSpeech 3.5s ease-in-out infinite;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+@keyframes floatSpeech {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.speech-quote {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.35;
+  transition: opacity 0.2s ease;
+}
+
+.speech-hint-tap {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #0284c7;
+  letter-spacing: 0.5px;
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.speech-arrow {
+  position: absolute;
+  bottom: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 9px solid #38bdf8;
+}
+
+.speech-arrow::after {
+  content: '';
+  position: absolute;
+  top: -11px;
+  left: -8px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid #ffffff;
+}
+
+/* FIGURA DEL MUÑECO 3D */
+.mascot-figure-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 310px;
+}
+
+.mascot-halo {
+  position: absolute;
+  top: 15%;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.35) 0%, rgba(2, 132, 199, 0.08) 60%, transparent 80%);
+  filter: blur(14px);
+  pointer-events: none;
+  animation: haloPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes haloPulse {
+  0% { transform: scale(0.9); opacity: 0.6; }
+  100% { transform: scale(1.15); opacity: 1; }
+}
+
+.doctor-mascot-doll {
+  height: 290px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 18px rgba(15, 23, 42, 0.22));
+  animation: floatDoll 3.8s ease-in-out infinite;
+  transition: transform 0.25s ease;
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes floatDoll {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+/* Animación de celebración al tocar el muñeco */
+.doctor-mascot-doll.doll-celebrating {
+  animation: dollCheer 0.85s cubic-bezier(0.2, 0.8, 0.3, 1) !important;
+}
+
+@keyframes dollCheer {
+  0% { transform: scale(1) translateY(0); }
+  25% { transform: scale(1.16) translateY(-14px) rotate(-6deg); }
+  50% { transform: scale(1.18) translateY(-18px) rotate(6deg); }
+  75% { transform: scale(1.08) translateY(-6px) rotate(-2deg); }
+  100% { transform: scale(1) translateY(0); }
+}
+
+.mascot-pedestal-shadow {
+  width: 140px;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(15, 23, 42, 0.35) 0%, rgba(15, 23, 42, 0.05) 60%, transparent 80%);
+  filter: blur(3px);
+  margin-top: -6px;
+  position: relative;
+  z-index: 1;
+  animation: shadowPulse 3.8s ease-in-out infinite;
+}
+
+@keyframes shadowPulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(0.85); opacity: 0.5; }
+}
+
+/* IDENTIFICADOR / GAFETE DEL MUÑECO */
+.mascot-nametag {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+  border: 1.5px solid #bae6fd;
+  padding: 5px 14px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.12);
+}
+
+.nametag-badge-icon {
+  font-size: 1.1rem;
+}
+
+.nametag-info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.nametag-title {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #0284c7;
+  letter-spacing: 0.8px;
+}
+
+.nametag-role {
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: #334155;
+}
+
 /* MARCO 3D DE LAS PUERTAS HOSPITALARIAS */
 .main-entrance-3d {
+  flex: 1;
   width: 100%;
-  max-width: 580px;
+  max-width: 540px;
   height: 380px;
-  margin: 0 auto;
   perspective: 1400px;
   cursor: pointer;
   user-select: none;
@@ -840,6 +1054,62 @@ body {
 .hallway-header {
   text-align: center;
   margin-bottom: 40px;
+}
+
+.hallway-doctor-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  background: #ffffff;
+  border: 2px solid #bae6fd;
+  border-radius: 24px;
+  padding: 10px 22px;
+  margin-bottom: 20px;
+  box-shadow: 
+    0 10px 25px rgba(2, 132, 199, 0.1),
+    0 2px 6px rgba(15, 23, 42, 0.04);
+  max-width: 620px;
+  text-align: left;
+  transition: transform 0.25s ease;
+}
+
+.hallway-doctor-badge:hover {
+  transform: translateY(-2px);
+  border-color: #38bdf8;
+}
+
+.hallway-doctor-avatar {
+  width: 58px;
+  height: 74px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(15, 23, 42, 0.15));
+  flex-shrink: 0;
+  animation: floatDollMini 3.2s ease-in-out infinite;
+}
+
+@keyframes floatDollMini {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.hallway-doctor-greeting {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hallway-greeting-title {
+  font-size: 0.84rem;
+  font-weight: 800;
+  color: #0284c7;
+  letter-spacing: 0.5px;
+}
+
+.hallway-greeting-text {
+  font-size: 0.82rem;
+  color: #334155;
+  line-height: 1.35;
+  font-style: italic;
 }
 
 .hallway-floor-indicator {
@@ -1597,7 +1867,29 @@ body {
     font-size: 0.84rem;
   }
 
+  .entrance-stage-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .doctor-mascot-card {
+    flex: auto;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .mascot-figure-stage {
+    height: 250px;
+  }
+
+  .doctor-mascot-doll {
+    height: 235px;
+  }
+
   .main-entrance-3d {
+    width: 100%;
+    max-width: 100%;
     height: 330px;
   }
 

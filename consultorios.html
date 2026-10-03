@@ -16,7 +16,7 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <!-- Estilos del Hospital -->
-  <link rel="stylesheet" href="styles.css?v=armando-v8">
+  <link rel="stylesheet" href="styles.css?v=armando-v9">
 </head>
 <body class="page-consultorios">
 
@@ -77,6 +77,14 @@
     
     <!-- Encabezado del Pasillo -->
     <div class="hallway-header">
+      <div class="hallway-doctor-badge" id="hallwayDoctorMascot" title="Dr. Armando te da la bienvenida al pabellón">
+        <img src="armando-doctor-3d.png" alt="Dr. Armando 3D" class="hallway-doctor-avatar">
+        <div class="hallway-doctor-greeting">
+          <span class="hallway-greeting-title">Dr. Armando • Médico Anfitrión 🩺</span>
+          <p class="hallway-greeting-text">"¡Bienvenido a mi pabellón! Toca cada puerta para ingresar y descubrir mis recuerdos."</p>
+        </div>
+      </div>
+
       <div class="hallway-floor-indicator">
         <span class="indicator-icon">🏥</span>
         <span>PISO 1 • PABELLÓN DE RECUERDOS Y CELEBRACIÓN</span>
@@ -207,6 +215,6 @@
   <audio id="ambientAudio" preload="none"></audio>
 
   <!-- Script principal del hospital -->
-  <script src="script.js?v=armando-v8"></script>
+  <script src="script.js?v=armando-v9"></script>
 </body>
 </html>

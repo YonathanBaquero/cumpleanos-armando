@@ -1022,7 +1022,7 @@ function initPrescriptionWall() {
   let pendingLikeRxId = null;
 
   // URL predeterminada oficial de Google Sheets para todos los invitados
-  const DEFAULT_GOOGLE_SCRIPT_URL = '';
+  const DEFAULT_GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz-7e60s9BHO2dnFEUECzf6AVyfPgk_gUuEP21J4VvXfeOTsZ244O61iZGEwSvHzAI6Fw/exec';
 
   // Obtener URL de Web App de Google Sheets
   const getGoogleScriptUrl = () => {

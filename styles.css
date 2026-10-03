@@ -221,16 +221,16 @@ body {
    SECCIÓN 1: FACHADA Y PUERTAS DE ENTRADA AL HOSPITAL
    ======================================================== */
 .hospital-facade-section {
-  padding: 35px 20px 50px;
+  padding: 30px 20px 50px;
   display: flex;
   justify-content: center;
   position: relative;
-  background: radial-gradient(circle at center 30%, rgba(2, 128, 144, 0.2) 0%, transparent 60%);
+  background: radial-gradient(circle at center 20%, rgba(2, 128, 144, 0.25) 0%, transparent 70%);
 }
 
 .facade-container {
   width: 100%;
-  max-width: 820px;
+  max-width: 960px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -244,12 +244,12 @@ body {
   background: linear-gradient(135deg, #0f1f38 0%, #081120 100%);
   border: 3px solid #00f2fe;
   border-radius: 24px;
-  padding: 28px 24px 24px;
+  padding: 24px 20px 22px;
   box-shadow: 
     0 0 35px rgba(0, 242, 254, 0.35),
     inset 0 0 20px rgba(0, 242, 254, 0.15),
     0 15px 40px rgba(0, 0, 0, 0.7);
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 
 .emergency-beacon {
@@ -280,12 +280,12 @@ body {
   letter-spacing: 1.5px;
   padding: 4px 16px;
   border-radius: 20px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   box-shadow: 0 0 15px rgba(255, 51, 102, 0.6);
 }
 
 .sign-title {
-  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-size: clamp(1.7rem, 4.5vw, 2.6rem);
   font-weight: 900;
   letter-spacing: 1px;
   background: linear-gradient(135deg, #ffffff 30%, #a5f3fc 100%);
@@ -295,9 +295,9 @@ body {
 }
 
 .sign-subtitle {
-  font-size: 1rem;
+  font-size: 0.98rem;
   color: var(--text-secondary);
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .patient-badge {
@@ -306,7 +306,7 @@ body {
   gap: 8px;
   background: rgba(255, 209, 102, 0.15);
   border: 1.5px solid var(--gold-accent);
-  padding: 8px 20px;
+  padding: 8px 22px;
   border-radius: 30px;
 }
 
@@ -318,18 +318,165 @@ body {
 }
 
 .badge-name {
-  font-size: 1.15rem;
+  font-size: 1.18rem;
   font-weight: 800;
   color: #ffffff;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
+/* ========================================================
+   FACHADA 3D DEL EDIFICIO DEL HOSPITAL (IMAGEN Y DETALLES)
+   ======================================================== */
+.hospital-building-showcase {
+  width: 100%;
+  background: #091220;
+  border: 3px solid rgba(0, 242, 254, 0.45);
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 
+    0 25px 60px rgba(0, 0, 0, 0.85),
+    0 0 35px rgba(0, 242, 254, 0.25);
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.hospital-photo-container {
+  position: relative;
+  width: 100%;
+  max-height: 480px;
+  overflow: hidden;
+  background: #020617;
+}
+
+.hospital-hero-photo {
+  width: 100%;
+  height: 100%;
+  max-height: 480px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.hospital-building-showcase:hover .hospital-hero-photo {
+  transform: scale(1.02);
+}
+
+.hospital-photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(6, 11, 23, 0.15) 0%, rgba(6, 11, 23, 0.35) 60%, #091220 100%);
+  pointer-events: none;
+}
+
+/* Luces de Neón sobre la Fachada */
+.neon-cross-glow {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 51, 102, 0.35) 0%, transparent 70%);
+  filter: blur(12px);
+  pointer-events: none;
+  animation: pulseNeon 3s ease-in-out infinite;
+}
+
+@keyframes pulseNeon {
+  0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.18); }
+}
+
+.ambulance-light-glow {
+  position: absolute;
+  bottom: 22%;
+  left: 36%;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 242, 254, 0.6) 0%, transparent 75%);
+  filter: blur(8px);
+  pointer-events: none;
+  animation: beaconAmbulance 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes beaconAmbulance {
+  0% { opacity: 0.3; transform: scale(0.8); }
+  100% { opacity: 0.95; transform: scale(1.3); }
+}
+
+.hospital-status-tag {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  background: rgba(6, 11, 23, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid #00f2fe;
+  color: #00f2fe;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00f2fe;
+  box-shadow: 0 0 8px #00f2fe;
+  animation: liveDotPulse 1.5s infinite;
+}
+
+@keyframes liveDotPulse {
+  0%, 100% { opacity: 0.5; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+/* PORTAL DE ACCESO Y PUERTAS 3D */
+.entrance-gateway {
+  padding: 16px 20px 24px;
+  background: #091220;
+}
+
+.gateway-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.gateway-icon {
+  font-size: 1.6rem;
+}
+
+.gateway-text h3 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #00f2fe;
+  letter-spacing: 1px;
+}
+
+.gateway-text p {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
 /* PUERTAS DE ENTRADA PRINCIPAL 3D */
 .main-entrance-3d {
   width: 100%;
-  max-width: 580px;
-  height: 340px;
-  margin: 0 auto 28px;
+  max-width: 600px;
+  height: 310px;
+  margin: 0 auto;
   perspective: 1200px;
 }
 
@@ -1342,8 +1489,21 @@ body {
     font-size: 1.45rem;
   }
 
+  .hospital-building-showcase {
+    border-radius: 18px;
+    margin-bottom: 22px;
+  }
+
+  .hospital-photo-container {
+    max-height: 260px;
+  }
+
+  .entrance-gateway {
+    padding: 12px 10px 18px;
+  }
+
   .main-entrance-3d {
-    height: 280px;
+    height: 260px;
   }
 
   .btn-enter-hospital {

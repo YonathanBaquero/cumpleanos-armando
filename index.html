@@ -16,7 +16,7 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <!-- Estilos del Hospital -->
-  <link rel="stylesheet" href="styles.css?v=armando-v1">
+  <link rel="stylesheet" href="styles.css?v=armando-v2">
 </head>
 <body>
 
@@ -75,46 +75,74 @@
         <div class="emergency-beacon beacon-left"></div>
         <div class="emergency-beacon beacon-right"></div>
         <div class="sign-top-tag">🚨 CÓDIGO CELEBRACIÓN ACTIVADO 🚨</div>
-        <h1 class="sign-title">CENTRO MÉDICO DE CUMPLEAÑOS</h1>
-        <p class="sign-subtitle">Homenaje Especial y Urgencias de Felicidad</p>
+        <h1 class="sign-title">DR. ARMANDO MEDICAL CENTER</h1>
+        <p class="sign-subtitle">Hospital General de la Alegría • Área Especial de Urgencias & Cumpleaños</p>
         <div class="patient-badge">
-          <span class="badge-label">PACIENTE DE HONOR:</span>
+          <span class="badge-label">HOMENAJEADO DE HONOR:</span>
           <span class="badge-name">¡DR. ARMANDO! 🎂🎉</span>
         </div>
       </div>
 
-      <!-- Marco de las Puertas Principales de Urgencias 3D -->
-      <div class="main-entrance-3d">
-        <div class="door-frame-3d">
+      <!-- Fachada Visual 3D del Edificio del Hospital -->
+      <div class="hospital-building-showcase">
+        <div class="hospital-photo-container">
+          <img src="hospital.jpg" alt="Fachada del Hospital Dr. Armando Medical Center" class="hospital-hero-photo">
           
-          <!-- Puerta Izquierda -->
-          <div class="main-sliding-door door-left" id="mainDoorLeft">
-            <div class="glass-pane">
-              <div class="frosted-cross">➕</div>
-              <div class="door-tape">⚠️ PRECAUCIÓN: CUMPLEAÑOS ⚠️</div>
-            </div>
-            <div class="metal-bar"></div>
-          </div>
+          <!-- Efectos luminosos dinámicos sobre la fachada del hospital -->
+          <div class="hospital-photo-overlay"></div>
+          <div class="neon-cross-glow"></div>
+          <div class="ambulance-light-glow"></div>
 
-          <!-- Puerta Derecha -->
-          <div class="main-sliding-door door-right" id="mainDoorRight">
-            <div class="glass-pane">
-              <div class="frosted-cross">➕</div>
-              <div class="door-tape">⚠️ SOBREDOSIS DE ALEGRÍA ⚠️</div>
-            </div>
-            <div class="metal-bar"></div>
+          <div class="hospital-status-tag">
+            <span class="live-dot"></span>
+            <span>EN VIVO • HOSPITAL DE CUMPLEAÑOS ABIERTO</span>
           </div>
-
-          <!-- Interior visible detrás de las puertas -->
-          <div class="entrance-interior-glow">
-            <div class="interior-welcome-msg">
-              <div class="stethoscope-big">🩺</div>
-              <h2>¡BIENVENIDO, ARMANDO!</h2>
-              <p>Tu equipo médico y seres queridos te esperan adentro</p>
-            </div>
-          </div>
-
         </div>
+
+        <!-- Marco de las Puertas Principales de Urgencias 3D -->
+        <div class="entrance-gateway">
+          <div class="gateway-header">
+            <div class="gateway-icon">🚨</div>
+            <div class="gateway-text">
+              <h3>PUERTAS DE ACCESO PRINCIPAL</h3>
+              <p>Toca para abrir las puertas automáticas e ingresar a los consultorios</p>
+            </div>
+          </div>
+
+          <div class="main-entrance-3d">
+            <div class="door-frame-3d">
+              
+              <!-- Puerta Izquierda -->
+              <div class="main-sliding-door door-left" id="mainDoorLeft">
+                <div class="glass-pane">
+                  <div class="frosted-cross">➕</div>
+                  <div class="door-tape">⚠️ PRECAUCIÓN: CUMPLEAÑOS ⚠️</div>
+                </div>
+                <div class="metal-bar"></div>
+              </div>
+
+              <!-- Puerta Derecha -->
+              <div class="main-sliding-door door-right" id="mainDoorRight">
+                <div class="glass-pane">
+                  <div class="frosted-cross">➕</div>
+                  <div class="door-tape">⚠️ SOBREDOSIS DE ALEGRÍA ⚠️</div>
+                </div>
+                <div class="metal-bar"></div>
+              </div>
+
+              <!-- Interior visible detrás de las puertas -->
+              <div class="entrance-interior-glow">
+                <div class="interior-welcome-msg">
+                  <div class="stethoscope-big">🩺</div>
+                  <h2>¡BIENVENIDO AL HOSPITAL, DR. ARMANDO!</h2>
+                  <p>Ingresando al Pabellón de Consultorios y Recuerdos...</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <!-- Botón de Entrada Principal -->
@@ -124,7 +152,7 @@
           <span class="btn-enter-label">INGRESAR AL HOSPITAL • ABRIR PUERTAS</span>
           <span class="btn-enter-pulse"></span>
         </button>
-        <p class="entrance-hint">Toca el botón o las puertas para ingresar a los consultorios</p>
+        <p class="entrance-hint">Toca el botón o las puertas de cristal para ingresar al hospital</p>
       </div>
 
     </div>
@@ -148,279 +176,9 @@
       </p>
     </div>
 
-    <!-- Contenedor del Pasillo con las Puertas de Consultorios -->
+    <!-- Contenedor del Pasillo con las Puertas de Consultorios (14 salas temáticas) -->
     <div class="hallway-corridor" id="doorsContainer">
-
-      <!-- ==================== CONSULTORIO 101 ==================== -->
-      <article class="clinic-room-card" data-room="1">
-        <div class="room-signboard">
-          <span class="room-number">CONSULTORIO 101</span>
-          <span class="room-specialty">Cardiología de Recuerdos 🫀</span>
-        </div>
-
-        <div class="room-door-assembly">
-          <!-- Interior con la foto y mensaje (detrás de la puerta) -->
-          <div class="room-interior">
-            <div class="room-spotlight"></div>
-            
-            <div class="photo-frame">
-              <img src="fotos/foto1.svg" 
-                   alt="Foto 1 - Recuerdos de Corazón" 
-                   class="room-photo" 
-                   data-photo-index="1"
-                   onerror="this.src='fotos/foto1.svg'">
-              <button class="btn-zoom-photo" data-photo="1" title="Ver foto completa">🔍 Ampliar</button>
-            </div>
-
-            <div class="room-details">
-              <span class="room-tag">Momento Inolvidable ❤️</span>
-              <h3 class="room-headline">Un Corazón Lleno de Pasión</h3>
-              <p class="room-text">
-                "Para alguien que pone el alma en todo lo que hace, curando tristezas con una sonrisa y regalando siempre lo mejor de sí. ¡Gracias por cada momento compartido, Armando!"
-              </p>
-              <div class="clinical-chart">
-                <div class="chart-item"><strong>🩺 Diagnóstico:</strong> Gran ser humano</div>
-                <div class="chart-item"><strong>📈 Estado:</strong> 100% admirado</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Puerta 3D Batiente que se abre -->
-          <div class="clinic-door-3d" id="door1" data-room="1">
-            <div class="door-exterior">
-              <div class="door-status-light light-busy">
-                <span class="status-dot"></span>
-                <span class="status-label">TOCA PARA ABRIR</span>
-              </div>
-              <div class="door-window">
-                <div class="window-cross">➕</div>
-                <div class="window-reflection"></div>
-              </div>
-              <div class="door-room-badge">101</div>
-              <div class="door-handle">
-                <div class="handle-bar"></div>
-              </div>
-              <div class="door-push-plate">EMPUJE</div>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- ==================== CONSULTORIO 102 ==================== -->
-      <article class="clinic-room-card" data-room="2">
-        <div class="room-signboard">
-          <span class="room-number">CONSULTORIO 102</span>
-          <span class="room-specialty">Traumatología & Risas 🩺</span>
-        </div>
-
-        <div class="room-door-assembly">
-          <div class="room-interior">
-            <div class="room-spotlight"></div>
-
-            <div class="photo-frame">
-              <img src="fotos/foto2.svg" 
-                   alt="Foto 2 - Anécdotas y Alegría" 
-                   class="room-photo" 
-                   data-photo-index="2"
-                   onerror="this.src='fotos/foto2.svg'">
-              <button class="btn-zoom-photo" data-photo="2" title="Ver foto completa">🔍 Ampliar</button>
-            </div>
-
-            <div class="room-details">
-              <span class="room-tag">Dosis de Alegría 😄</span>
-              <h3 class="room-headline">La Risa es la Mejor Medicina</h3>
-              <p class="room-text">
-                "Cualquier día difícil se alivia con tus ocurrencias, tus buenas charlas y esa energía contagiosa. ¡Que nunca te falten motivos para sonreír como hoy!"
-              </p>
-              <div class="clinical-chart">
-                <div class="chart-item"><strong>🩺 Prescripción:</strong> Risas sin límite</div>
-                <div class="chart-item"><strong>📈 Efecto:</strong> Felicidad garantizada</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="clinic-door-3d" id="door2" data-room="2">
-            <div class="door-exterior">
-              <div class="door-status-light light-busy">
-                <span class="status-dot"></span>
-                <span class="status-label">TOCA PARA ABRIR</span>
-              </div>
-              <div class="door-window">
-                <div class="window-cross">➕</div>
-                <div class="window-reflection"></div>
-              </div>
-              <div class="door-room-badge">102</div>
-              <div class="door-handle">
-                <div class="handle-bar"></div>
-              </div>
-              <div class="door-push-plate">EMPUJE</div>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- ==================== CONSULTORIO 103 ==================== -->
-      <article class="clinic-room-card" data-room="3">
-        <div class="room-signboard">
-          <span class="room-number">CONSULTORIO 103</span>
-          <span class="room-specialty">Quirófano: Operación Éxito 👨‍⚕️</span>
-        </div>
-
-        <div class="room-door-assembly">
-          <div class="room-interior">
-            <div class="room-spotlight"></div>
-
-            <div class="photo-frame">
-              <img src="fotos/foto3.svg" 
-                   alt="Foto 3 - Grandes Metas" 
-                   class="room-photo" 
-                   data-photo-index="3"
-                   onerror="this.src='fotos/foto3.svg'">
-              <button class="btn-zoom-photo" data-photo="3" title="Ver foto completa">🔍 Ampliar</button>
-            </div>
-
-            <div class="room-details">
-              <span class="room-tag">Logros & Orgullo 🏆</span>
-              <h3 class="room-headline">Superando Cada Desafío</h3>
-              <p class="room-text">
-                "Cada meta que te propones la alcanzas con dedicación, temple y sabiduría. Es un inmenso orgullo verte crecer, vencer retos y alcanzar grandes cimas."
-              </p>
-              <div class="clinical-chart">
-                <div class="chart-item"><strong>🩺 Procedimiento:</strong> Victoria total</div>
-                <div class="chart-item"><strong>📈 Pronóstico:</strong> Éxito infinito</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="clinic-door-3d" id="door3" data-room="3">
-            <div class="door-exterior">
-              <div class="door-status-light light-busy">
-                <span class="status-dot"></span>
-                <span class="status-label">TOCA PARA ABRIR</span>
-              </div>
-              <div class="door-window">
-                <div class="window-cross">➕</div>
-                <div class="window-reflection"></div>
-              </div>
-              <div class="door-room-badge">103</div>
-              <div class="door-handle">
-                <div class="handle-bar"></div>
-              </div>
-              <div class="door-push-plate">EMPUJE</div>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- ==================== CONSULTORIO 104 ==================== -->
-      <article class="clinic-room-card" data-room="4">
-        <div class="room-signboard">
-          <span class="room-number">CONSULTORIO 104</span>
-          <span class="room-specialty">Urgencias de Abrazos 🚑</span>
-        </div>
-
-        <div class="room-door-assembly">
-          <div class="room-interior">
-            <div class="room-spotlight"></div>
-
-            <div class="photo-frame">
-              <img src="fotos/foto4.svg" 
-                   alt="Foto 4 - Familia y Cariño" 
-                   class="room-photo" 
-                   data-photo-index="4"
-                   onerror="this.src='fotos/foto4.svg'">
-              <button class="btn-zoom-photo" data-photo="4" title="Ver foto completa">🔍 Ampliar</button>
-            </div>
-
-            <div class="room-details">
-              <span class="room-tag">Amor Incondicional 🫂</span>
-              <h3 class="room-headline">Siempre a Tu Lado</h3>
-              <p class="room-text">
-                "En las buenas y en las no tan buenas, aquí tienes un equipo que te quiere, te apoya y celebra cada año de tu valiosa existencia. ¡Te queremos mucho, Armando!"
-              </p>
-              <div class="clinical-chart">
-                <div class="chart-item"><strong>🩺 Tratamiento:</strong> Dosis masiva de abrazos</div>
-                <div class="chart-item"><strong>📈 Frecuencia:</strong> Por siempre</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="clinic-door-3d" id="door4" data-room="4">
-            <div class="door-exterior">
-              <div class="door-status-light light-busy">
-                <span class="status-dot"></span>
-                <span class="status-label">TOCA PARA ABRIR</span>
-              </div>
-              <div class="door-window">
-                <div class="window-cross">➕</div>
-                <div class="window-reflection"></div>
-              </div>
-              <div class="door-room-badge">104</div>
-              <div class="door-handle">
-                <div class="handle-bar"></div>
-              </div>
-              <div class="door-push-plate">EMPUJE</div>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- ==================== CONSULTORIO 105 ==================== -->
-      <article class="clinic-room-card" data-room="5">
-        <div class="room-signboard">
-          <span class="room-number">CONSULTORIO 105</span>
-          <span class="room-specialty">Farmacia de Deseos & Pastel 🎂</span>
-        </div>
-
-        <div class="room-door-assembly">
-          <div class="room-interior">
-            <div class="room-spotlight"></div>
-
-            <div class="photo-frame">
-              <img src="fotos/foto5.svg" 
-                   alt="Foto 5 - Pide un Deseo" 
-                   class="room-photo" 
-                   data-photo-index="5"
-                   onerror="this.src='fotos/foto5.svg'">
-              <button class="btn-zoom-photo" data-photo="5" title="Ver foto completa">🔍 Ampliar</button>
-            </div>
-
-            <div class="room-details">
-              <span class="room-tag">¡Pide un Deseo! 🎂✨</span>
-              <h3 class="room-headline">Un Brindis por tu Vida</h3>
-              <p class="room-text">
-                "Cierra los ojos, pide tu deseo más grande y sopla las velas con fuerza. Que este nuevo año de vida venga colmado de bendiciones, salud y grandes alegrías."
-              </p>
-              <div class="clinical-chart">
-                <div class="chart-item"><strong>🩺 Receta:</strong> 1 rebanada de pastel ya</div>
-                <div class="chart-item"><strong>📈 Pronóstico:</strong> Un año maravilloso</div>
-              </div>
-              <button id="btnCelebrateAll" class="btn-mini-celebrate">
-                🎉 ¡Lanzar Confeti de Cumpleaños! 🎉
-              </button>
-            </div>
-          </div>
-
-          <div class="clinic-door-3d" id="door5" data-room="5">
-            <div class="door-exterior">
-              <div class="door-status-light light-busy">
-                <span class="status-dot"></span>
-                <span class="status-label">TOCA PARA ABRIR</span>
-              </div>
-              <div class="door-window">
-                <div class="window-cross">➕</div>
-                <div class="window-reflection"></div>
-              </div>
-              <div class="door-room-badge">105</div>
-              <div class="door-handle">
-                <div class="handle-bar"></div>
-              </div>
-              <div class="door-push-plate">EMPUJE</div>
-            </div>
-          </div>
-        </div>
-      </article>
-
+      <!-- Los 14 consultorios médicos con las fotos reales de Armando se generan dinámicamente con script.js -->
     </div>
 
     <!-- Banner Inferior de Compartir y Celebrar -->
@@ -550,6 +308,6 @@
   <audio id="ambientAudio" preload="none"></audio>
 
   <!-- Script principal del hospital -->
-  <script src="script.js?v=armando-v1"></script>
+  <script src="script.js?v=armando-v2"></script>
 </body>
 </html>

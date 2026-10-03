@@ -6,7 +6,7 @@
  */
 
 // ========================================================
-// 1. CONFIGURACIÓN DE LAS FOTOS Y CONSULTORIOS
+// 1. CONFIGURACIÓN DE LAS FOTOS Y CONSULTORIOS (14 SALAS)
 // ========================================================
 const ROOMS_DATA = [
   {
@@ -16,8 +16,11 @@ const ROOMS_DATA = [
     tag: "Momento Inolvidable ❤️",
     title: "Un Corazón Lleno de Pasión",
     desc: "Para alguien que pone el alma en todo lo que hace, curando tristezas con una sonrisa y regalando siempre lo mejor de sí. ¡Gracias por cada momento compartido, Armando!",
-    imageDefault: "fotos/foto1.svg",
-    imageCustom: "fotos/foto1.jpg"
+    image: "fotos/foto1.jpg",
+    chart: [
+      { label: "Diagnóstico", val: "Gran ser humano" },
+      { label: "Estado", val: "100% admirado" }
+    ]
   },
   {
     id: 2,
@@ -26,8 +29,11 @@ const ROOMS_DATA = [
     tag: "Dosis de Alegría 😄",
     title: "La Risa es la Mejor Medicina",
     desc: "Cualquier día difícil se alivia con tus ocurrencias, tus buenas charlas y esa energía contagiosa. ¡Que nunca te falten motivos para sonreír como hoy!",
-    imageDefault: "fotos/foto2.svg",
-    imageCustom: "fotos/foto2.jpg"
+    image: "fotos/foto2.jpg",
+    chart: [
+      { label: "Prescripción", val: "Risas sin límite" },
+      { label: "Efecto", val: "Felicidad garantizada" }
+    ]
   },
   {
     id: 3,
@@ -36,8 +42,11 @@ const ROOMS_DATA = [
     tag: "Logros & Orgullo 🏆",
     title: "Superando Cada Desafío",
     desc: "Cada meta que te propones la alcanzas con dedicación, temple y sabiduría. Es un inmenso orgullo verte crecer, vencer retos y alcanzar grandes cimas.",
-    imageDefault: "fotos/foto3.svg",
-    imageCustom: "fotos/foto3.jpg"
+    image: "fotos/foto3.jpg",
+    chart: [
+      { label: "Procedimiento", val: "Victoria total" },
+      { label: "Pronóstico", val: "Éxito infinito" }
+    ]
   },
   {
     id: 4,
@@ -46,18 +55,142 @@ const ROOMS_DATA = [
     tag: "Amor Incondicional 🫂",
     title: "Siempre a Tu Lado",
     desc: "En las buenas y en las no tan buenas, aquí tienes un equipo que te quiere, te apoya y celebra cada año de tu valiosa existencia. ¡Te queremos mucho, Armando!",
-    imageDefault: "fotos/foto4.svg",
-    imageCustom: "fotos/foto4.jpg"
+    image: "fotos/foto4.jpg",
+    chart: [
+      { label: "Tratamiento", val: "Dosis masiva de abrazos" },
+      { label: "Frecuencia", val: "Por siempre" }
+    ]
   },
   {
     id: 5,
     number: "105",
+    specialty: "Pediatría & Juventud Eterna 🧸",
+    tag: "Espíritu Alegre ✨",
+    title: "El Alma de la Fiesta",
+    desc: "Conservar la alegría, el asombro y las ganas de disfrutar de la vida es tu mayor talento. ¡Que tu niño interior siga celebrando la vida con emoción!",
+    image: "fotos/foto5.jpg",
+    chart: [
+      { label: "Vitalidad", val: "Inagotable" },
+      { label: "Evolución", val: "Brillante" }
+    ]
+  },
+  {
+    id: 6,
+    number: "106",
+    specialty: "Neurología de Grandes Ideas 🧠",
+    tag: "Sabiduría & Enfoque 💡",
+    title: "Mente Brillante",
+    desc: "Tu capacidad para aconsejar, pensar con serenidad y encontrar soluciones donde otros ven problemas te hace un profesional y amigo excepcional.",
+    image: "fotos/foto6.jpg",
+    chart: [
+      { label: "Capacidad", val: "Extraordinaria" },
+      { label: "Consejo", val: "Confiar siempre en ti" }
+    ]
+  },
+  {
+    id: 7,
+    number: "107",
+    specialty: "Laboratorio de Recuerdos 🔬",
+    tag: "Momentos Únicos 📸",
+    title: "La Fórmula de la Amistad",
+    desc: "Analizando cada recuerdo, la muestra arroja un 100% de lealtad, risas compartidas y momentos que se guardan en el corazón para siempre.",
+    image: "fotos/foto7.jpg",
+    chart: [
+      { label: "Resultado", val: "Amistad pura" },
+      { label: "Pureza", val: "100%" }
+    ]
+  },
+  {
+    id: 8,
+    number: "108",
+    specialty: "Sala de Terapia & Aventuras ⛰️",
+    tag: "Caminos Recorridos 🗺️",
+    title: "Nuevos Horizontes",
+    desc: "Que cada viaje, cada paso y cada nueva experiencia te sigan llenando de anécdotas inolvidables. ¡La vida es tu mejor paciente para llenar de vida!",
+    image: "fotos/foto8.jpg",
+    chart: [
+      { label: "Destino", val: "Nuevas victorias" },
+      { label: "Estado", val: "Listo para triunfar" }
+    ]
+  },
+  {
+    id: 9,
+    number: "109",
+    specialty: "Radiología: Lo Esencial 🩻",
+    tag: "Transparencia & Bondad 💎",
+    title: "Lo que Hay en tu Interior",
+    desc: "No hace falta una radiografía para ver el corazón tan grande que tienes. Eres una persona noble, transparente y con un valor incalculable.",
+    image: "fotos/foto9.jpg",
+    chart: [
+      { label: "Hallazgo", val: "Corazón gigante" },
+      { label: "Calidad", val: "Insuperable" }
+    ]
+  },
+  {
+    id: 10,
+    number: "110",
+    specialty: "Nutrición & Brindis 🍷",
+    tag: "¡A Festejar! 🥂",
+    title: "Brindando por tu Salud",
+    desc: "Hoy se vale celebrar con todo: buena comida, brindis por tus éxitos y el cariño de quienes te admiramos profundamente. ¡Salud por ti, Armando!",
+    image: "fotos/foto10.jpg",
+    chart: [
+      { label: "Dieta de hoy", val: "Pastel y alegría" },
+      { label: "Calorías", val: "Pura felicidad" }
+    ]
+  },
+  {
+    id: 11,
+    number: "111",
+    specialty: "Oftalmología: Mirando al Futuro 👓",
+    tag: "Grandes Proyectos 🚀",
+    title: "Una Visión Triunfadora",
+    desc: "Que tu mirada siempre esté puesta en lo alto, porque tienes todo el potencial, la disciplina y el talento para llegar tan lejos como sueñes.",
+    image: "fotos/foto11.jpg",
+    chart: [
+      { label: "Agudeza", val: "20/20 hacia el éxito" },
+      { label: "Perspectiva", val: "Imparable" }
+    ]
+  },
+  {
+    id: 12,
+    number: "112",
+    specialty: "Cuidados Intensivos de Cariño 🏥",
+    tag: "Equipo Médico Unido 🩺",
+    title: "El Orgullo de la Familia",
+    desc: "Tenerte en nuestras vidas es un regalo diario. Tu dedicación, tu esfuerzo y tu forma de ser llenan de orgullo a toda la familia y a tus amigos.",
+    image: "fotos/foto12.jpg",
+    chart: [
+      { label: "Apoyo", val: "Incondicional" },
+      { label: "Amor", val: "Máxima potencia" }
+    ]
+  },
+  {
+    id: 13,
+    number: "113",
+    specialty: "Área VIP: Paciente Distinguido ⭐",
+    tag: "Caballero Ejemplar 👔",
+    title: "Una Persona Inolvidable",
+    desc: "Porque personas como tú dejan una huella imborrable en el corazón de todos los que tienen la dicha de conocerte. ¡Feliz cumpleaños, campeón!",
+    image: "fotos/foto13.jpg",
+    chart: [
+      { label: "Estatus", val: "Inigualable" },
+      { label: "Puntuación", val: "⭐⭐⭐⭐⭐" }
+    ]
+  },
+  {
+    id: 14,
+    number: "114",
     specialty: "Farmacia de Deseos & Pastel 🎂",
     tag: "¡Pide un Deseo! 🎂✨",
     title: "Un Brindis por tu Vida",
     desc: "Cierra los ojos, pide tu deseo más grande y sopla las velas con fuerza. Que este nuevo año de vida venga colmado de bendiciones, salud y grandes alegrías.",
-    imageDefault: "fotos/foto5.svg",
-    imageCustom: "fotos/foto5.jpg"
+    image: "fotos/foto14.jpg",
+    isCakeRoom: true,
+    chart: [
+      { label: "Receta", val: "1 rebanada de pastel ya" },
+      { label: "Pronóstico", val: "Un año maravilloso" }
+    ]
   }
 ];
 
@@ -70,14 +203,76 @@ let audioContext = null;
 // 2. INICIALIZACIÓN AL CARGAR LA PÁGINA
 // ========================================================
 document.addEventListener('DOMContentLoaded', () => {
+  renderClinicRooms();
   initEntranceDoors();
   initClinicDoors();
   initPrescriptionModal();
   initLightboxModal();
   initAudioSystem();
   initActionButtons();
-  initAutoDetectPhotos();
 });
+
+// Renderizar dinámicamente los 14 consultorios del hospital
+function renderClinicRooms() {
+  const container = document.getElementById('doorsContainer');
+  if (!container) return;
+
+  container.innerHTML = ROOMS_DATA.map(room => `
+    <article class="clinic-room-card" data-room="${room.id}">
+      <div class="room-signboard">
+        <span class="room-number">CONSULTORIO ${room.number}</span>
+        <span class="room-specialty">${room.specialty}</span>
+      </div>
+
+      <div class="room-door-assembly">
+        <div class="room-interior">
+          <div class="room-spotlight"></div>
+          
+          <div class="photo-frame">
+            <img src="${room.image}" 
+                 alt="Foto ${room.id} - ${room.title}" 
+                 class="room-photo" 
+                 data-photo-index="${room.id}"
+                 onerror="this.src='fotos/foto${((room.id - 1) % 5) + 1}.svg'">
+            <button class="btn-zoom-photo" data-photo="${room.id}" title="Ver foto completa">🔍 Ampliar</button>
+          </div>
+
+          <div class="room-details">
+            <span class="room-tag">${room.tag}</span>
+            <h3 class="room-headline">${room.title}</h3>
+            <p class="room-text">"${room.desc}"</p>
+            <div class="clinical-chart">
+              ${room.chart.map(c => `<div class="chart-item"><strong>🩺 ${c.label}:</strong> ${c.val}</div>`).join('')}
+            </div>
+            ${room.isCakeRoom ? `
+              <button id="btnCelebrateAll" class="btn-mini-celebrate">
+                🎉 ¡Lanzar Confeti de Cumpleaños! 🎉
+              </button>
+            ` : ''}
+          </div>
+        </div>
+
+        <div class="clinic-door-3d" id="door${room.id}" data-room="${room.id}">
+          <div class="door-exterior">
+            <div class="door-status-light light-busy">
+              <span class="status-dot"></span>
+              <span class="status-label">TOCA PARA ABRIR</span>
+            </div>
+            <div class="door-window">
+              <div class="window-cross">➕</div>
+              <div class="window-reflection"></div>
+            </div>
+            <div class="door-room-badge">${room.number}</div>
+            <div class="door-handle">
+              <div class="handle-bar"></div>
+            </div>
+            <div class="door-push-plate">EMPUJE</div>
+          </div>
+        </div>
+      </div>
+    </article>
+  `).join('');
+}
 
 // ========================================================
 // 3. PUERTAS PRINCIPALES DE ENTRADA (FACHADA 3D)
@@ -219,7 +414,7 @@ function initLightboxModal() {
     
     // Obtener la imagen actual renderizada en el consultorio
     const currentImg = document.querySelector(`.room-photo[data-photo-index="${index}"]`);
-    imgEl.src = currentImg ? currentImg.src : room.imageDefault;
+    imgEl.src = currentImg ? currentImg.src : room.image;
     
     titleEl.textContent = `Consultorio ${room.number}: ${room.title}`;
     descEl.textContent = room.desc;

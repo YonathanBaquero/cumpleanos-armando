@@ -15,8 +15,11 @@
   <!-- Librería ligera de confeti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
+  <!-- Preload prioritario del muñeco 3D para carga instantánea en móviles -->
+  <link rel="preload" as="image" href="armando-doctor-3d.webp" type="image/webp" fetchpriority="high">
+
   <!-- Estilos del Hospital -->
-  <link rel="stylesheet" href="styles.css?v=armando-v10">
+  <link rel="stylesheet" href="styles.css?v=armando-v11">
 </head>
 <body>
 
@@ -120,7 +123,10 @@
               </div>
               <div class="mascot-figure-stage">
                 <div class="mascot-halo"></div>
-                <img src="armando-doctor-3d.png" alt="Muñeco 3D del Dr. Armando Médico" class="doctor-mascot-doll" id="doctorMascotImg">
+                <picture>
+                  <source srcset="armando-doctor-3d.webp" type="image/webp">
+                  <img src="armando-doctor-3d.png" alt="Muñeco 3D del Dr. Armando Médico" class="doctor-mascot-doll" id="doctorMascotImg" width="380" height="508" fetchpriority="high" loading="eager" decoding="async">
+                </picture>
                 <div class="mascot-pedestal-shadow"></div>
               </div>
               <div class="mascot-nametag">
@@ -332,6 +338,6 @@
   <audio id="ambientAudio" preload="none"></audio>
 
   <!-- Script principal del hospital -->
-  <script src="script.js?v=armando-v10"></script>
+  <script src="script.js?v=armando-v11"></script>
 </body>
 </html>

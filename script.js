@@ -1011,33 +1011,50 @@ function initPrescriptionWall() {
   const btnCancelConfig = document.getElementById('btnCancelConfig');
   const btnSaveConfig = document.getElementById('btnSaveConfig');
   const scriptUrlInput = document.getElementById('scriptUrlInput');
+  const btnClearPrescriptions = document.getElementById('btnClearPrescriptions');
+
+  // Modal para capturar nombre de la persona que da Me Gusta
+  const modalLikeAuthor = document.getElementById('modalLikeAuthor');
+  const formLikeAuthor = document.getElementById('formLikeAuthor');
+  const inputLikeAuthorName = document.getElementById('inputLikeAuthorName');
+  const btnCloseLikeModal = document.getElementById('btnCloseLikeModal');
+  const btnCancelLike = document.getElementById('btnCancelLike');
+  let pendingLikeRxId = null;
 
   // Obtener URL de Web App de Google Sheets guardada localmente
   const getGoogleScriptUrl = () => {
     return localStorage.getItem('google_script_muro_jose_url') || localStorage.getItem('google_script_muro_url') || '';
   };
 
-  // Muro limpio sin recetas de ejemplo (inicio en blanco colaborativo)
-  const INITIAL_PRESCRIPTIONS = [];
+  // Clave de almacenamiento v3 para garantizar inicio en 0 recetas
+  const STORAGE_KEY = 'drJose_wall_prescriptions_v3';
 
-  // Cargar recetas del almacenamiento local y descartar notas de prueba anteriores
+  // Purgar versiones antiguas de caché para dejar el muro completamente en 0
+  try {
+    localStorage.removeItem('drJose_wall_prescriptions');
+    localStorage.removeItem('drJose_wall_prescriptions_v2');
+  } catch (e) {}
+
+  // Cargar recetas del almacenamiento local
   let prescriptions = [];
   try {
-    const saved = localStorage.getItem('drJose_wall_prescriptions');
+    const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved);
       if (Array.isArray(parsed)) {
-        prescriptions = parsed.filter(rx => rx && !['RX-1001', 'RX-1002', 'RX-1003'].includes(rx.id));
+        prescriptions = parsed.filter(rx => rx && rx.id && rx.treatment && !['RX-1001', 'RX-1002', 'RX-1003'].includes(rx.id));
       }
     }
   } catch (e) {
     prescriptions = [];
   }
 
-  // Guardar estado limpio en caso de haber purgado notas de prueba
-  try {
-    localStorage.setItem('drJose_wall_prescriptions', JSON.stringify(prescriptions));
-  } catch (e) {}
+  // Guardar estado local
+  const saveLocalPrescriptions = () => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(prescriptions));
+    } catch (e) {}
+  };
 
   // Detectar si se recibió una receta en la URL (?rx=...)
   let highlightedRxId = null;
@@ -1052,9 +1069,7 @@ function initPrescriptionWall() {
         const exists = prescriptions.some(p => p.id === incomingRx.id);
         if (!exists) {
           prescriptions.unshift(incomingRx);
-          try {
-            localStorage.setItem('drJose_wall_prescriptions', JSON.stringify(prescriptions));
-          } catch (e) {}
+          saveLocalPrescriptions();
           sendPrescriptionToGoogleSheets(incomingRx);
         }
         highlightedRxId = incomingRx.id;
@@ -1153,6 +1168,146 @@ function initPrescriptionWall() {
     });
   }
 
+  // Botón para vaciar recetas locales (dejar en 0 para pruebas)
+  if (btnClearPrescriptions) {
+    btnClearPrescriptions.addEventListener('click', () => {
+      if (confirm('¿Deseas vaciar todas las recetas guardadas localmente y dejar el muro en 0 para hacer pruebas?')) {
+        localStorage.removeItem(STORAGE_KEY);
+        prescriptions = [];
+        renderWall();
+        alert('✅ Muro reiniciado a 0 recetas. ¡Listo para hacer tu prueba!');
+        closeConfigModal();
+      }
+    });
+  }
+
+  // ========================================================
+  // CONTROL DEL MODAL PARA CAPTURAR NOMBRE EN "ME GUSTA"
+  // ========================================================
+  const closeLikeModal = () => {
+    if (modalLikeAuthor) modalLikeAuthor.classList.remove('open');
+    pendingLikeRxId = null;
+  };
+
+  if (btnCloseLikeModal) btnCloseLikeModal.addEventListener('click', closeLikeModal);
+  if (btnCancelLike) btnCancelLike.addEventListener('click', closeLikeModal);
+  if (modalLikeAuthor) {
+    modalLikeAuthor.addEventListener('click', (e) => {
+      if (e.target === modalLikeAuthor) closeLikeModal();
+    });
+  }
+
+  if (formLikeAuthor) {
+    formLikeAuthor.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nameVal = inputLikeAuthorName ? inputLikeAuthorName.value.trim() : '';
+      if (!nameVal) return;
+      localStorage.setItem('drJose_guest_name', nameVal);
+      closeLikeModal();
+
+      if (pendingLikeRxId) {
+        const item = prescriptions.find(p => p.id === pendingLikeRxId);
+        if (item) {
+          toggleLikeForUser(item, nameVal);
+        }
+      }
+    });
+  }
+
+  // Manejar clic en Me Gusta (pedir nombre si no se conoce)
+  const handleLikeClick = (id) => {
+    const item = prescriptions.find(p => p.id === id);
+    if (!item) return;
+
+    let myName = localStorage.getItem('drJose_guest_name') || '';
+    if (!myName) {
+      const senderInput = document.getElementById('doctorSenderName');
+      if (senderInput && senderInput.value.trim()) {
+        myName = senderInput.value.trim();
+        localStorage.setItem('drJose_guest_name', myName);
+      }
+    }
+
+    if (!myName) {
+      pendingLikeRxId = id;
+      if (modalLikeAuthor) modalLikeAuthor.classList.add('open');
+      if (inputLikeAuthorName) {
+        inputLikeAuthorName.value = '';
+        setTimeout(() => inputLikeAuthorName.focus(), 200);
+      }
+      return;
+    }
+
+    toggleLikeForUser(item, myName);
+  };
+
+  // Alternar dar/quitar Me Gusta para un usuario específico
+  const toggleLikeForUser = (item, userName) => {
+    if (!Array.isArray(item.likedBy)) {
+      item.likedBy = [];
+    }
+
+    const idx = item.likedBy.indexOf(userName);
+    if (idx > -1) {
+      // Quitar like
+      item.likedBy.splice(idx, 1);
+    } else {
+      // Agregar like
+      item.likedBy.push(userName);
+      triggerHospitalCelebrationConfetti();
+      playMedicalBeep();
+    }
+
+    item.likes = item.likedBy.length;
+    saveLocalPrescriptions();
+    renderWall();
+
+    // Sincronizar con Google Sheets en tiempo real
+    sendLikeToGoogleSheets(item.id, userName);
+  };
+
+  // Enviar Me Gusta a Google Sheets
+  async function sendLikeToGoogleSheets(rxId, userName) {
+    const scriptUrl = getGoogleScriptUrl();
+    if (!scriptUrl) return;
+
+    try {
+      await fetch(scriptUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'text/plain;charset=utf-8'
+        },
+        body: JSON.stringify({
+          action: 'like',
+          id: rxId,
+          userName: userName
+        })
+      });
+    } catch (err) {
+      console.warn('Error al sincronizar like con Google Sheets:', err);
+    }
+  }
+
+  // Formatear texto amigable de quién dio Me Gusta
+  const formatLikedByText = (likedBy, isLikedByMe, myName) => {
+    if (!likedBy || likedBy.length === 0) return '';
+    const count = likedBy.length;
+
+    if (isLikedByMe) {
+      if (count === 1) return 'A ti te gusta esta receta médica';
+      const others = likedBy.filter(n => n !== myName);
+      if (others.length === 1) return `A ti y a <strong>${escapeHtml(others[0])}</strong> les gusta`;
+      if (others.length === 2) return `A ti, a <strong>${escapeHtml(others[0])}</strong> y a <strong>${escapeHtml(others[1])}</strong> les gusta`;
+      return `A ti, a <strong>${escapeHtml(others[0])}</strong> y a <strong>${others.length - 1} personas más</strong> les gusta`;
+    } else {
+      if (count === 1) return `Le gusta a <strong>${escapeHtml(likedBy[0])}</strong>`;
+      if (count === 2) return `Les gusta a <strong>${escapeHtml(likedBy[0])}</strong> y <strong>${escapeHtml(likedBy[1])}</strong>`;
+      if (count === 3) return `Les gusta a <strong>${escapeHtml(likedBy[0])}</strong>, <strong>${escapeHtml(likedBy[1])}</strong> y <strong>${escapeHtml(likedBy[2])}</strong>`;
+      return `Les gusta a <strong>${escapeHtml(likedBy[0])}</strong>, <strong>${escapeHtml(likedBy[1])}</strong> y <strong>${count - 2} personas más</strong>`;
+    }
+  };
+
   // Renderizar muro
   const renderWall = () => {
     if (countBadge) countBadge.textContent = prescriptions.length;
@@ -1166,8 +1321,21 @@ function initPrescriptionWall() {
 
     if (emptyState) emptyState.style.display = 'none';
 
+    const myName = localStorage.getItem('drJose_guest_name') || '';
+
     grid.innerHTML = prescriptions.map(rx => {
       const isHighlighted = rx.id === highlightedRxId;
+      const likedByList = Array.isArray(rx.likedBy) ? rx.likedBy : [];
+      const isLikedByMe = myName && likedByList.includes(myName);
+      const likesCount = likedByList.length || (rx.likes || 0);
+
+      const likedByHtml = likedByList.length > 0 ? `
+        <div class="rx-card-liked-by">
+          <span class="liked-by-icon">❤️</span>
+          <span class="liked-by-text">${formatLikedByText(likedByList, isLikedByMe, myName)}</span>
+        </div>
+      ` : '';
+
       return `
         <article class="prescription-note-card ${isHighlighted ? 'highlighted-new' : ''}" id="card-${rx.id}" data-id="${rx.id}">
           <div class="rx-card-clip"></div>
@@ -1235,32 +1403,25 @@ function initPrescriptionWall() {
           </div>
 
           <div class="rx-card-actions">
-            <button class="btn-rx-like" data-id="${rx.id}" title="Dar cariño a esta receta">
-              <span class="like-icon">❤️</span>
-              <span class="like-count">${rx.likes || 1}</span>
+            <button class="btn-rx-like ${isLikedByMe ? 'liked' : ''}" data-id="${rx.id}" title="Dar cariño a esta receta">
+              <span class="like-icon">${isLikedByMe ? '❤️' : '🤍'}</span>
+              <span class="like-count">${likesCount}</span>
             </button>
             <button class="btn-rx-share-item" data-id="${rx.id}" title="Compartir esta receta por WhatsApp">
               <span>💬 Compartir</span>
             </button>
           </div>
+
+          ${likedByHtml}
         </article>
       `;
     }).join('');
 
-    // Listener para likes
+    // Listener para likes (con identificación de autor)
     grid.querySelectorAll('.btn-rx-like').forEach(btn => {
       btn.addEventListener('click', () => {
         const id = btn.getAttribute('data-id');
-        const item = prescriptions.find(p => p.id === id);
-        if (item) {
-          item.likes = (item.likes || 1) + 1;
-          btn.querySelector('.like-count').textContent = item.likes;
-          btn.classList.add('liked');
-          try {
-            localStorage.setItem('drJose_wall_prescriptions', JSON.stringify(prescriptions));
-          } catch (e) {}
-          playMedicalBeep();
-        }
+        handleLikeClick(id);
       });
     });
 
@@ -1350,6 +1511,9 @@ function initPrescriptionWall() {
     const today = new Date();
     const dateStr = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
 
+    // Guardar nombre del autor para no tener que pedírselo al dar me gusta
+    localStorage.setItem('drJose_guest_name', sender);
+
     const newRx = {
       id: newId,
       sender: sender,
@@ -1358,13 +1522,12 @@ function initPrescriptionWall() {
       treatment: treatment,
       dose: dose,
       date: dateStr,
-      likes: 1
+      likes: 0,
+      likedBy: []
     };
 
     prescriptions.unshift(newRx);
-    try {
-      localStorage.setItem('drJose_wall_prescriptions', JSON.stringify(prescriptions));
-    } catch (e) {}
+    saveLocalPrescriptions();
 
     // Enviar inmediatamente a Google Sheets
     sendPrescriptionToGoogleSheets(newRx);
@@ -1428,7 +1591,8 @@ function initPrescriptionWall() {
           diagnosis: rx.diagnosis,
           treatment: rx.treatment,
           dose: rx.dose,
-          likes: rx.likes || 1
+          likes: rx.likes || 0,
+          likedBy: rx.likedBy || []
         })
       });
     } catch (err) {
@@ -1453,23 +1617,31 @@ function initPrescriptionWall() {
         const result = await response.json();
         if (result.status === 'success' && Array.isArray(result.data)) {
           const remoteRxs = result.data
-            .map((row, idx) => ({
-              id: String(row.id || `remote_${idx}`),
-              sender: row.sender || row.name || 'Anónimo',
-              relationship: row.relationship || '',
-              diagnosis: row.diagnosis || 'Sobredosis de Alegría',
-              treatment: row.treatment || row.message || '',
-              dose: row.dose || '',
-              date: row.timestamp || 'Hoy',
-              likes: Number(row.likes) || 1
-            }))
+            .map((row, idx) => {
+              const likedBy = Array.isArray(row.likedBy)
+                ? row.likedBy
+                : (row.likedBy ? String(row.likedBy).split(',').map(s => s.trim()).filter(Boolean) : []);
+              const likes = Number(row.likes) || (likedBy.length || 0);
+
+              return {
+                id: String(row.id || `remote_${idx}`),
+                sender: row.sender || row.name || 'Anónimo',
+                relationship: row.relationship || '',
+                diagnosis: row.diagnosis || 'Sobredosis de Alegría',
+                treatment: row.treatment || row.message || '',
+                dose: row.dose || '',
+                date: row.timestamp || 'Hoy',
+                likes: likes,
+                likedBy: likedBy
+              };
+            })
             .filter(rx => rx.sender && rx.treatment && !['RX-1001', 'RX-1002', 'RX-1003'].includes(rx.id));
 
           // Deduplicación inteligente: incorporar las de Google Sheets y notas locales
           const merged = [];
           const seenIds = new Set();
 
-          // Primero las de Google Sheets (fuente de verdad oficial)
+          // Primero las de Google Sheets (fuente de verdad oficial con likes y nombres)
           remoteRxs.forEach(r => {
             if (!seenIds.has(r.id)) {
               seenIds.add(r.id);
@@ -1486,9 +1658,7 @@ function initPrescriptionWall() {
           });
 
           prescriptions = merged;
-          try {
-            localStorage.setItem('drJose_wall_prescriptions', JSON.stringify(prescriptions));
-          } catch (e) {}
+          saveLocalPrescriptions();
           renderWall();
         }
       }

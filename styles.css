@@ -2823,6 +2823,40 @@ body {
   transform: scale(1.04);
 }
 
+.rx-card-liked-by {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  color: #166534;
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.35;
+  animation: fadeIn 0.25s ease;
+}
+
+.rx-card-liked-by .liked-by-icon {
+  font-size: 0.95rem;
+  flex-shrink: 0;
+  line-height: 1.2;
+}
+
+.rx-card-liked-by .liked-by-text strong {
+  font-weight: 700;
+  color: #15803d;
+}
+
+.btn-clear-prescriptions:hover {
+  background: #fecaca !important;
+  border-color: #f87171 !important;
+  color: #b91c1c !important;
+  transform: translateY(-1px);
+}
+
 /* ========================================================
    MODAL DE NUEVA RECETA MÉDICA (PRESCRIPTION FORM)
    ======================================================== */

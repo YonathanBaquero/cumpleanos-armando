@@ -21,8 +21,8 @@
  * 10. Ve a tu página del muro (muro.html), toca el icono de engranaje (⚙️) arriba a la derecha,
  *     pega la URL y haz clic en "Guardar y Conectar".
  * 
- * ¡Listo! A partir de ese momento, cada vez que cualquier persona entre desde su celular
- * y deje una receta médica, se guardará automáticamente en tu hoja de cálculo y se verá en el muro!
+ * ¡Listo! Cada vez que cualquier persona entre desde su celular y deje una receta
+ * o le dé Me Gusta con su nombre, se guardará en tu hoja de cálculo y se verá en tiempo real!
  * ============================================================================
  */
 
@@ -36,6 +36,13 @@ function doGet(e) {
     for (var i = 1; i < rows.length; i++) {
       var r = rows[i];
       if (r[0] || r[2] || r[5]) { // Si tiene ID, Nombre o Mensaje
+        var likedByStr = String(r[8] || '');
+        var likedBy = likedByStr ? likedByStr.split(',').map(function(s){ return s.trim(); }).filter(Boolean) : [];
+        var likesCount = Number(r[7]);
+        if (isNaN(likesCount) || likesCount < likedBy.length) {
+          likesCount = likedBy.length;
+        }
+
         prescriptions.push({
           id: String(r[0] || ('rx_' + i)),
           timestamp: String(r[1] || ''),
@@ -44,7 +51,8 @@ function doGet(e) {
           diagnosis: String(r[4] || 'Sobredosis de Cariño'),
           treatment: String(r[5] || ''),
           dose: String(r[6] || ''),
-          likes: Number(r[7]) || 0
+          likes: likesCount,
+          likedBy: likedBy
         });
       }
     }
@@ -69,10 +77,64 @@ function doGet(e) {
 function doPost(e) {
   try {
     var sheet = getOrCreateSheet();
-    
     var contents = e.postData.contents;
     var data = JSON.parse(contents);
-    
+
+    // ========================================================
+    // CASO 1: DAR O QUITAR "ME GUSTA" CON EL NOMBRE DE LA PERSONA
+    // ========================================================
+    if (data.action === 'like') {
+      var rxId = String(data.id || '');
+      var userName = String(data.userName || data.name || '').trim();
+      var rows = sheet.getDataRange().getValues();
+      var targetRowIndex = -1;
+
+      for (var i = 1; i < rows.length; i++) {
+        if (String(rows[i][0]) === rxId) {
+          targetRowIndex = i + 1; // 1-indexed para getRange
+          break;
+        }
+      }
+
+      if (targetRowIndex > 0) {
+        var currentLikedByStr = String(sheet.getRange(targetRowIndex, 9).getValue() || '');
+        var likedByArr = currentLikedByStr ? currentLikedByStr.split(',').map(function(s){ return s.trim(); }).filter(Boolean) : [];
+
+        if (userName) {
+          var userIndex = likedByArr.indexOf(userName);
+          if (userIndex > -1) {
+            // Si ya le había dado me gusta, se lo quitamos
+            likedByArr.splice(userIndex, 1);
+          } else {
+            // Si es nuevo me gusta, lo agregamos a la lista
+            likedByArr.push(userName);
+          }
+        }
+
+        var newLikes = likedByArr.length;
+        var newLikedByStr = likedByArr.join(', ');
+
+        sheet.getRange(targetRowIndex, 8).setValue(newLikes);
+        sheet.getRange(targetRowIndex, 9).setValue(newLikedByStr);
+
+        return ContentService.createTextOutput(JSON.stringify({
+          status: 'success',
+          action: 'like',
+          id: rxId,
+          likes: newLikes,
+          likedBy: likedByArr
+        })).setMimeType(ContentService.MimeType.JSON);
+      } else {
+        return ContentService.createTextOutput(JSON.stringify({
+          status: 'error',
+          message: 'Receta no encontrada para actualizar like'
+        })).setMimeType(ContentService.MimeType.JSON);
+      }
+    }
+
+    // ========================================================
+    // CASO 2: GUARDAR NUEVA RECETA MÉDICA
+    // ========================================================
     var id = data.id || ('rx_' + new Date().getTime());
     var timestamp = Utilities.formatDate(new Date(), "America/Bogota", "dd/MM/yyyy, hh:mm a");
     var sender = data.sender || data.name || 'Anónimo';
@@ -81,10 +143,11 @@ function doPost(e) {
     var treatment = data.treatment || data.message || '';
     var dose = data.dose || '';
     var likes = Number(data.likes) || 0;
-    
+    var likedByStr = Array.isArray(data.likedBy) ? data.likedBy.join(', ') : (data.likedBy || '');
+
     // Agregar la nueva fila en la hoja de cálculo
-    sheet.appendRow([id, timestamp, sender, relationship, diagnosis, treatment, dose, likes]);
-    
+    sheet.appendRow([id, timestamp, sender, relationship, diagnosis, treatment, dose, likes, likedByStr]);
+
     return ContentService.createTextOutput(JSON.stringify({
       status: 'success',
       message: 'Receta médica guardada exitosamente en Google Sheets',
@@ -96,10 +159,11 @@ function doPost(e) {
         diagnosis: diagnosis,
         treatment: treatment,
         dose: dose,
-        likes: likes
+        likes: likes,
+        likedBy: likedByStr ? likedByStr.split(',').map(function(s){ return s.trim(); }) : []
       }
     })).setMimeType(ContentService.MimeType.JSON);
-    
+
   } catch (err) {
     return ContentService.createTextOutput(JSON.stringify({
       status: 'error',
@@ -112,11 +176,26 @@ function getOrCreateSheet() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = ss.getActiveSheet();
   
-  // Si la hoja está totalmente vacía, crear los encabezados
+  // Si la hoja está totalmente vacía, crear los 9 encabezados
   if (sheet.getLastRow() === 0) {
-    sheet.appendRow(['ID', 'Fecha y Hora', 'Médico Remitente', 'Parentesco / Especialidad', 'Diagnóstico', 'Tratamiento (Mensaje)', 'Dosis / Posología', 'Likes']);
-    sheet.getRange(1, 1, 1, 8).setFontWeight('bold').setBackground('#bae6fd');
+    sheet.appendRow([
+      'ID', 
+      'Fecha y Hora', 
+      'Médico Remitente', 
+      'Parentesco / Especialidad', 
+      'Diagnóstico', 
+      'Tratamiento (Mensaje)', 
+      'Dosis / Posología', 
+      'Likes', 
+      'Personas Me Gusta'
+    ]);
+    sheet.getRange(1, 1, 1, 9).setFontWeight('bold').setBackground('#bae6fd');
     sheet.setFrozenRows(1);
+  } else {
+    // Si la hoja ya tiene encabezados de 8 columnas, asegurarse de agregar el encabezado 9
+    if (sheet.getLastColumn() < 9) {
+      sheet.getRange(1, 9).setValue('Personas Me Gusta').setFontWeight('bold').setBackground('#bae6fd');
+    }
   }
   
   return sheet;

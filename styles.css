@@ -231,6 +231,20 @@ body {
   vertical-align: middle;
 }
 
+.btn-back-entrance {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #a5f3fc;
+  text-decoration: none;
+}
+
+.btn-back-entrance:hover,
+.btn-back-entrance:active {
+  background: rgba(0, 242, 254, 0.25);
+  border-color: #00f2fe;
+  color: #ffffff;
+}
+
 .btn-sound {
   padding: 7px 10px;
   border-radius: 50%;

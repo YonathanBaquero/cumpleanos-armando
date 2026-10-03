@@ -279,78 +279,59 @@ function renderClinicRooms() {
 }
 
 // ========================================================
-// 3. PUERTAS PRINCIPALES DE ENTRADA (FACHADA 3D - ESTILO SOBRE)
+// 3. PUERTAS PRINCIPALES DE ENTRADA (FACHADA 3D - REDIRECCIÓN)
 // ========================================================
 function initEntranceDoors() {
   const btnEnter = document.getElementById('btnEnterHospital');
   const btnEnterLabel = document.getElementById('btnEnterHospitalLabel');
   const mainEntrance = document.getElementById('mainHospitalEntrance');
-  const hospitalHallway = document.getElementById('hospitalHallway');
-  const btnScrollToConsultorios = document.getElementById('btnScrollToConsultorios');
-  const btnToggleDoorsState = document.getElementById('btnToggleDoorsState');
   const sensorIndicator = document.getElementById('doorSensorIndicator');
+  const btnGoToConsultorios = document.getElementById('btnGoToConsultorios');
 
   if (!mainEntrance) return;
 
-  const openMainDoors = () => {
-    if (!mainEntrance.classList.contains('opened')) {
-      mainEntrance.classList.add('opened');
-      playHospitalEntranceSound();
-      triggerHospitalCelebrationConfetti();
+  let isNavigating = false;
 
-      if (btnEnterLabel) {
-        btnEnterLabel.textContent = 'PUERTAS ABIERTAS • EXPLORAR HOSPITAL';
-      }
-      if (sensorIndicator) {
-        sensorIndicator.innerHTML = '<span class="sensor-green-dot"></span><span class="sensor-text">ACCESO CONCEDIDO • BIENVENIDO</span>';
-      }
-    }
+  const navigateToConsultorios = () => {
+    window.location.href = 'consultorios.html';
   };
 
-  const closeMainDoors = (e) => {
-    if (e) e.stopPropagation();
-    mainEntrance.classList.remove('opened');
-    playDoorOpenSound();
+  const openMainDoors = () => {
+    if (isNavigating) return;
+    isNavigating = true;
+
+    mainEntrance.classList.add('opened');
+    playHospitalEntranceSound();
+    triggerHospitalCelebrationConfetti();
+
     if (btnEnterLabel) {
-      btnEnterLabel.textContent = 'TOCA PARA ABRIR LAS PUERTAS DEL HOSPITAL';
+      btnEnterLabel.textContent = '¡INGRESANDO AL HOSPITAL...!';
     }
     if (sensorIndicator) {
-      sensorIndicator.innerHTML = '<span class="sensor-green-dot"></span><span class="sensor-text">SENSOR ACTIVO • TOCA PARA ENTRAR</span>';
+      sensorIndicator.innerHTML = '<span class="sensor-green-dot"></span><span class="sensor-text">ACCESO CONCEDIDO • INGRESANDO...</span>';
     }
+
+    // Navegar a consultorios.html tras la animación 3D de apertura
+    setTimeout(navigateToConsultorios, 1200);
   };
 
   // Clic en las puertas para abrir
   mainEntrance.addEventListener('click', (e) => {
-    if (e.target.closest('#btnScrollToConsultorios') || e.target.closest('#btnToggleDoorsState')) {
-      return;
-    }
-    if (!mainEntrance.classList.contains('opened')) {
-      openMainDoors();
-    }
+    if (e.target.closest('#btnGoToConsultorios')) return;
+    openMainDoors();
   });
 
   // Botón exterior de entrada
   if (btnEnter) {
-    btnEnter.addEventListener('click', () => {
-      if (!mainEntrance.classList.contains('opened')) {
-        openMainDoors();
-      } else {
-        hospitalHallway.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
+    btnEnter.addEventListener('click', openMainDoors);
   }
 
-  // Botón interior para explorar consultorios
-  if (btnScrollToConsultorios) {
-    btnScrollToConsultorios.addEventListener('click', (e) => {
-      e.stopPropagation();
-      hospitalHallway.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Enlace directo en el interior
+  if (btnGoToConsultorios) {
+    btnGoToConsultorios.addEventListener('click', (e) => {
+      e.preventDefault();
+      navigateToConsultorios();
     });
-  }
-
-  // Botón interior para cerrar puertas y volver a abrirlas
-  if (btnToggleDoorsState) {
-    btnToggleDoorsState.addEventListener('click', closeMainDoors);
   }
 }
 
@@ -383,14 +364,20 @@ function initClinicDoors() {
 // ========================================================
 // 5. COMPARTIR EN WHATSAPP
 // ========================================================
+function getShareUrl() {
+  let url = window.location.href.split('#')[0].split('?')[0];
+  url = url.replace('consultorios.html', '');
+  return url;
+}
+
 function initShareWhatsApp() {
   const btnShare = document.getElementById('btnShareWhatsApp');
   if (!btnShare) return;
 
   btnShare.addEventListener('click', (e) => {
     e.preventDefault();
-    const pageUrl = window.location.href.split('#')[0].split('?')[0];
-    const text = encodeURIComponent('🏥🎂 ¡Te invito a celebrar el cumpleaños de Armando! Descubre sus fotos y recuerdos en su Hospital Interactivo: ' + pageUrl);
+    const pageUrl = getShareUrl();
+    const text = encodeURIComponent('🏥🎂 ¡Te invito a celebrar el cumpleaños de Armando! Abre las puertas y descubre sus fotos y recuerdos en su Hospital Interactivo: ' + pageUrl);
     window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
   });
 }

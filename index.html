@@ -16,7 +16,7 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <!-- Estilos del Hospital -->
-  <link rel="stylesheet" href="styles.css?v=armando-v4">
+  <link rel="stylesheet" href="styles.css?v=armando-v5">
 </head>
 <body>
 
@@ -196,16 +196,13 @@
                 <div class="interior-welcome-content">
                   <div class="interior-stetho-pulse">🩺 🎂 🏥</div>
                   <h2 class="interior-welcome-title">¡BIENVENIDO AL HOSPITAL, DR. ARMANDO!</h2>
-                  <p class="interior-welcome-desc">Las puertas de urgencias se han abierto para tu gran fiesta de cumpleaños. ¡Acceso concedido a todos tus recuerdos y consultorios!</p>
+                  <p class="interior-welcome-desc">Las puertas de urgencias se han abierto... ¡Ingresando al pabellón de fotos y consultorios!</p>
                   
                   <div class="interior-cta-group">
-                    <button id="btnScrollToConsultorios" class="btn-interior-enter">
-                      <span>VER LOS 14 CONSULTORIOS Y FOTOS</span>
-                      <span class="cta-arrow">⬇️</span>
-                    </button>
-                    <button id="btnToggleDoorsState" class="btn-interior-close" title="Cerrar puertas">
-                      <span>Cerrar Puertas 🚪</span>
-                    </button>
+                    <a href="consultorios.html" id="btnGoToConsultorios" class="btn-interior-enter">
+                      <span>INGRESAR A LOS CONSULTORIOS (14)</span>
+                      <span class="cta-arrow">➡️</span>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -230,45 +227,6 @@
   </section>
 
   <!-- ========================================================
-       SECCIÓN 2: EL PASILLO DE CONSULTORIOS DEL HOSPITAL
-       (Hall con cada puerta interactiva que revela fotos)
-       ======================================================== -->
-  <main class="hospital-hallway-section" id="hospitalHallway">
-    
-    <!-- Encabezado del Pasillo -->
-    <div class="hallway-header">
-      <div class="hallway-floor-indicator">
-        <span class="indicator-icon">🏥</span>
-        <span>PISO 1 • PABELLÓN DE RECUERDOS Y CELEBRACIÓN</span>
-      </div>
-      <h2 class="hallway-title">Consultorios del Dr. Armando</h2>
-      <p class="hallway-desc">
-        Toca cada puerta para ingresar a su respectiva sala y descubrir cada fotografía y dedicatoria especial 🚪👇
-      </p>
-    </div>
-
-    <!-- Contenedor del Pasillo con las Puertas de Consultorios (14 salas temáticas) -->
-    <div class="hallway-corridor" id="doorsContainer">
-      <!-- Los 14 consultorios médicos con las fotos reales de Armando se generan dinámicamente con script.js -->
-    </div>
-
-    <!-- Banner Inferior de Compartir y Celebrar -->
-    <section class="hospital-footer-banner">
-      <div class="footer-card">
-        <div class="footer-icon">🚑💨</div>
-        <div class="footer-content">
-          <h3>¿Quieres compartir este homenaje con Armando?</h3>
-          <p>Toca el botón para enviarle este enlace directamente por WhatsApp:</p>
-        </div>
-        <button id="btnShareWa" class="btn-share-wa">
-          <span>📲 Compartir por WhatsApp</span>
-        </button>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ========================================================
        MODAL: FÓRMULA MÉDICA OFICIAL (PRESCRIPCIÓN DE CUMPLEAÑOS)
        ======================================================== -->
   <div class="modal-backdrop" id="modalPrescription" aria-hidden="true">
@@ -278,7 +236,7 @@
       <!-- Membrete Médico Oficial -->
       <div class="prescription-header">
         <div class="rx-logo">
-          <div class="rx-cross">➕</div>
+          <div class="rx-cross">✚</div>
           <div class="rx-institution">
             <h4>MINISTERIO DE LA SALUD Y LA FELICIDAD</h4>
             <p>Clínica de Cuidados Intensivos de Cariño • Registro N° 2026-BDAY</p>
@@ -352,33 +310,10 @@
     </div>
   </div>
 
-  <!-- ========================================================
-       MODAL: VISOR DE FOTO EN PANTALLA COMPLETA (LIGHTBOX)
-       ======================================================== -->
-  <div class="modal-backdrop lightbox-backdrop" id="modalLightbox" aria-hidden="true">
-    <div class="lightbox-card" role="dialog" aria-modal="true">
-      <button class="btn-close-modal" id="btnCloseLightbox" aria-label="Cerrar imagen">✕</button>
-      
-      <div class="lightbox-image-wrapper">
-        <img id="lightboxImg" src="" alt="Foto en grande del Dr. Armando">
-      </div>
-      
-      <div class="lightbox-caption">
-        <h3 id="lightboxTitle">Consultorio</h3>
-        <p id="lightboxDesc">Momento especial de celebración</p>
-      </div>
-
-      <div class="lightbox-nav">
-        <button id="btnPrevPhoto" class="lightbox-btn-nav" title="Foto anterior">‹ Anterior</button>
-        <button id="btnNextPhoto" class="lightbox-btn-nav" title="Foto siguiente">Siguiente ›</button>
-      </div>
-    </div>
-  </div>
-
   <!-- Sonido de fondo opcional -->
   <audio id="ambientAudio" preload="none"></audio>
 
   <!-- Script principal del hospital -->
-  <script src="script.js?v=armando-v4"></script>
+  <script src="script.js?v=armando-v5"></script>
 </body>
 </html>

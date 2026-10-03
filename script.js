@@ -312,7 +312,8 @@ function initEntranceDoors() {
       mascotImg.classList.add('doll-celebrating');
     }
     if (mascotSpeechText) {
-      mascotSpeechText.textContent = '"¡Adelante! ¡Bienvenido a mis consultorios! 🏥✨"';
+      mascotSpeechText.textContent = '"¡Están locooss! 😂 ¡Pasen a los consultorios! 🏥✨"';
+      speakDoctorPhrase('¡Están locooss! Pasen a los consultorios');
     }
 
     if (btnEnterLabel) {
@@ -357,12 +358,12 @@ function initDoctorMascot() {
   if (!mascotCard || !mascotImg) return;
 
   const doctorQuotes = [
-    "¡Hola! Soy el Dr. Armando 🩺 ¡Toca mis puertas para entrar a los consultorios!",
-    "¡Diagnóstico oficial: Hoy es día de fiesta, abrazos y mucho pastel! 🎂🎉",
-    "¡Prescripción médica: 100 dosis de alegría y risas sin límite! 😄💊",
-    "¡Signos vitales al 100%: ritmo cardíaco acelerado de felicidad! ❤️🩺",
-    "¡Hoy no atiendo consultas, hoy celebro mi cumpleaños con ustedes! 🥳✨",
-    "¡Toca las puertas dobles a mi lado para ver mis fotos y recuerdos! 🚪👇"
+    "¡Están locooss! 😂🩺 ¡Miren todo lo que hicieron!",
+    "¡Están locooss! 🤣🎂 ¡No me esperaba este hospital!",
+    "¡Están locooss! 😄❤️ ¡El mejor cumpleaños del mundo!",
+    "¡Diagnóstico oficial: Están todos locos de amor y felicidad! 🎉🩺",
+    "¡Prescripción médica: 100 dosis de abrazos y mucho pastel! 😄🍰",
+    "¡Hoy no atiendo consultas, hoy celebro mi cumpleaños con ustedes! 🥳✨"
   ];
   let quoteIndex = 0;
 
@@ -374,6 +375,10 @@ function initDoctorMascot() {
 
     // Reproducir tono musical alegre
     playDoorChimeSound();
+
+    // Hablar la frase
+    const currentQuote = doctorQuotes[quoteIndex];
+    speakDoctorPhrase(currentQuote);
 
     // Lanzar confeti desde la posición del muñeco
     if (typeof confetti === 'function') {
@@ -389,15 +394,31 @@ function initDoctorMascot() {
     }
 
     // Cambiar frase del muñeco
-    quoteIndex = (quoteIndex + 1) % doctorQuotes.length;
     if (mascotSpeechText) {
       mascotSpeechText.style.opacity = '0';
       setTimeout(() => {
-        mascotSpeechText.textContent = `"${doctorQuotes[quoteIndex]}"`;
+        mascotSpeechText.textContent = `"${currentQuote}"`;
         mascotSpeechText.style.opacity = '1';
       }, 150);
     }
+    quoteIndex = (quoteIndex + 1) % doctorQuotes.length;
   });
+}
+
+function speakDoctorPhrase(text) {
+  try {
+    if ('speechSynthesis' in window && soundEnabled) {
+      window.speechSynthesis.cancel();
+      const cleanText = text.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, '').replace(/[🩺🎂🎉😄💊❤️🥳✨🍰🤣]/g, '');
+      const utterance = new SpeechSynthesisUtterance(cleanText);
+      utterance.lang = 'es-ES';
+      utterance.pitch = 1.1;
+      utterance.rate = 1.0;
+      window.speechSynthesis.speak(utterance);
+    }
+  } catch (err) {
+    // Silently continue if speech is restricted
+  }
 }
 
 // ========================================================

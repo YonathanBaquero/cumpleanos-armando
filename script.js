@@ -983,6 +983,8 @@ function initPrescriptionWall() {
   const grid = document.getElementById('prescriptionsGrid');
   if (!grid) return; // No estamos en muro.html
 
+  const emptyState = document.getElementById('emptyState');
+  const btnEmptyStateWrite = document.getElementById('btnEmptyStateWrite');
   const modal = document.getElementById('modalNewRx');
   const btnOpenModal = document.getElementById('btnOpenNewRxModal');
   const btnTriggerNewRx = document.getElementById('btnTriggerNewRx');
@@ -1002,57 +1004,40 @@ function initPrescriptionWall() {
   const btnCloseNotice = document.getElementById('btnCloseSharedNotice');
   const btnSubmitAndShare = document.getElementById('btnSubmitAndShareWhatsApp');
 
-  // Recetas iniciales precargadas para que el muro se vea vivo y cálido
-  const INITIAL_PRESCRIPTIONS = [
-    {
-      id: "RX-1001",
-      sender: "Familia Baquero & Amigos",
-      relationship: "Familia de Corazón",
-      diagnosis: "Sobredosis de Juventud, Sabiduría y Energía Inagotable 🧠✨",
-      treatment: "¡Querido Dr. José! Gracias por ser faro, alegría y ejemplo de dedicación en cada paso. Te deseamos un año lleno de salud de hierro, grandes éxitos profesionales y momentos imborrables junto a quienes te amamos profundamente. ¡Feliz Cumpleaños!",
-      dose: "100 abrazos al despertar, 2 pedazos de pastel y 1 copa de buen vino.",
-      date: "03/10/2026",
-      likes: 18
-    },
-    {
-      id: "RX-1002",
-      sender: "Dra. Carolina",
-      relationship: "Colega & Amiga de Urgencias",
-      diagnosis: "Corazón Gigante Incurable y Bondad Extrema ❤️🫀",
-      treatment: "Mi estimado colega José: Que la vida te siga premiando con tanta felicidad como la que tú regalas a tus pacientes y amigos todos los días. ¡Un inmenso honor compartir tantos momentos contigo!",
-      dose: "Risas sin moderación y cero preocupaciones por hoy.",
-      date: "03/10/2026",
-      likes: 12
-    },
-    {
-      id: "RX-1003",
-      sender: "El Equipo Médico de Turno",
-      relationship: "Compañeros de Aventuras",
-      diagnosis: "El Mejor Médico, Amigo y Ser Humano del Año 🏆🩺",
-      treatment: "¡Feliz Cumpleaños, Doctor José! El mejor anfitrión, consejero y amigo. Que este nuevo ciclo venga cargado de bendiciones abundantes, viajes y sonrisas infinitas.",
-      dose: "Dosis masiva de abrazos y aplausos de pie.",
-      date: "03/10/2026",
-      likes: 15
-    }
-  ];
+  // Modal y configuración de Google Sheets (Apps Script)
+  const configModal = document.getElementById('configBackdrop');
+  const btnOpenConfig = document.getElementById('btnOpenConfigModal');
+  const btnCloseConfig = document.getElementById('btnCloseConfig');
+  const btnCancelConfig = document.getElementById('btnCancelConfig');
+  const btnSaveConfig = document.getElementById('btnSaveConfig');
+  const scriptUrlInput = document.getElementById('scriptUrlInput');
 
-  // Cargar recetas del almacenamiento local
+  // Obtener URL de Web App de Google Sheets guardada localmente
+  const getGoogleScriptUrl = () => {
+    return localStorage.getItem('google_script_muro_jose_url') || localStorage.getItem('google_script_muro_url') || '';
+  };
+
+  // Muro limpio sin recetas de ejemplo (inicio en blanco colaborativo)
+  const INITIAL_PRESCRIPTIONS = [];
+
+  // Cargar recetas del almacenamiento local y descartar notas de prueba anteriores
   let prescriptions = [];
   try {
     const saved = localStorage.getItem('drJose_wall_prescriptions');
     if (saved) {
-      prescriptions = JSON.parse(saved);
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed)) {
+        prescriptions = parsed.filter(rx => rx && !['RX-1001', 'RX-1002', 'RX-1003'].includes(rx.id));
+      }
     }
   } catch (e) {
     prescriptions = [];
   }
 
-  if (!prescriptions || prescriptions.length === 0) {
-    prescriptions = [...INITIAL_PRESCRIPTIONS];
-    try {
-      localStorage.setItem('drJose_wall_prescriptions', JSON.stringify(prescriptions));
-    } catch (e) {}
-  }
+  // Guardar estado limpio en caso de haber purgado notas de prueba
+  try {
+    localStorage.setItem('drJose_wall_prescriptions', JSON.stringify(prescriptions));
+  } catch (e) {}
 
   // Detectar si se recibió una receta en la URL (?rx=...)
   let highlightedRxId = null;
@@ -1070,6 +1055,7 @@ function initPrescriptionWall() {
           try {
             localStorage.setItem('drJose_wall_prescriptions', JSON.stringify(prescriptions));
           } catch (e) {}
+          sendPrescriptionToGoogleSheets(incomingRx);
         }
         highlightedRxId = incomingRx.id;
 
@@ -1125,15 +1111,60 @@ function initPrescriptionWall() {
   if (btnOpenModal) btnOpenModal.addEventListener('click', openModal);
   if (btnTriggerNewRx) btnTriggerNewRx.addEventListener('click', openModal);
   if (btnCloseModal) btnCloseModal.addEventListener('click', closeModal);
+  if (btnEmptyStateWrite) btnEmptyStateWrite.addEventListener('click', openModal);
   if (modal) {
     modal.addEventListener('click', (e) => {
       if (e.target === modal) closeModal();
     });
   }
 
+  // Abrir y cerrar modal de configuración de Google Sheets
+  const openConfigModal = () => {
+    if (scriptUrlInput) {
+      scriptUrlInput.value = getGoogleScriptUrl();
+    }
+    if (configModal) configModal.classList.add('open');
+  };
+  const closeConfigModal = () => {
+    if (configModal) configModal.classList.remove('open');
+  };
+
+  if (btnOpenConfig) btnOpenConfig.addEventListener('click', openConfigModal);
+  if (btnCloseConfig) btnCloseConfig.addEventListener('click', closeConfigModal);
+  if (btnCancelConfig) btnCancelConfig.addEventListener('click', closeConfigModal);
+  if (configModal) {
+    configModal.addEventListener('click', (e) => {
+      if (e.target === configModal) closeConfigModal();
+    });
+  }
+
+  if (btnSaveConfig && scriptUrlInput) {
+    btnSaveConfig.addEventListener('click', () => {
+      const url = scriptUrlInput.value.trim();
+      if (url) {
+        localStorage.setItem('google_script_muro_jose_url', url);
+        alert('✅ ¡URL de Google Sheets guardada correctamente! Sincronizando recetas...');
+        fetchPrescriptionsFromGoogleSheets(false);
+      } else {
+        localStorage.removeItem('google_script_muro_jose_url');
+        alert('ℹ️ Se ha restablecido la configuración.');
+      }
+      closeConfigModal();
+    });
+  }
+
   // Renderizar muro
   const renderWall = () => {
     if (countBadge) countBadge.textContent = prescriptions.length;
+
+    // Manejo del estado vacío cuando no hay recetas publicadas
+    if (prescriptions.length === 0) {
+      grid.innerHTML = '';
+      if (emptyState) emptyState.style.display = 'block';
+      return;
+    }
+
+    if (emptyState) emptyState.style.display = 'none';
 
     grid.innerHTML = prescriptions.map(rx => {
       const isHighlighted = rx.id === highlightedRxId;
@@ -1335,6 +1366,9 @@ function initPrescriptionWall() {
       localStorage.setItem('drJose_wall_prescriptions', JSON.stringify(prescriptions));
     } catch (e) {}
 
+    // Enviar inmediatamente a Google Sheets
+    sendPrescriptionToGoogleSheets(newRx);
+
     highlightedRxId = newId;
     closeModal();
     renderWall();
@@ -1375,6 +1409,112 @@ function initPrescriptionWall() {
     });
   }
 
+  // Enviar receta a Google Sheets
+  async function sendPrescriptionToGoogleSheets(rx) {
+    const scriptUrl = getGoogleScriptUrl();
+    if (!scriptUrl) return;
+
+    try {
+      await fetch(scriptUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'text/plain;charset=utf-8'
+        },
+        body: JSON.stringify({
+          id: rx.id,
+          sender: rx.sender,
+          relationship: rx.relationship,
+          diagnosis: rx.diagnosis,
+          treatment: rx.treatment,
+          dose: rx.dose,
+          likes: rx.likes || 1
+        })
+      });
+    } catch (err) {
+      console.warn('Error al enviar receta a Google Sheets:', err);
+    }
+  }
+
+  // Traer recetas desde Google Sheets
+  async function fetchPrescriptionsFromGoogleSheets(silent = false) {
+    const scriptUrl = getGoogleScriptUrl();
+    if (!scriptUrl) return;
+
+    try {
+      const fetchUrl = `${scriptUrl}${scriptUrl.includes('?') ? '&' : '?'}t=${Date.now()}`;
+      const response = await fetch(fetchUrl, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-store'
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        if (result.status === 'success' && Array.isArray(result.data)) {
+          const remoteRxs = result.data
+            .map((row, idx) => ({
+              id: String(row.id || `remote_${idx}`),
+              sender: row.sender || row.name || 'Anónimo',
+              relationship: row.relationship || '',
+              diagnosis: row.diagnosis || 'Sobredosis de Alegría',
+              treatment: row.treatment || row.message || '',
+              dose: row.dose || '',
+              date: row.timestamp || 'Hoy',
+              likes: Number(row.likes) || 1
+            }))
+            .filter(rx => rx.sender && rx.treatment && !['RX-1001', 'RX-1002', 'RX-1003'].includes(rx.id));
+
+          // Deduplicación inteligente: incorporar las de Google Sheets y notas locales
+          const merged = [];
+          const seenIds = new Set();
+
+          // Primero las de Google Sheets (fuente de verdad oficial)
+          remoteRxs.forEach(r => {
+            if (!seenIds.has(r.id)) {
+              seenIds.add(r.id);
+              merged.push(r);
+            }
+          });
+
+          // Mantener notas locales recientes que aún no hayan impactado la hoja
+          prescriptions.forEach(l => {
+            if (!seenIds.has(l.id)) {
+              seenIds.add(l.id);
+              merged.push(l);
+            }
+          });
+
+          prescriptions = merged;
+          try {
+            localStorage.setItem('drJose_wall_prescriptions', JSON.stringify(prescriptions));
+          } catch (e) {}
+          renderWall();
+        }
+      }
+    } catch (err) {
+      if (!silent) console.warn('No se pudo conectar a Google Sheets en este momento:', err);
+    }
+  }
+
   // Renderizar al inicializar
   renderWall();
+
+  // Si hay URL de Google Sheets conectada, traer recetas de inmediato
+  if (getGoogleScriptUrl()) {
+    fetchPrescriptionsFromGoogleSheets(true);
+  }
+
+  // Sincronización periódica automática (cada 20 segundos) y al reactivar la pestaña
+  setInterval(() => {
+    if (getGoogleScriptUrl() && !document.hidden) {
+      fetchPrescriptionsFromGoogleSheets(true);
+    }
+  }, 20000);
+
+  document.addEventListener('visibilitychange', () => {
+    if (getGoogleScriptUrl() && !document.hidden) {
+      fetchPrescriptionsFromGoogleSheets(true);
+    }
+  });
 }

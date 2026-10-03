@@ -78,6 +78,10 @@
       <button id="btnAudioToggle" class="btn-top btn-sound" title="Sonido y Música">
         <span class="icon">🔊</span>
       </button>
+
+      <button id="btnOpenConfigModal" class="btn-top btn-config" title="Conectar con Google Sheets">
+        <span class="icon">⚙️</span>
+      </button>
     </div>
   </header>
 
@@ -169,6 +173,17 @@
          TABLERO / MURO CLÍNICO DE PRESCRIPCIONES
          ======================================================== -->
     <div class="wall-board-container">
+      <!-- Estado vacío cuando no hay recetas publicadas -->
+      <div class="board-empty-state" id="emptyState" style="display: none;">
+        <div class="empty-icon">📋🩺</div>
+        <h3>¡El Muro está listo para las primeras recetas médicas!</h3>
+        <p>Aún no hay recetas publicadas en el muro. Sé la primera persona en prescribirle una dosis de cariño, buenos deseos y bendiciones al Dr. José.</p>
+        <button id="btnEmptyStateWrite" class="btn-primary-write-rx" style="margin-top: 18px;">
+          <span class="pulse-icon">✍️</span>
+          <span>¡Escribir la Primera Receta!</span>
+        </button>
+      </div>
+
       <div class="wall-prescriptions-grid" id="prescriptionsGrid">
         <!-- Las recetas médicas se insertan dinámicamente aquí -->
       </div>
@@ -274,6 +289,33 @@
           </button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- MODAL DE CONFIGURACIÓN DE GOOGLE SHEETS -->
+  <div class="modal-backdrop" id="configBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="prescription-form-card config-modal-card">
+      <button class="btn-close-modal" id="btnCloseConfig" aria-label="Cerrar configuración">✕</button>
+      <div class="modal-header-title">
+        <span class="modal-icon">⚙️</span>
+        <h2>Conectar con Google Sheets</h2>
+      </div>
+      <div class="config-modal-body">
+        <p class="config-instructions">
+          Para que las recetas médicas de familiares y amigos se guarden en tu propia <strong>Hoja de Cálculo de Google</strong> en tiempo real, pega aquí la URL de tu Web App de Google Apps Script:
+        </p>
+        <div class="form-group" style="margin-top: 14px;">
+          <label for="scriptUrlInput">URL de Google Apps Script (Web App):</label>
+          <input type="url" id="scriptUrlInput" placeholder="https://script.google.com/macros/s/.../exec">
+        </div>
+        <div class="config-help">
+          <p>💡 <em>¿Aún no la has creado?</em> Sigue la guía paso a paso en el archivo <code>google-apps-script-jose.js</code> incluido en el proyecto. ¡Solo toma 2 minutos!</p>
+        </div>
+        <div class="form-actions-wrapper" style="margin-top: 16px;">
+          <button type="button" class="btn-submit-rx" id="btnSaveConfig">Guardar y Conectar</button>
+          <button type="button" class="btn-cancel-config" id="btnCancelConfig">Cerrar</button>
+        </div>
+      </div>
     </div>
   </div>
 

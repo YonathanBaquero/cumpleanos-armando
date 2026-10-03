@@ -16,7 +16,7 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <!-- Estilos del Hospital -->
-  <link rel="stylesheet" href="styles.css?v=armando-v2">
+  <link rel="stylesheet" href="styles.css?v=armando-v3">
 </head>
 <body>
 
@@ -95,41 +95,116 @@
 
         <!-- Marco de las Puertas Principales de Urgencias 3D -->
         <div class="entrance-gateway">
-          <div class="gateway-header">
-            <div class="gateway-icon">🚨</div>
-            <div class="gateway-text">
-              <h3>PUERTAS DE ACCESO PRINCIPAL</h3>
-              <p>Toca para abrir las puertas automáticas e ingresar a los consultorios</p>
+          <div class="door-operator-header">
+            <div class="emergency-header-badge">
+              <span class="cross-badge-mini">✚</span>
+              <span>URGENCIAS & CUMPLEAÑOS • ACCESO PRINCIPAL</span>
+            </div>
+            <div class="door-sensor-indicator" id="doorSensorIndicator">
+              <span class="sensor-green-dot"></span>
+              <span class="sensor-text">SENSOR ACTIVO • TOCA PARA ENTRAR</span>
             </div>
           </div>
 
-          <div class="main-entrance-3d">
+          <div class="main-entrance-3d" id="mainHospitalEntrance" title="Toca para abrir las puertas del hospital">
             <div class="door-frame-3d">
               
               <!-- Puerta Izquierda -->
-              <div class="main-sliding-door door-left" id="mainDoorLeft">
-                <div class="glass-pane">
-                  <div class="frosted-cross">➕</div>
-                  <div class="door-tape">⚠️ PRECAUCIÓN: CUMPLEAÑOS ⚠️</div>
+              <div class="hospital-double-door door-left" id="mainDoorLeft">
+                <div class="door-panel-body">
+                  <!-- Ventana de Cristal de Seguridad Hospitalaria -->
+                  <div class="hospital-glass-window">
+                    <div class="glass-reflection-streak"></div>
+                    <div class="frosted-safety-stripes">
+                      <span></span><span></span><span></span>
+                    </div>
+                    <div class="door-medical-emblem">
+                      <svg class="medical-cross-svg" viewBox="0 0 36 36">
+                        <rect width="36" height="36" rx="8" fill="#e63946"/>
+                        <path d="M14 6 h8 v8 h8 v8 h-8 v8 h-8 v-8 h-8 v-8 h8 z" fill="#ffffff"/>
+                      </svg>
+                      <span class="emblem-text">URGENCIAS</span>
+                    </div>
+                  </div>
+
+                  <!-- Barra Antipánico de Acero Inoxidable (Push Bar) -->
+                  <div class="hospital-panic-bar">
+                    <div class="panic-bar-bracket bracket-left"></div>
+                    <div class="panic-bar-core">
+                      <span class="panic-bar-label">EMPUJE • PUSH</span>
+                    </div>
+                    <div class="panic-bar-bracket bracket-right"></div>
+                  </div>
+
+                  <!-- Zócalo de Pateo de Acero Inoxidable (Kickplate) -->
+                  <div class="hospital-kickplate">
+                    <span class="kickplate-screw screw-tl"></span>
+                    <span class="kickplate-screw screw-tr"></span>
+                    <span class="kickplate-screw screw-bl"></span>
+                    <span class="kickplate-screw screw-br"></span>
+                    <div class="kickplate-sheen"></div>
+                  </div>
                 </div>
-                <div class="metal-bar"></div>
+                <!-- Junta de goma central -->
+                <div class="door-rubber-astragal astragal-left"></div>
               </div>
 
               <!-- Puerta Derecha -->
-              <div class="main-sliding-door door-right" id="mainDoorRight">
-                <div class="glass-pane">
-                  <div class="frosted-cross">➕</div>
-                  <div class="door-tape">⚠️ SOBREDOSIS DE ALEGRÍA ⚠️</div>
+              <div class="hospital-double-door door-right" id="mainDoorRight">
+                <div class="door-panel-body">
+                  <!-- Ventana de Cristal de Seguridad Hospitalaria -->
+                  <div class="hospital-glass-window">
+                    <div class="glass-reflection-streak"></div>
+                    <div class="frosted-safety-stripes">
+                      <span></span><span></span><span></span>
+                    </div>
+                    <div class="door-medical-emblem">
+                      <svg class="medical-cross-svg" viewBox="0 0 36 36">
+                        <rect width="36" height="36" rx="8" fill="#e63946"/>
+                        <path d="M14 6 h8 v8 h8 v8 h-8 v8 h-8 v-8 h-8 v-8 h8 z" fill="#ffffff"/>
+                      </svg>
+                      <span class="emblem-text">DR. ARMANDO</span>
+                    </div>
+                  </div>
+
+                  <!-- Barra Antipánico de Acero Inoxidable (Push Bar) -->
+                  <div class="hospital-panic-bar">
+                    <div class="panic-bar-bracket bracket-left"></div>
+                    <div class="panic-bar-core">
+                      <span class="panic-bar-label">EMPUJE • PUSH</span>
+                    </div>
+                    <div class="panic-bar-bracket bracket-right"></div>
+                  </div>
+
+                  <!-- Zócalo de Pateo de Acero Inoxidable (Kickplate) -->
+                  <div class="hospital-kickplate">
+                    <span class="kickplate-screw screw-tl"></span>
+                    <span class="kickplate-screw screw-tr"></span>
+                    <span class="kickplate-screw screw-bl"></span>
+                    <span class="kickplate-screw screw-br"></span>
+                    <div class="kickplate-sheen"></div>
+                  </div>
                 </div>
-                <div class="metal-bar"></div>
+                <!-- Junta de goma central -->
+                <div class="door-rubber-astragal astragal-right"></div>
               </div>
 
-              <!-- Interior visible detrás de las puertas -->
+              <!-- Interior del Hospital visible al abrir las puertas (como en el sobre) -->
               <div class="entrance-interior-glow">
-                <div class="interior-welcome-msg">
-                  <div class="stethoscope-big">🩺</div>
-                  <h2>¡BIENVENIDO AL HOSPITAL, DR. ARMANDO!</h2>
-                  <p>Ingresando al Pabellón de Consultorios y Recuerdos...</p>
+                <div class="interior-welcome-content">
+                  <div class="interior-stetho-pulse">🩺 🎂 🏥</div>
+                  <h2 class="interior-welcome-title">¡BIENVENIDO AL HOSPITAL, DR. ARMANDO!</h2>
+                  <p class="interior-welcome-desc">Las puertas de urgencias se han abierto para tu gran fiesta de cumpleaños. ¡Acceso concedido a todos tus recuerdos y consultorios!</p>
+                  
+                  <div class="interior-cta-group">
+                    <button id="btnScrollToConsultorios" class="btn-interior-enter">
+                      <span>VER LOS 14 CONSULTORIOS Y FOTOS</span>
+                      <span class="cta-arrow">⬇️</span>
+                    </button>
+                    <button id="btnToggleDoorsState" class="btn-interior-close" title="Cerrar puertas">
+                      <span>Cerrar Puertas 🚪</span>
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -142,11 +217,11 @@
       <!-- Botón de Entrada Principal -->
       <div class="entrance-action-wrapper">
         <button id="btnEnterHospital" class="btn-enter-hospital">
-          <span class="btn-enter-icon">🚨</span>
-          <span class="btn-enter-label">INGRESAR AL HOSPITAL • ABRIR PUERTAS</span>
+          <span class="btn-enter-icon">🚪</span>
+          <span class="btn-enter-label" id="btnEnterHospitalLabel">TOCA PARA ABRIR LAS PUERTAS DEL HOSPITAL</span>
           <span class="btn-enter-pulse"></span>
         </button>
-        <p class="entrance-hint">Toca el botón o las puertas de cristal para ingresar al hospital</p>
+        <p class="entrance-hint">Toca las puertas o el botón para abrirlas en 3D e ingresar al hospital</p>
       </div>
 
     </div>
@@ -302,6 +377,6 @@
   <audio id="ambientAudio" preload="none"></audio>
 
   <!-- Script principal del hospital -->
-  <script src="script.js?v=armando-v2"></script>
+  <script src="script.js?v=armando-v3"></script>
 </body>
 </html>

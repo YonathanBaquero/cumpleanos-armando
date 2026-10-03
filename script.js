@@ -259,7 +259,10 @@ function renderClinicRooms() {
               <span class="status-label">TOCA PARA ABRIR</span>
             </div>
             <div class="door-window">
-              <div class="window-cross">➕</div>
+              <svg class="clinic-window-cross-svg" viewBox="0 0 32 32" width="30" height="30">
+                <rect width="32" height="32" rx="7" fill="#e63946"/>
+                <path d="M12 6 h8 v8 h8 v8 h-8 v8 h-8 v-8 h-8 v-8 h8 z" fill="#ffffff"/>
+              </svg>
               <div class="window-reflection"></div>
             </div>
             <div class="door-room-badge">${room.number}</div>
@@ -275,14 +278,18 @@ function renderClinicRooms() {
 }
 
 // ========================================================
-// 3. PUERTAS PRINCIPALES DE ENTRADA (FACHADA 3D)
+// 3. PUERTAS PRINCIPALES DE ENTRADA (FACHADA 3D - ESTILO SOBRE)
 // ========================================================
 function initEntranceDoors() {
   const btnEnter = document.getElementById('btnEnterHospital');
-  const mainEntrance = document.querySelector('.main-entrance-3d');
+  const btnEnterLabel = document.getElementById('btnEnterHospitalLabel');
+  const mainEntrance = document.getElementById('mainHospitalEntrance');
   const hospitalHallway = document.getElementById('hospitalHallway');
+  const btnScrollToConsultorios = document.getElementById('btnScrollToConsultorios');
+  const btnToggleDoorsState = document.getElementById('btnToggleDoorsState');
+  const sensorIndicator = document.getElementById('doorSensorIndicator');
 
-  if (!btnEnter || !mainEntrance) return;
+  if (!mainEntrance) return;
 
   const openMainDoors = () => {
     if (!mainEntrance.classList.contains('opened')) {
@@ -290,18 +297,60 @@ function initEntranceDoors() {
       playHospitalEntranceSound();
       triggerHospitalCelebrationConfetti();
 
-      // Scroll suave hacia los consultorios tras abrir
-      setTimeout(() => {
-        hospitalHallway.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 1000);
-    } else {
-      // Si ya está abierta, solo hace scroll al pasillo
-      hospitalHallway.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (btnEnterLabel) {
+        btnEnterLabel.textContent = 'PUERTAS ABIERTAS • EXPLORAR HOSPITAL';
+      }
+      if (sensorIndicator) {
+        sensorIndicator.innerHTML = '<span class="sensor-green-dot"></span><span class="sensor-text">ACCESO CONCEDIDO • BIENVENIDO</span>';
+      }
     }
   };
 
-  btnEnter.addEventListener('click', openMainDoors);
-  mainEntrance.addEventListener('click', openMainDoors);
+  const closeMainDoors = (e) => {
+    if (e) e.stopPropagation();
+    mainEntrance.classList.remove('opened');
+    playDoorOpenSound();
+    if (btnEnterLabel) {
+      btnEnterLabel.textContent = 'TOCA PARA ABRIR LAS PUERTAS DEL HOSPITAL';
+    }
+    if (sensorIndicator) {
+      sensorIndicator.innerHTML = '<span class="sensor-green-dot"></span><span class="sensor-text">SENSOR ACTIVO • TOCA PARA ENTRAR</span>';
+    }
+  };
+
+  // Clic en las puertas para abrir
+  mainEntrance.addEventListener('click', (e) => {
+    if (e.target.closest('#btnScrollToConsultorios') || e.target.closest('#btnToggleDoorsState')) {
+      return;
+    }
+    if (!mainEntrance.classList.contains('opened')) {
+      openMainDoors();
+    }
+  });
+
+  // Botón exterior de entrada
+  if (btnEnter) {
+    btnEnter.addEventListener('click', () => {
+      if (!mainEntrance.classList.contains('opened')) {
+        openMainDoors();
+      } else {
+        hospitalHallway.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  }
+
+  // Botón interior para explorar consultorios
+  if (btnScrollToConsultorios) {
+    btnScrollToConsultorios.addEventListener('click', (e) => {
+      e.stopPropagation();
+      hospitalHallway.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  // Botón interior para cerrar puertas y volver a abrirlas
+  if (btnToggleDoorsState) {
+    btnToggleDoorsState.addEventListener('click', closeMainDoors);
+  }
 }
 
 // ========================================================

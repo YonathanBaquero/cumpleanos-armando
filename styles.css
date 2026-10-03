@@ -441,43 +441,92 @@ body {
   50% { opacity: 1; transform: scale(1.3); }
 }
 
-/* PORTAL DE ACCESO Y PUERTAS 3D */
+/* ========================================================
+   PORTAL DE ACCESO Y PUERTAS HOSPITALARIAS REALISTAS 3D
+   ======================================================== */
 .entrance-gateway {
-  padding: 16px 20px 24px;
-  background: #091220;
+  padding: 18px 20px 26px;
+  background: #080f1d;
+  border-top: 1px solid rgba(0, 242, 254, 0.2);
 }
 
-.gateway-header {
+.door-operator-header {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  max-width: 580px;
+  margin: 0 auto 16px;
+  padding: 8px 16px;
+  background: linear-gradient(90deg, #0d1e33 0%, #162c47 50%, #0d1e33 100%);
+  border: 1px solid #334e68;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.emergency-header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #ff3366;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-shadow: 0 0 10px rgba(255, 51, 102, 0.4);
+}
+
+.cross-badge-mini {
+  background: #ff3366;
+  color: #ffffff;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  margin-bottom: 18px;
+  font-size: 0.72rem;
+  font-weight: 900;
 }
 
-.gateway-icon {
-  font-size: 1.6rem;
+.door-sensor-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid #10b981;
+  color: #10b981;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  padding: 4px 12px;
+  border-radius: 20px;
 }
 
-.gateway-text h3 {
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: #00f2fe;
-  letter-spacing: 1px;
+.sensor-green-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 10px #10b981;
+  animation: sensorBreathe 1.6s ease-in-out infinite alternate;
 }
 
-.gateway-text p {
-  font-size: 0.82rem;
-  color: var(--text-secondary);
+@keyframes sensorBreathe {
+  0% { opacity: 0.5; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1.3); }
 }
 
-/* PUERTAS DE ENTRADA PRINCIPAL 3D */
+/* MARCO 3D DE LAS PUERTAS HOSPITALARIAS */
 .main-entrance-3d {
   width: 100%;
-  max-width: 600px;
-  height: 310px;
+  max-width: 580px;
+  height: 380px;
   margin: 0 auto;
-  perspective: 1200px;
+  perspective: 1400px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .door-frame-3d {
@@ -485,142 +534,321 @@ body {
   width: 100%;
   height: 100%;
   border: 12px solid #1e293b;
-  border-top-color: #334155;
-  border-bottom-width: 16px;
-  border-radius: 18px;
-  background: #020617;
+  border-top: 18px solid #334155;
+  border-bottom: 12px solid #0f172a;
+  border-radius: 14px;
+  background: #030812;
   box-shadow: 
-    0 25px 60px rgba(0, 0, 0, 0.8),
-    inset 0 0 30px rgba(0, 0, 0, 0.9);
+    0 25px 60px rgba(0, 0, 0, 0.9),
+    inset 0 0 30px rgba(0, 0, 0, 0.95),
+    0 0 20px rgba(0, 242, 254, 0.15);
   overflow: hidden;
   display: flex;
 }
 
-/* Interior visible detrás de las puertas */
-.entrance-interior-glow {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at center, #0e2a3a 0%, #030a12 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
-}
-
-.interior-welcome-msg {
-  padding: 20px;
-}
-
-.stethoscope-big {
-  font-size: 3.5rem;
-  margin-bottom: 8px;
-  filter: drop-shadow(0 0 15px #00f2fe);
-}
-
-.interior-welcome-msg h2 {
-  font-size: 1.6rem;
-  font-weight: 800;
-  color: #00f2fe;
-  margin-bottom: 6px;
-}
-
-.interior-welcome-msg p {
-  font-size: 0.92rem;
-  color: #cbd5e1;
-}
-
-/* PUERTAS CORREDIZAS O BATIENTES DE ENTRADA */
-.main-sliding-door {
+/* PUERTAS BATIENTES HOSPITALARIAS DOBLES */
+.hospital-double-door {
   position: absolute;
   top: 0;
   bottom: 0;
   width: 50%;
-  background: linear-gradient(135deg, rgba(30, 58, 75, 0.95) 0%, rgba(15, 30, 45, 0.98) 100%);
-  backdrop-filter: blur(10px);
-  border: 4px solid #38bdf8;
-  z-index: 2;
-  transition: transform 1.1s cubic-bezier(0.25, 1, 0.5, 1);
+  z-index: 5;
+  background: linear-gradient(145deg, #1b3548 0%, #102436 45%, #0b1a28 100%);
+  border: 2px solid #243b53;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6), 0 8px 25px rgba(0, 0, 0, 0.7);
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 20px 14px;
+  transition: transform 1.25s cubic-bezier(0.2, 0.9, 0.3, 1), box-shadow 1s ease;
+  transform-style: preserve-3d;
 }
 
 .door-left {
   left: 0;
-  border-right: 2px solid #0284c7;
+  border-right: 2px solid #08111b;
   transform-origin: left center;
 }
 
 .door-right {
   right: 0;
-  border-left: 2px solid #0284c7;
+  border-left: 2px solid #08111b;
   transform-origin: right center;
 }
 
-/* Vidrio con cruz y cinta de precaución */
-.glass-pane {
+/* CUERPO INTERNO DE CADA HOJA DE PUERTA */
+.door-panel-body {
+  width: 100%;
+  height: 100%;
+  padding: 16px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+
+/* VENTANA DE CRISTAL DE SEGURIDAD HOSPITALARIA */
+.hospital-glass-window {
   flex: 1;
-  background: rgba(56, 189, 248, 0.08);
-  border: 2px dashed rgba(56, 189, 248, 0.4);
-  border-radius: 8px;
+  max-height: 195px;
+  width: 88%;
+  margin: 0 auto;
+  background: linear-gradient(180deg, rgba(14, 45, 70, 0.65) 0%, rgba(7, 22, 38, 0.85) 100%);
+  border: 3px solid #334e68;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 14px;
-  position: relative;
-  overflow: hidden;
+  box-shadow: 
+    inset 0 0 20px rgba(0, 242, 254, 0.25),
+    inset 0 2px 4px rgba(255, 255, 255, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
-.glass-pane::before {
-  content: '';
+.glass-reflection-streak {
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.12) 50%, transparent 60%);
+  top: -60%;
+  left: -70%;
+  width: 240%;
+  height: 240%;
+  background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.18) 50%, transparent 60%);
   pointer-events: none;
 }
 
-.frosted-cross {
-  font-size: 2.8rem;
-  color: #ff3366;
-  text-shadow: 0 0 15px rgba(255, 51, 102, 0.8);
+/* Franjas horizontales de seguridad (estándar hospitalario real) */
+.frosted-safety-stripes {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 48%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  opacity: 0.5;
+  pointer-events: none;
 }
 
-.door-tape {
-  background: #ffd166;
-  color: #0f172a;
-  font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-  padding: 4px 8px;
+.frosted-safety-stripes span {
+  height: 2px;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 3px rgba(255, 255, 255, 0.6);
+}
+
+/* Emblema Médico Real en la Ventana */
+.door-medical-emblem {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.medical-cross-svg {
+  width: 40px;
+  height: 40px;
+  filter: drop-shadow(0 3px 8px rgba(230, 57, 70, 0.7));
+}
+
+.emblem-text {
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #ffffff;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.9);
+}
+
+/* BARRA ANTIPÁNICO DE ACERO INOXIDABLE (HORIZONTAL PUSH BAR) */
+.hospital-panic-bar {
+  width: 100%;
+  height: 26px;
+  margin: 12px 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.panic-bar-bracket {
+  width: 10px;
+  height: 22px;
+  background: linear-gradient(180deg, #94a3b8 0%, #475569 100%);
+  border: 1px solid #cbd5e1;
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.panic-bar-core {
+  flex: 1;
+  height: 18px;
+  margin: 0 4px;
+  background: linear-gradient(180deg, #f8fafc 0%, #cbd5e1 35%, #94a3b8 70%, #64748b 100%);
+  border: 1px solid #f1f5f9;
   border-radius: 4px;
-  transform: rotate(-4deg);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.6),
+    inset 0 1px 1px #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.door-right .door-tape {
-  transform: rotate(4deg);
+.panic-bar-label {
+  font-size: 0.64rem;
+  font-weight: 900;
+  color: #1e293b;
+  letter-spacing: 2px;
 }
 
-.metal-bar {
-  height: 12px;
-  background: linear-gradient(to right, #94a3b8, #f8fafc, #94a3b8);
-  border-radius: 6px;
-  margin-top: 15px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.5);
+/* ZÓCALO DE PATEO DE ACERO INOXIDABLE (KICKPLATE) */
+.hospital-kickplate {
+  height: 52px;
+  width: 100%;
+  background: linear-gradient(180deg, #94a3b8 0%, #cbd5e1 25%, #64748b 70%, #475569 100%);
+  border: 1px solid #e2e8f0;
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.8),
+    0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
-/* ESTADO ABIERTO DE LA PUERTA PRINCIPAL */
+.kickplate-screw {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #334155;
+  box-shadow: inset 0 1px 1px #000, 0 1px 1px #fff;
+}
+.screw-tl { top: 4px; left: 5px; }
+.screw-tr { top: 4px; right: 5px; }
+.screw-bl { bottom: 4px; left: 5px; }
+.screw-br { bottom: 4px; right: 5px; }
+
+.kickplate-sheen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, transparent 100%);
+}
+
+/* JUNTA DE GOMA CENTRAL (ASTRAGAL) */
+.door-rubber-astragal {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #09121d;
+  box-shadow: 0 0 3px rgba(0,0,0,0.8);
+  z-index: 3;
+}
+.astragal-left { right: 0; }
+.astragal-right { left: 0; }
+
+/* ========================================================
+   ANIMACIÓN DE APERTURA 3D (COMO SE ABRE EL SOBRE)
+   ======================================================== */
 .main-entrance-3d.opened .door-left {
-  transform: translateX(-102%) rotateY(-25deg);
+  transform: rotateY(-112deg);
+  box-shadow: 20px 10px 40px rgba(0, 0, 0, 0.85);
 }
 
 .main-entrance-3d.opened .door-right {
-  transform: translateX(102%) rotateY(25deg);
+  transform: rotateY(112deg);
+  box-shadow: -20px 10px 40px rgba(0, 0, 0, 0.85);
+}
+
+/* INTERIOR DEL HOSPITAL REVELADO TRAS ABRIR LAS PUERTAS */
+.entrance-interior-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, #11324d 0%, #061320 85%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 20px;
+  z-index: 1;
+  text-align: center;
+}
+
+.interior-welcome-content {
+  max-width: 440px;
+}
+
+.interior-stetho-pulse {
+  font-size: 2.8rem;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 0 15px #00f2fe);
+  animation: pulseBeat 1.4s ease-in-out infinite alternate;
+}
+
+.interior-welcome-title {
+  font-size: clamp(1.2rem, 3.5vw, 1.6rem);
+  font-weight: 900;
+  color: #00f2fe;
+  letter-spacing: 0.8px;
+  margin-bottom: 8px;
+  text-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
+}
+
+.interior-welcome-desc {
+  font-size: 0.86rem;
+  color: #cbd5e1;
+  line-height: 1.45;
+  margin-bottom: 16px;
+}
+
+.interior-cta-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-interior-enter {
+  background: linear-gradient(135deg, #00f2fe 0%, #0284c7 100%);
+  color: #061524;
+  border: none;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  padding: 10px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-interior-enter:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 242, 254, 0.6);
+}
+
+.btn-interior-close {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #94a3b8;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-interior-close:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
 }
 
 /* BOTÓN DE ENTRADA PRINCIPAL */
@@ -989,10 +1217,10 @@ body {
   overflow: hidden;
 }
 
-.window-cross {
-  font-size: 2.8rem;
-  color: #ff3366;
-  text-shadow: 0 0 12px rgba(255, 51, 102, 0.8);
+.clinic-window-cross-svg {
+  width: 44px;
+  height: 44px;
+  filter: drop-shadow(0 2px 8px rgba(255, 51, 102, 0.8));
 }
 
 .window-reflection {

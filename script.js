@@ -206,6 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderClinicRooms();
   initEntranceDoors();
   initClinicDoors();
+  initShareWhatsApp();
   initPrescriptionModal();
   initLightboxModal();
   initAudioSystem();
@@ -377,30 +378,21 @@ function initClinicDoors() {
     });
   });
 
-  // Botón superior: Abrir / Cerrar todas las puertas
-  const btnOpenAll = document.getElementById('btnOpenAllDoors');
-  if (btnOpenAll) {
-    let allOpened = false;
+}
 
-    btnOpenAll.addEventListener('click', () => {
-      allOpened = !allOpened;
-      doors.forEach(door => {
-        if (allOpened) {
-          door.classList.add('opened');
-        } else {
-          door.classList.remove('opened');
-        }
-      });
+// ========================================================
+// 5. COMPARTIR EN WHATSAPP
+// ========================================================
+function initShareWhatsApp() {
+  const btnShare = document.getElementById('btnShareWhatsApp');
+  if (!btnShare) return;
 
-      if (allOpened) {
-        btnOpenAll.innerHTML = '<span class="icon">🔒</span><span class="btn-text">Cerrar Todas</span>';
-        playHospitalEntranceSound();
-        triggerHospitalCelebrationConfetti();
-      } else {
-        btnOpenAll.innerHTML = '<span class="icon">🚪</span><span class="btn-text">Abrir Todas</span>';
-      }
-    });
-  }
+  btnShare.addEventListener('click', (e) => {
+    e.preventDefault();
+    const pageUrl = window.location.href.split('#')[0].split('?')[0];
+    const text = encodeURIComponent('🏥🎂 ¡Te invito a celebrar el cumpleaños de Armando! Descubre sus fotos y recuerdos en su Hospital Interactivo: ' + pageUrl);
+    window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+  });
 }
 
 // ========================================================

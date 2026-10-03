@@ -308,7 +308,7 @@ function initEntranceDoors() {
       btnEnterLabel.textContent = '¡INGRESANDO AL HOSPITAL...!';
     }
     if (sensorIndicator) {
-      sensorIndicator.innerHTML = '<span class="sensor-green-dot"></span><span class="sensor-text">ACCESO CONCEDIDO • INGRESANDO...</span>';
+      sensorIndicator.innerHTML = '<span class="sensor-green-dot"></span><span class="sensor-text">INGRESANDO AL HOSPITAL...</span>';
     }
 
     // Navegar a consultorios.html tras la animación 3D de apertura

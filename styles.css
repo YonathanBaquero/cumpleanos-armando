@@ -526,6 +526,42 @@ body {
   position: relative;
 }
 
+.doors-column-wrapper {
+  flex: 1;
+  width: 100%;
+  max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.doors-focus-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  border: 1.5px solid #38bdf8;
+  color: #ffffff;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 15px rgba(2, 132, 199, 0.35);
+  animation: badgePulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes badgePulse {
+  0% { transform: scale(0.98); box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3); }
+  100% { transform: scale(1.02); box-shadow: 0 6px 20px rgba(56, 189, 248, 0.6); }
+}
+
+.doors-focus-icon {
+  font-size: 1.15rem;
+}
+
 /* TARJETA / STAND DEL MUÑECO 3D */
 .doctor-mascot-card {
   flex: 0 0 260px;
@@ -1851,26 +1887,44 @@ body {
   }
 
   .hospital-facade-section {
-    padding: 20px 12px 35px;
+    padding: 16px 10px 25px;
   }
 
   .hospital-sign-board {
-    padding: 20px 14px 18px;
+    padding: 16px 12px 14px;
     border-radius: 18px;
+    margin-bottom: 14px;
   }
 
   .sign-title {
-    font-size: 1.55rem;
+    font-size: 1.45rem;
   }
 
   .sign-subtitle {
-    font-size: 0.84rem;
+    font-size: 0.8rem;
+  }
+
+  .hospital-photo-container {
+    max-height: 160px;
+  }
+
+  .hospital-hero-photo {
+    max-height: 160px;
+  }
+
+  .entrance-gateway {
+    padding: 14px 10px 20px;
+  }
+
+  .door-operator-header {
+    padding: 6px 12px;
+    margin-bottom: 10px;
   }
 
   .entrance-stage-wrapper {
     flex-direction: column;
     align-items: center;
-    gap: 18px;
+    gap: 12px;
   }
 
   .doctor-mascot-card {
@@ -1879,58 +1933,140 @@ body {
     max-width: 320px;
   }
 
+  .mascot-speech-bubble {
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    font-size: 0.78rem;
+  }
+
   .mascot-figure-stage {
-    height: 250px;
+    height: 160px;
   }
 
   .doctor-mascot-doll {
-    height: 235px;
+    height: 150px;
+  }
+
+  .mascot-pedestal-shadow {
+    width: 90px;
+    height: 12px;
+  }
+
+  .mascot-nametag {
+    margin-top: 4px;
+    padding: 3px 10px;
+  }
+
+  .doors-column-wrapper {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .doors-focus-badge {
+    font-size: 0.72rem;
+    padding: 6px 14px;
+    margin-bottom: 10px;
   }
 
   .main-entrance-3d {
-    width: 100%;
-    max-width: 100%;
-    height: 330px;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 310px !important;
+    display: block !important;
+    visibility: visible !important;
+    position: relative !important;
+    margin: 0 auto !important;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15) !important;
   }
 
   .hospital-hallway-section {
-    padding: 30px 12px 60px;
+    padding: 24px 10px 50px;
   }
 
   .hallway-corridor {
     grid-template-columns: 1fr;
-    gap: 28px;
+    gap: 24px;
   }
 
   .room-door-assembly {
-    min-height: 460px;
+    min-height: 440px;
   }
 }
 
 @media (max-width: 480px) {
+  .hospital-photo-container {
+    max-height: 130px;
+  }
+
+  .hospital-hero-photo {
+    max-height: 130px;
+  }
+
+  .hospital-sign-board {
+    padding: 12px 10px 10px;
+    border-radius: 14px;
+    margin-bottom: 10px;
+  }
+
+  .sign-title {
+    font-size: 1.25rem;
+  }
+
+  .sign-subtitle {
+    font-size: 0.72rem;
+    margin-bottom: 6px;
+  }
+
+  .patient-badge {
+    padding: 4px 12px;
+  }
+
+  .badge-name {
+    font-size: 0.92rem;
+  }
+
+  .mascot-figure-stage {
+    height: 140px;
+  }
+
+  .doctor-mascot-doll {
+    height: 130px;
+  }
+
   .main-entrance-3d {
-    height: 300px;
+    height: 280px !important;
+  }
+
+  .door-frame-3d {
+    border: 8px solid #94a3b8;
+    border-top: 12px solid #cbd5e1;
+    border-bottom: 8px solid #64748b;
+  }
+
+  .door-panel-body {
+    padding: 10px 8px 8px;
   }
 
   .hospital-glass-window {
-    max-height: 160px;
+    max-height: 140px;
+    width: 92%;
   }
 
   .door-medical-emblem .medical-cross-svg {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
   }
 
   .emblem-text {
-    font-size: 0.65rem;
+    font-size: 0.6rem;
   }
 
   .panic-bar-label {
-    font-size: 0.55rem;
-    letter-spacing: 1px;
+    font-size: 0.5rem;
+    letter-spacing: 0.5px;
   }
 
   .hospital-kickplate {
-    height: 42px;
+    height: 36px;
   }
 }

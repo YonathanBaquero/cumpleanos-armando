@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>¡Feliz Cumpleaños, Armando! 🏥🎂🩺 Hospital de la Felicidad</title>
-  <meta name="description" content="Una experiencia interactiva y médica única para celebrar el cumpleaños de Armando. ¡Abre las puertas de los consultorios y descubre los recuerdos!">
+  <title>¡Feliz Cumpleaños, Dr. José! 🏥🎂🩺 Hospital de la Felicidad</title>
+  <meta name="description" content="Una experiencia interactiva y médica única para celebrar el cumpleaños del Dr. José. ¡Abre las puertas de los consultorios y descubre los recuerdos!">
   <meta name="theme-color" content="#0284c7">
 
   <!-- Fuentes de Google: Montserrat moderna + Fuentas manuscritas festivas -->
@@ -19,7 +19,7 @@
   <link rel="preload" as="image" href="armando-doctor-3d.webp" type="image/webp" fetchpriority="high">
 
   <!-- Estilos del Hospital -->
-  <link rel="stylesheet" href="styles.css?v=armando-v11">
+  <link rel="stylesheet" href="styles.css?v=armando-v12">
 </head>
 <body>
 
@@ -34,7 +34,7 @@
       </div>
       <div class="brand-text">
         <span class="hospital-name">HOSPITAL GENERAL DE LA ALEGRÍA</span>
-        <span class="hospital-sub">ÁREA ESPECIAL • DR. ARMANDO 🩺</span>
+        <span class="hospital-sub">ÁREA ESPECIAL • DR. JOSÉ 🩺</span>
       </div>
     </div>
 
@@ -79,18 +79,18 @@
       <div class="hospital-sign-board">
         <div class="emergency-beacon beacon-left"></div>
         <div class="emergency-beacon beacon-right"></div>
-        <h1 class="sign-title">DR. ARMANDO MEDICAL CENTER</h1>
+        <h1 class="sign-title">DR. JOSÉ MEDICAL CENTER</h1>
         <p class="sign-subtitle">Hospital General de la Alegría • Área Especial de Urgencias & Cumpleaños</p>
         <div class="patient-badge">
           <span class="badge-label">HOMENAJEADO DE HONOR:</span>
-          <span class="badge-name">¡DR. ARMANDO! 🎂🎉</span>
+          <span class="badge-name">¡DR. JOSÉ! 🎂🎉</span>
         </div>
       </div>
 
       <!-- Fachada Visual 3D del Edificio del Hospital -->
       <div class="hospital-building-showcase">
         <div class="hospital-photo-container">
-          <img src="hospital.jpg" alt="Fachada del Hospital Dr. Armando Medical Center" class="hospital-hero-photo">
+          <img src="hospital.jpg" alt="Fachada del Hospital Dr. José Medical Center" class="hospital-hero-photo">
           
           <!-- Efectos luminosos dinámicos sobre la fachada del hospital -->
           <div class="hospital-photo-overlay"></div>
@@ -111,11 +111,11 @@
             </div>
           </div>
 
-          <!-- Escenario de Entrada: Muñeco 3D del Dr. Armando y Puertas Hospitalarias -->
+          <!-- Escenario de Entrada: Muñeco 3D del Dr. José y Puertas Hospitalarias -->
           <div class="entrance-stage-wrapper">
 
-            <!-- Muñeco 3D del Dr. Armando Médico Anfitrión -->
-            <aside class="doctor-mascot-card" id="doctorMascotContainer" title="¡Toca al Dr. Armando para saludarlo!">
+            <!-- Muñeco 3D del Dr. José Médico Anfitrión -->
+            <aside class="doctor-mascot-card" id="doctorMascotContainer" title="¡Toca al Dr. José para saludarlo!">
               <div class="mascot-speech-bubble" id="mascotSpeech">
                 <span class="speech-quote" id="mascotSpeechText">"¡Están locooss! 😂🩺 ¡Toca mis puertas para entrar al hospital!"</span>
                 <span class="speech-hint-tap">✨ Tócame para interactuar</span>
@@ -125,21 +125,28 @@
                 <div class="mascot-halo"></div>
                 <picture>
                   <source srcset="armando-doctor-3d.webp" type="image/webp">
-                  <img src="armando-doctor-3d.png" alt="Muñeco 3D del Dr. Armando Médico" class="doctor-mascot-doll" id="doctorMascotImg" width="380" height="508" fetchpriority="high" loading="eager" decoding="async">
+                  <img src="armando-doctor-3d.png" alt="Muñeco 3D del Dr. José Médico" class="doctor-mascot-doll" id="doctorMascotImg" width="380" height="508" fetchpriority="high" loading="eager" decoding="async">
                 </picture>
                 <div class="mascot-pedestal-shadow"></div>
               </div>
               <div class="mascot-nametag">
                 <div class="nametag-badge-icon">👨‍⚕️</div>
                 <div class="nametag-info">
-                  <span class="nametag-title">DR. ARMANDO</span>
+                  <span class="nametag-title">DR. JOSÉ</span>
                   <span class="nametag-role">Médico Especialista en Alegría 🩺</span>
                 </div>
               </div>
             </aside>
 
-            <!-- Puertas Dobles Hospitalarias 3D -->
-            <div class="main-entrance-3d" id="mainHospitalEntrance" title="Toca para abrir las puertas del hospital">
+            <!-- Puertas Dobles Hospitalarias 3D con indicador visible para móvil -->
+            <div class="doors-column-wrapper">
+              <div class="doors-focus-badge">
+                <span class="doors-focus-icon">🚪</span>
+                <span class="doors-focus-text">PUERTAS PRINCIPALES • TOCA PARA ENTRAR</span>
+                <span class="doors-focus-icon">🚪</span>
+              </div>
+
+              <div class="main-entrance-3d" id="mainHospitalEntrance" title="Toca para abrir las puertas del hospital">
             <div class="door-frame-3d">
               
               <!-- Puerta Izquierda -->
@@ -196,7 +203,7 @@
                         <rect width="36" height="36" rx="8" fill="#e63946"/>
                         <path d="M14 6 h8 v8 h8 v8 h-8 v8 h-8 v-8 h-8 v-8 h8 z" fill="#ffffff"/>
                       </svg>
-                      <span class="emblem-text">DR. ARMANDO</span>
+                      <span class="emblem-text">DR. JOSÉ</span>
                     </div>
                   </div>
 
@@ -226,7 +233,7 @@
               <div class="entrance-interior-glow">
                 <div class="interior-welcome-content">
                   <div class="interior-stetho-pulse">🩺 🎂 🏥</div>
-                  <h2 class="interior-welcome-title">¡BIENVENIDO AL HOSPITAL, DR. ARMANDO!</h2>
+                  <h2 class="interior-welcome-title">¡BIENVENIDO AL HOSPITAL, DR. JOSÉ!</h2>
                   <p class="interior-welcome-desc">Las puertas de urgencias se han abierto... ¡Ingresando al pabellón de fotos y consultorios!</p>
                   
                   <div class="interior-cta-group">
@@ -240,6 +247,7 @@
 
             </div>
           </div>
+          </div> <!-- Fin .doors-column-wrapper -->
           </div> <!-- Fin .entrance-stage-wrapper -->
         </div>
 
@@ -272,7 +280,7 @@
       <!-- Datos del Paciente -->
       <div class="prescription-patient-info">
         <div class="info-row">
-          <span class="info-item"><strong>Paciente:</strong> Armando</span>
+          <span class="info-item"><strong>Paciente:</strong> Dr. José</span>
           <span class="info-item"><strong>Edad:</strong> En su mejor momento ✨</span>
         </div>
         <div class="info-row">
@@ -338,6 +346,6 @@
   <audio id="ambientAudio" preload="none"></audio>
 
   <!-- Script principal del hospital -->
-  <script src="script.js?v=armando-v11"></script>
+  <script src="script.js?v=armando-v12"></script>
 </body>
 </html>

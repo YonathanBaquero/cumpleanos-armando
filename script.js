@@ -15,7 +15,7 @@ const ROOMS_DATA = [
     specialty: "Cardiología de Recuerdos 🫀",
     tag: "Momento Inolvidable ❤️",
     title: "Un Corazón Lleno de Pasión",
-    desc: "Para alguien que pone el alma en todo lo que hace, curando tristezas con una sonrisa y regalando siempre lo mejor de sí. ¡Gracias por cada momento compartido, Armando!",
+    desc: "Para alguien que pone el alma en todo lo que hace, curando tristezas con una sonrisa y regalando siempre lo mejor de sí. ¡Gracias por cada momento compartido, José!",
     image: "fotos/foto1.jpg",
     chart: [
       { label: "Diagnóstico", val: "Gran ser humano" },
@@ -54,7 +54,7 @@ const ROOMS_DATA = [
     specialty: "Urgencias de Abrazos 🚑",
     tag: "Amor Incondicional 🫂",
     title: "Siempre a Tu Lado",
-    desc: "En las buenas y en las no tan buenas, aquí tienes un equipo que te quiere, te apoya y celebra cada año de tu valiosa existencia. ¡Te queremos mucho, Armando!",
+    desc: "En las buenas y en las no tan buenas, aquí tienes un equipo que te quiere, te apoya y celebra cada año de tu valiosa existencia. ¡Te queremos mucho, José!",
     image: "fotos/foto4.jpg",
     chart: [
       { label: "Tratamiento", val: "Dosis masiva de abrazos" },
@@ -132,7 +132,7 @@ const ROOMS_DATA = [
     specialty: "Nutrición & Brindis 🍷",
     tag: "¡A Festejar! 🥂",
     title: "Brindando por tu Salud",
-    desc: "Hoy se vale celebrar con todo: buena comida, brindis por tus éxitos y el cariño de quienes te admiramos profundamente. ¡Salud por ti, Armando!",
+    desc: "Hoy se vale celebrar con todo: buena comida, brindis por tus éxitos y el cariño de quienes te admiramos profundamente. ¡Salud por ti, José!",
     image: "fotos/foto10.jpg",
     chart: [
       { label: "Dieta de hoy", val: "Pastel y alegría" },
@@ -405,19 +405,95 @@ function initDoctorMascot() {
   });
 }
 
+// ========================================================
+// 3.6. SISTEMA DE VOZ MASCULINA DEL DR. JOSÉ
+// ========================================================
+let cachedSystemVoices = [];
+
+function loadVoicesList() {
+  if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+    cachedSystemVoices = window.speechSynthesis.getVoices();
+  }
+}
+
+if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+  loadVoicesList();
+  window.speechSynthesis.onvoiceschanged = loadVoicesList;
+}
+
+function getMaleSpanishVoice() {
+  if (!('speechSynthesis' in window)) return null;
+  if (!cachedSystemVoices || cachedSystemVoices.length === 0) {
+    cachedSystemVoices = window.speechSynthesis.getVoices();
+  }
+
+  const spanishVoices = cachedSystemVoices.filter(v => v.lang && v.lang.toLowerCase().startsWith('es'));
+
+  // Nombres y descriptores masculinos de voces en iOS, Android, Windows
+  const maleIdentifiers = [
+    'jorge', 'juan', 'diego', 'carlos', 'pablo', 'raul', 'raúl', 
+    'manuel', 'gonzalo', 'miguel', 'alvaro', 'álvaro', 'david', 'enrique',
+    'male', 'hombre', 'man', 'eed', 'sfb', 'guy'
+  ];
+
+  // Nombres y descriptores femeninos a descartar
+  const femaleIdentifiers = [
+    'monica', 'mónica', 'paulina', 'helena', 'elena', 'laura', 'lucia', 'lucía', 
+    'rosa', 'carmen', 'female', 'mujer', 'sabina', 'soledad', 'valeria', 'ana', 
+    'francisca', 'victoria', 'angelica', 'angela', 'es-es-x-ana'
+  ];
+
+  // 1. Voz en español explícitamente masculina
+  for (const v of spanishVoices) {
+    const name = v.name.toLowerCase();
+    const isMale = maleIdentifiers.some(m => name.includes(m));
+    const isFemale = femaleIdentifiers.some(f => name.includes(f));
+    if (isMale && !isFemale) {
+      return v;
+    }
+  }
+
+  // 2. Voz en español que no sea femenina
+  for (const v of spanishVoices) {
+    const name = v.name.toLowerCase();
+    const isFemale = femaleIdentifiers.some(f => name.includes(f));
+    if (!isFemale) {
+      return v;
+    }
+  }
+
+  if (spanishVoices.length > 0) return spanishVoices[0];
+  return null;
+}
+
 function speakDoctorPhrase(text) {
   try {
-    if ('speechSynthesis' in window && soundEnabled) {
-      window.speechSynthesis.cancel();
-      const cleanText = text.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, '').replace(/[🩺🎂🎉😄💊❤️🥳✨🍰🤣]/g, '');
-      const utterance = new SpeechSynthesisUtterance(cleanText);
-      utterance.lang = 'es-ES';
-      utterance.pitch = 1.1;
-      utterance.rate = 1.0;
-      window.speechSynthesis.speak(utterance);
+    if (!('speechSynthesis' in window) || !soundEnabled) return;
+
+    window.speechSynthesis.cancel();
+
+    // Limpiar emojis y caracteres decorativos para el lector
+    const cleanText = text.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, '').replace(/[🩺🎂🎉😄💊❤️🥳✨🍰🤣🚪👇]/g, '').trim();
+    if (!cleanText) return;
+
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.lang = 'es-ES';
+
+    // Priorizar voz masculina nativa del teléfono
+    const maleVoice = getMaleSpanishVoice();
+    if (maleVoice) {
+      utterance.voice = maleVoice;
+      utterance.lang = maleVoice.lang || 'es-ES';
     }
+
+    // PITCH BAJO (0.74): Clave para garantizar voz masculina profunda y cálida
+    utterance.pitch = 0.74;
+    utterance.rate = 0.95;
+    utterance.volume = 1.0;
+
+    window.speechSynthesis.speak(utterance);
   } catch (err) {
-    // Silently continue if speech is restricted
+    // Si la reproducción es bloqueada por el navegador, continuar
   }
 }
 
@@ -463,7 +539,7 @@ function initShareWhatsApp() {
   btnShare.addEventListener('click', (e) => {
     e.preventDefault();
     const pageUrl = getShareUrl();
-    const text = encodeURIComponent('🏥🎂 ¡Te invito a celebrar el cumpleaños de Armando! Abre las puertas y descubre sus fotos y recuerdos en su Hospital Interactivo: ' + pageUrl);
+    const text = encodeURIComponent('🏥🎂 ¡Te invito a celebrar el cumpleaños del Dr. José! Abre las puertas y descubre sus fotos y recuerdos en su Hospital Interactivo: ' + pageUrl);
     window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
   });
 }
@@ -617,7 +693,7 @@ function initActionButtons() {
   if (btnShare) {
     btnShare.addEventListener('click', () => {
       const pageUrl = window.location.href;
-      const text = encodeURIComponent(`🩺 ¡Emergencia especial de cumpleaños para el Dr. Armando! Abre las puertas de los consultorios y descubre los recuerdos que preparamos para ti aquí: ${pageUrl}`);
+      const text = encodeURIComponent(`🩺 ¡Emergencia especial de cumpleaños para el Dr. José! Abre las puertas de los consultorios y descubre los recuerdos que preparamos para ti aquí: ${pageUrl}`);
       window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
     });
   }

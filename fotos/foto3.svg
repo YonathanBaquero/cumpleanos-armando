@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b192c"/>
+      <stop offset="50%" stop-color="#1e3e62"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </linearGradient>
+    <linearGradient id="trophyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffd700"/>
+      <stop offset="50%" stop-color="#ffa500"/>
+      <stop offset="100%" stop-color="#ff8c00"/>
+    </linearGradient>
+    <filter id="glow3" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <rect width="600" height="450" rx="16" fill="url(#bgGrad3)"/>
+
+  <!-- Placa superior -->
+  <rect x="180" y="30" width="240" height="38" rx="19" fill="#ffd700" opacity="0.15"/>
+  <text x="300" y="55" font-family="'Montserrat', sans-serif" font-size="14" font-weight="700" fill="#ffd700" text-anchor="middle" letter-spacing="2">
+    CONSULTORIO 103 • FOTO 3
+  </text>
+
+  <!-- Ilustración central: Trofeo médico / Medalla de Honor -->
+  <g transform="translate(300, 195)">
+    <!-- Aura dorada -->
+    <circle cx="0" cy="0" r="100" fill="#ffd700" opacity="0.15" filter="url(#glow3)"/>
+
+    <!-- Copa / Trofeo de oro -->
+    <path d="M -45 -55 L 45 -55 C 45 10 25 35 0 45 C -25 35 -45 10 -45 -55 Z" fill="url(#trophyGrad)" filter="url(#glow3)"/>
+    <!-- Asas de la copa -->
+    <path d="M -45 -40 C -75 -40 -75 0 -40 10" fill="none" stroke="#ffa500" stroke-width="8" stroke-linecap="round"/>
+    <path d="M 45 -40 C 75 -40 75 0 40 10" fill="none" stroke="#ffa500" stroke-width="8" stroke-linecap="round"/>
+    <!-- Tallo y Base -->
+    <rect x="-10" y="45" width="20" height="25" fill="#e67e22"/>
+    <rect x="-35" y="70" width="70" height="20" rx="4" fill="#34495e"/>
+    <!-- Cruz médica grabada en el trofeo -->
+    <rect x="-6" y="-30" width="12" height="30" rx="3" fill="#ffffff"/>
+    <rect x="-15" y="-21" width="30" height="12" rx="3" fill="#ffffff"/>
+
+    <!-- Destellos -->
+    <text x="60" y="-45" font-size="28">⭐</text>
+    <text x="-80" y="-25" font-size="26">👑</text>
+    <text x="55" y="40" font-size="24">✨</text>
+  </g>
+
+  <!-- Texto informativo -->
+  <text x="300" y="380" font-family="'Montserrat', sans-serif" font-size="20" font-weight="800" fill="#ffffff" text-anchor="middle">
+    ¡Tercera Foto: Operación Cumpleaños! 📸
+  </text>
+  <text x="300" y="410" font-family="'Montserrat', sans-serif" font-size="13" fill="#cbd5e1" text-anchor="middle">
+    Nombra tu imagen foto3.jpg en la carpeta fotos para reemplazar este diseño
+  </text>
+</svg>

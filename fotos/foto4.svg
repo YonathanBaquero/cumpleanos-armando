@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e130c"/>
+      <stop offset="50%" stop-color="#4a1c40"/>
+      <stop offset="100%" stop-color="#120c1f"/>
+    </linearGradient>
+    <linearGradient id="ambGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff007f"/>
+      <stop offset="100%" stop-color="#7928ca"/>
+    </linearGradient>
+    <filter id="glow4" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <rect width="600" height="450" rx="16" fill="url(#bgGrad4)"/>
+
+  <!-- Placa superior -->
+  <rect x="180" y="30" width="240" height="38" rx="19" fill="#ff007f" opacity="0.15"/>
+  <text x="300" y="55" font-family="'Montserrat', sans-serif" font-size="14" font-weight="700" fill="#ff70a6" text-anchor="middle" letter-spacing="2">
+    CONSULTORIO 104 • FOTO 4
+  </text>
+
+  <!-- Ilustración central: Ambulancia de Felicidad con Globos -->
+  <g transform="translate(300, 205)">
+    <!-- Aura de luz -->
+    <circle cx="0" cy="0" r="95" fill="#ff007f" opacity="0.12" filter="url(#glow4)"/>
+
+    <!-- Ambulancia / Vehículo de emergencia festiva -->
+    <g transform="translate(-100, -40)">
+      <!-- Carrocería -->
+      <rect x="20" y="30" width="160" height="70" rx="12" fill="#ffffff" filter="url(#glow4)"/>
+      <path d="M 140 30 L 175 60 L 175 100 L 140 100 Z" fill="#ffffff"/>
+      <!-- Ventana -->
+      <path d="M 142 38 L 168 62 L 142 62 Z" fill="#00c6ff" opacity="0.8"/>
+      <!-- Franja festiva -->
+      <rect x="20" y="65" width="155" height="14" fill="url(#ambGrad)"/>
+      <!-- Cruz médica -->
+      <rect x="70" y="42" width="20" height="6" fill="#ff007f" rx="2"/>
+      <rect x="77" y="35" width="6" height="20" fill="#ff007f" rx="2"/>
+      <!-- Sirena de fiesta -->
+      <polygon points="90,20 85,30 95,30" fill="#ffd166"/>
+      <circle cx="90" cy="18" r="6" fill="#ff0055"/>
+      <!-- Ruedas -->
+      <circle cx="55" cy="100" r="16" fill="#2d3748"/>
+      <circle cx="55" cy="100" r="7" fill="#cbd5e1"/>
+      <circle cx="140" cy="100" r="16" fill="#2d3748"/>
+      <circle cx="140" cy="100" r="7" fill="#cbd5e1"/>
+    </g>
+
+    <!-- Globos atados a la ambulancia -->
+    <g transform="translate(10, -85)">
+      <!-- Hilos -->
+      <path d="M -30 20 Q -15 60 0 85" stroke="#cbd5e1" stroke-width="1.5" fill="none"/>
+      <path d="M 0 10 Q 0 50 0 85" stroke="#cbd5e1" stroke-width="1.5" fill="none"/>
+      <path d="M 30 15 Q 15 50 0 85" stroke="#cbd5e1" stroke-width="1.5" fill="none"/>
+      <!-- Globos -->
+      <circle cx="-35" cy="10" r="22" fill="#ff4d6d"/>
+      <circle cx="0" cy="-5" r="24" fill="#ffd166"/>
+      <circle cx="35" cy="5" r="22" fill="#06d6a0"/>
+    </g>
+  </g>
+
+  <!-- Texto informativo -->
+  <text x="300" y="380" font-family="'Montserrat', sans-serif" font-size="20" font-weight="800" fill="#ffffff" text-anchor="middle">
+    ¡Cuarta Foto: Urgencias de Abrazos! 📸
+  </text>
+  <text x="300" y="410" font-family="'Montserrat', sans-serif" font-size="13" fill="#cbd5e1" text-anchor="middle">
+    Nombra tu imagen foto4.jpg en la carpeta fotos para reemplazar este diseño
+  </text>
+</svg>

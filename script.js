@@ -1021,9 +1021,24 @@ function initPrescriptionWall() {
   const btnCancelLike = document.getElementById('btnCancelLike');
   let pendingLikeRxId = null;
 
-  // Obtener URL de Web App de Google Sheets guardada localmente
+  // URL predeterminada oficial de Google Sheets para todos los invitados
+  const DEFAULT_GOOGLE_SCRIPT_URL = '';
+
+  // Obtener URL de Web App de Google Sheets
   const getGoogleScriptUrl = () => {
-    return localStorage.getItem('google_script_muro_jose_url') || localStorage.getItem('google_script_muro_url') || '';
+    // Si viene en el enlace (?script=...), autoconfigurar inmediatamente en el celular
+    const urlParams = new URLSearchParams(window.location.search);
+    const paramScript = urlParams.get('script');
+    if (paramScript) {
+      try {
+        const decoded = decodeURIComponent(paramScript);
+        if (decoded.startsWith('http')) {
+          localStorage.setItem('google_script_muro_jose_url', decoded);
+          return decoded;
+        }
+      } catch (e) {}
+    }
+    return localStorage.getItem('google_script_muro_jose_url') || DEFAULT_GOOGLE_SCRIPT_URL || '';
   };
 
   // Clave de almacenamiento v3 para garantizar inicio en 0 recetas

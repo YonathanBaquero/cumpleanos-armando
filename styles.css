@@ -254,6 +254,45 @@ body {
   color: #0284c7;
 }
 
+.btn-wall {
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  border-color: #0ea5e9;
+  color: #ffffff;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.25);
+}
+
+.btn-wall:hover {
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(14, 165, 233, 0.45);
+}
+
+.btn-consultorios {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #0369a1;
+  text-decoration: none;
+}
+
+.btn-consultorios:hover {
+  background: #e0f2fe;
+  border-color: #38bdf8;
+  color: #0284c7;
+}
+
+.btn-write-rx {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  border-color: #f59e0b;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+.btn-write-rx:hover {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  box-shadow: 0 6px 16px rgba(245, 158, 11, 0.5);
+}
+
 .btn-sound {
   padding: 7px 10px;
   border-radius: 50%;
@@ -2291,3 +2330,728 @@ body {
     font-size: 1.1rem;
   }
 }
+
+/* ========================================================
+   SECCIÓN 3: MURO CLÍNICO DE PRESCRIPCIONES MÉDICAS (MURO.HTML)
+   ======================================================== */
+.page-muro {
+  background-color: #f0f7fa;
+}
+
+.hospital-wall-section {
+  padding: 30px 16px 80px;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.wall-header-container {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.wall-main-title {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 900;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.wall-subtitle {
+  font-size: 0.95rem;
+  color: #475569;
+  max-width: 640px;
+  margin: 0 auto 16px;
+  line-height: 1.45;
+}
+
+/* BOTÓN DE LLAMADO A LA ACCIÓN (ESCRIBIR RECETA) */
+.wall-cta-wrapper {
+  margin: 20px 0 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.btn-primary-write-rx {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  color: #ffffff;
+  border: 2px solid #38bdf8;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-size: 1.05rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(2, 132, 199, 0.35);
+  transition: all 0.25s ease;
+  animation: rxPulse 2.4s ease-in-out infinite alternate;
+}
+
+.btn-primary-write-rx:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(56, 189, 248, 0.5);
+  background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
+}
+
+@keyframes rxPulse {
+  0% { box-shadow: 0 6px 18px rgba(2, 132, 199, 0.3); }
+  100% { box-shadow: 0 10px 30px rgba(56, 189, 248, 0.6); }
+}
+
+.rx-mini-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 900;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+/* BARRA DE ESTADÍSTICAS DEL MURO */
+.wall-stats-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.stat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid #bae6fd;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #0369a1;
+  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.08);
+}
+
+.stat-count {
+  background: #0284c7;
+  color: #ffffff;
+  padding: 1px 7px;
+  border-radius: 10px;
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+/* ALERTA DE NUEVA RECETA COMPARTIDA */
+.shared-rx-notice {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  border: 2px solid #10b981;
+  border-radius: 16px;
+  padding: 14px 20px;
+  margin: 0 auto 28px;
+  max-width: 680px;
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.2);
+}
+
+.shared-rx-notice .notice-icon {
+  font-size: 1.8rem;
+}
+
+.shared-rx-notice h4 {
+  font-size: 0.96rem;
+  font-weight: 800;
+  color: #065f46;
+}
+
+.shared-rx-notice p {
+  font-size: 0.82rem;
+  color: #047857;
+}
+
+.btn-close-notice {
+  margin-left: auto;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: #047857;
+  cursor: pointer;
+  padding: 4px;
+}
+
+/* TABLERO DE RECETAS EN CUADRÍCULA */
+.wall-board-container {
+  width: 100%;
+}
+
+.wall-prescriptions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 28px;
+}
+
+/* ========================================================
+   HOJA DE PRESCRIPCIÓN MÉDICA INDIVIDUAL (CARD DE RECETA)
+   ======================================================== */
+.prescription-note-card {
+  position: relative;
+  background: #fffdfa;
+  border-radius: 14px;
+  padding: 24px 20px 18px;
+  border: 1px solid #cbd5e1;
+  box-shadow: 
+    0 10px 25px rgba(15, 23, 42, 0.08),
+    0 2px 6px rgba(15, 23, 42, 0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  overflow: hidden;
+}
+
+.prescription-note-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 18px 35px rgba(2, 132, 199, 0.16),
+    0 4px 10px rgba(15, 23, 42, 0.06);
+  border-color: #38bdf8;
+}
+
+.prescription-note-card.highlighted-new {
+  border: 2.5px solid #f59e0b;
+  box-shadow: 0 0 25px rgba(245, 158, 11, 0.35);
+  animation: cardHighlight 2s ease-in-out infinite alternate;
+}
+
+@keyframes cardHighlight {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.02); }
+}
+
+/* Clip metálico superior en cada receta */
+.rx-card-clip {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: 14px;
+  background: linear-gradient(180deg, #cbd5e1 0%, #94a3b8 100%);
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(15, 23, 42, 0.2);
+  border: 1px solid #94a3b8;
+  z-index: 3;
+}
+
+/* Encabezado de la Receta Médica */
+.rx-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #0284c7;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+}
+
+.rx-card-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rx-card-cross {
+  font-size: 1.5rem;
+  color: #0284c7;
+  line-height: 1;
+}
+
+.rx-card-hosp-name {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: 0.5px;
+}
+
+.rx-card-hosp-sub {
+  font-size: 0.62rem;
+  color: #64748b;
+}
+
+.rx-card-rx-id {
+  text-align: right;
+}
+
+.rx-big-symbol {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #0284c7;
+  line-height: 1;
+}
+
+.rx-card-id-text {
+  font-size: 0.62rem;
+  font-weight: 800;
+  color: #94a3b8;
+}
+
+/* Fila de Paciente y Médico Remitente */
+.rx-card-meta {
+  background: #f1f5f9;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin-bottom: 12px;
+  font-size: 0.76rem;
+}
+
+.meta-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 3px;
+}
+
+.meta-row:last-child {
+  margin-bottom: 0;
+}
+
+.meta-label {
+  font-weight: 700;
+  color: #475569;
+}
+
+.meta-value {
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.meta-value.patient {
+  color: #0284c7;
+}
+
+/* Diagnóstico Clínico */
+.rx-card-diagnosis-badge {
+  background: #e0f2fe;
+  border-left: 3px solid #0284c7;
+  padding: 6px 10px;
+  border-radius: 0 6px 6px 0;
+  margin-bottom: 12px;
+  font-size: 0.75rem;
+  text-align: left;
+}
+
+.diag-label {
+  font-weight: 800;
+  color: #0369a1;
+  text-transform: uppercase;
+  font-size: 0.64rem;
+  letter-spacing: 0.5px;
+  display: block;
+}
+
+.diag-text {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+/* Mensaje Escrito a Mano (Tratamiento) */
+.rx-card-treatment-body {
+  position: relative;
+  background-image: repeating-linear-gradient(transparent, transparent 23px, #e2e8f0 24px);
+  padding: 6px 4px;
+  margin-bottom: 14px;
+  min-height: 96px;
+  text-align: left;
+}
+
+.rx-handwriting-msg {
+  font-family: var(--font-hand);
+  font-size: 1.35rem;
+  line-height: 24px;
+  color: #1e3a8a;
+  font-weight: 700;
+  word-break: break-word;
+}
+
+/* Dosis Recomendada */
+.rx-card-dose {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #fef3c7;
+  border: 1px solid #fde68a;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 0.75rem;
+  color: #92400e;
+  margin-bottom: 14px;
+  text-align: left;
+}
+
+.dose-icon {
+  font-size: 0.9rem;
+}
+
+.dose-text strong {
+  color: #78350f;
+}
+
+/* Pie de Receta: Firma y Sello */
+.rx-card-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  border-top: 1px dashed #cbd5e1;
+  padding-top: 10px;
+  margin-bottom: 12px;
+}
+
+.rx-footer-signature {
+  text-align: left;
+}
+
+.rx-sig-text {
+  font-family: var(--font-hand);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #0284c7;
+  line-height: 1;
+}
+
+.rx-sig-line {
+  width: 130px;
+  height: 1px;
+  background: #64748b;
+  margin: 3px 0 2px;
+}
+
+.rx-sig-author {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.rx-sig-role {
+  font-size: 0.62rem;
+  color: #64748b;
+}
+
+.rx-card-seal {
+  width: 68px;
+  height: 68px;
+  border: 2px solid #ef4444;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-10deg);
+  opacity: 0.85;
+}
+
+.rx-seal-inner {
+  width: 58px;
+  height: 58px;
+  border: 1px dashed #ef4444;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.48rem;
+  font-weight: 900;
+  color: #ef4444;
+  text-align: center;
+  line-height: 1.15;
+}
+
+/* Barra de Acciones de la Tarjeta */
+.rx-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 8px;
+}
+
+.btn-rx-like {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 16px;
+  padding: 4px 10px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #334155;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s;
+}
+
+.btn-rx-like:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #ef4444;
+}
+
+.btn-rx-like.liked {
+  background: #ef4444;
+  color: #ffffff;
+  border-color: #ef4444;
+}
+
+.btn-rx-share-item {
+  background: #25d366;
+  color: #ffffff;
+  border: none;
+  border-radius: 16px;
+  padding: 4px 12px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s;
+}
+
+.btn-rx-share-item:hover {
+  background: #1da851;
+  transform: scale(1.04);
+}
+
+/* ========================================================
+   MODAL DE NUEVA RECETA MÉDICA (PRESCRIPTION FORM)
+   ======================================================== */
+.prescription-form-card {
+  position: relative;
+  background: #fffdf9;
+  color: #0f172a;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 92vh;
+  overflow-y: auto;
+  padding: 28px 24px 22px;
+  box-shadow: 0 25px 60px rgba(15, 23, 42, 0.4);
+  border: 2px solid #bae6fd;
+}
+
+.form-rx-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #0284c7;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+}
+
+.form-patient-fixed {
+  background: #f0f9ff;
+  border: 1px dashed #38bdf8;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-bottom: 16px;
+  font-size: 0.84rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fixed-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #0369a1;
+}
+
+.fixed-name {
+  color: #0284c7;
+  font-weight: 900;
+}
+
+.rx-form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-row-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  text-align: left;
+}
+
+.form-group label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #334155;
+}
+
+.form-group input,
+.form-group select {
+  padding: 10px 12px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  font-family: var(--font-main);
+  font-size: 0.86rem;
+  background: #ffffff;
+  color: #0f172a;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.lined-paper-wrapper textarea:focus {
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+}
+
+.lined-paper-wrapper {
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.lined-paper-wrapper textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 12px 14px;
+  font-family: var(--font-hand);
+  font-size: 1.35rem;
+  line-height: 24px;
+  color: #1e3a8a;
+  resize: vertical;
+  background-image: repeating-linear-gradient(transparent, transparent 23px, #e2e8f0 24px);
+  background-attachment: local;
+}
+
+/* Vista previa de firma */
+.form-signature-preview {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+
+.sig-label-small {
+  font-size: 0.68rem;
+  color: #64748b;
+  display: block;
+}
+
+.sig-preview-text {
+  font-family: var(--font-hand);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0284c7;
+}
+
+.sig-preview-line {
+  width: 140px;
+  height: 1px;
+  background: #64748b;
+  margin-top: 2px;
+}
+
+.seal-preview {
+  width: 68px;
+  height: 68px;
+}
+.seal-preview .seal-inner {
+  width: 58px;
+  height: 58px;
+  font-size: 0.46rem;
+}
+
+/* Botones del Formulario */
+.form-actions-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.btn-submit-rx {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(2, 132, 199, 0.3);
+  transition: all 0.2s;
+}
+
+.btn-submit-rx:hover {
+  background: #0369a1;
+  transform: translateY(-2px);
+}
+
+.btn-submit-and-share {
+  background: #25d366;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 0.92rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+  transition: all 0.2s;
+}
+
+.btn-submit-and-share:hover {
+  background: #1da851;
+  transform: translateY(-2px);
+}
+
+/* Responsividad para móviles del Muro */
+@media (max-width: 768px) {
+  .hospital-wall-section {
+    padding: 20px 10px 60px;
+  }
+  .form-row-2col {
+    grid-template-columns: 1fr;
+  }
+  .wall-prescriptions-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .btn-primary-write-rx {
+    font-size: 0.92rem;
+    padding: 10px 18px;
+    width: 100%;
+    max-width: 340px;
+    justify-content: center;
+  }
+  .prescription-form-card {
+    padding: 20px 14px 16px;
+  }
+}
+

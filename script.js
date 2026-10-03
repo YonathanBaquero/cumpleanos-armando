@@ -212,6 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLightboxModal();
   initAudioSystem();
   initBackgroundMusic();
+  initPrescriptionWall();
   initActionButtons();
 });
 
@@ -745,9 +746,11 @@ function initBackgroundMusic() {
 
   if (!audio) return;
 
-  // Solo configurar en el pabellón de consultorios
-  const isConsultorios = document.body.classList.contains('page-consultorios') || document.getElementById('doorsContainer');
-  if (!isConsultorios) return;
+  // Configurar en consultorios y en el muro de recetas
+  const shouldPlayMusic = document.body.classList.contains('page-consultorios') || 
+                          document.body.classList.contains('page-muro') || 
+                          document.getElementById('hospitalMusicPlayer');
+  if (!shouldPlayMusic) return;
 
   if (!audio.getAttribute('src')) {
     audio.src = 'musica.mp3';
@@ -971,4 +974,407 @@ function triggerDoorConfetti(clientX, clientY) {
     origin: { x: Math.max(0.1, Math.min(0.9, x)), y: Math.max(0.1, Math.min(0.9, y)) },
     colors: ['#00f2fe', '#ffd166', '#ff3366']
   });
+}
+
+// ========================================================
+// 11. MURO CLÍNICO DE PRESCRIPCIONES MÉDICAS (MURO.HTML)
+// ========================================================
+function initPrescriptionWall() {
+  const grid = document.getElementById('prescriptionsGrid');
+  if (!grid) return; // No estamos en muro.html
+
+  const modal = document.getElementById('modalNewRx');
+  const btnOpenModal = document.getElementById('btnOpenNewRxModal');
+  const btnTriggerNewRx = document.getElementById('btnTriggerNewRx');
+  const btnCloseModal = document.getElementById('btnCloseNewRxModal');
+  const form = document.getElementById('newPrescriptionForm');
+  const inputSender = document.getElementById('doctorSenderName');
+  const inputRelation = document.getElementById('doctorRelationship');
+  const selectDiagnosis = document.getElementById('prescriptionDiagnosis');
+  const customDiagInput = document.getElementById('customDiagnosisInput');
+  const textTreatment = document.getElementById('prescriptionTreatment');
+  const inputDose = document.getElementById('prescriptionDose');
+  const sigPreview = document.getElementById('sigLivePreview');
+  const countBadge = document.getElementById('prescriptionsCount');
+  const btnShareWall = document.getElementById('btnShareWall');
+  const sharedNotice = document.getElementById('sharedRxNotice');
+  const sharedNoticeTitle = document.getElementById('sharedRxNoticeTitle');
+  const btnCloseNotice = document.getElementById('btnCloseSharedNotice');
+  const btnSubmitAndShare = document.getElementById('btnSubmitAndShareWhatsApp');
+
+  // Recetas iniciales precargadas para que el muro se vea vivo y cálido
+  const INITIAL_PRESCRIPTIONS = [
+    {
+      id: "RX-1001",
+      sender: "Familia Baquero & Amigos",
+      relationship: "Familia de Corazón",
+      diagnosis: "Sobredosis de Juventud, Sabiduría y Energía Inagotable 🧠✨",
+      treatment: "¡Querido Dr. José! Gracias por ser faro, alegría y ejemplo de dedicación en cada paso. Te deseamos un año lleno de salud de hierro, grandes éxitos profesionales y momentos imborrables junto a quienes te amamos profundamente. ¡Feliz Cumpleaños!",
+      dose: "100 abrazos al despertar, 2 pedazos de pastel y 1 copa de buen vino.",
+      date: "03/10/2026",
+      likes: 18
+    },
+    {
+      id: "RX-1002",
+      sender: "Dra. Carolina",
+      relationship: "Colega & Amiga de Urgencias",
+      diagnosis: "Corazón Gigante Incurable y Bondad Extrema ❤️🫀",
+      treatment: "Mi estimado colega José: Que la vida te siga premiando con tanta felicidad como la que tú regalas a tus pacientes y amigos todos los días. ¡Un inmenso honor compartir tantos momentos contigo!",
+      dose: "Risas sin moderación y cero preocupaciones por hoy.",
+      date: "03/10/2026",
+      likes: 12
+    },
+    {
+      id: "RX-1003",
+      sender: "El Equipo Médico de Turno",
+      relationship: "Compañeros de Aventuras",
+      diagnosis: "El Mejor Médico, Amigo y Ser Humano del Año 🏆🩺",
+      treatment: "¡Feliz Cumpleaños, Doctor José! El mejor anfitrión, consejero y amigo. Que este nuevo ciclo venga cargado de bendiciones abundantes, viajes y sonrisas infinitas.",
+      dose: "Dosis masiva de abrazos y aplausos de pie.",
+      date: "03/10/2026",
+      likes: 15
+    }
+  ];
+
+  // Cargar recetas del almacenamiento local
+  let prescriptions = [];
+  try {
+    const saved = localStorage.getItem('drJose_wall_prescriptions');
+    if (saved) {
+      prescriptions = JSON.parse(saved);
+    }
+  } catch (e) {
+    prescriptions = [];
+  }
+
+  if (!prescriptions || prescriptions.length === 0) {
+    prescriptions = [...INITIAL_PRESCRIPTIONS];
+    try {
+      localStorage.setItem('drJose_wall_prescriptions', JSON.stringify(prescriptions));
+    } catch (e) {}
+  }
+
+  // Detectar si se recibió una receta en la URL (?rx=...)
+  let highlightedRxId = null;
+  const urlParams = new URLSearchParams(window.location.search);
+  const rxParam = urlParams.get('rx');
+  if (rxParam) {
+    try {
+      const decodedJson = decodeURIComponent(escape(atob(rxParam)));
+      const incomingRx = JSON.parse(decodedJson);
+      if (incomingRx && incomingRx.sender && incomingRx.treatment) {
+        // Verificar si ya existe para no duplicar
+        const exists = prescriptions.some(p => p.id === incomingRx.id);
+        if (!exists) {
+          prescriptions.unshift(incomingRx);
+          try {
+            localStorage.setItem('drJose_wall_prescriptions', JSON.stringify(prescriptions));
+          } catch (e) {}
+        }
+        highlightedRxId = incomingRx.id;
+
+        // Mostrar notificación de bienvenida
+        if (sharedNotice) {
+          sharedNotice.style.display = 'flex';
+          if (sharedNoticeTitle) {
+            sharedNoticeTitle.textContent = `¡Nueva receta médica recibida de ${incomingRx.sender}! 🩺✨`;
+          }
+          triggerHospitalCelebrationConfetti();
+        }
+      }
+    } catch (e) {
+      console.warn('No se pudo decodificar la receta del enlace:', e);
+    }
+  }
+
+  // Cerrar alerta de receta compartida
+  if (btnCloseNotice && sharedNotice) {
+    btnCloseNotice.addEventListener('click', () => {
+      sharedNotice.style.display = 'none';
+    });
+  }
+
+  // Vista previa de firma al escribir nombre
+  if (inputSender && sigPreview) {
+    inputSender.addEventListener('input', () => {
+      sigPreview.textContent = inputSender.value.trim() ? inputSender.value.trim() : 'Dr(a). Tu Nombre';
+    });
+  }
+
+  // Manejo de diagnóstico personalizado
+  if (selectDiagnosis && customDiagInput) {
+    selectDiagnosis.addEventListener('change', () => {
+      if (selectDiagnosis.value === '__custom__') {
+        customDiagInput.style.display = 'block';
+        customDiagInput.focus();
+      } else {
+        customDiagInput.style.display = 'none';
+      }
+    });
+  }
+
+  // Abrir y cerrar modal
+  const openModal = () => {
+    if (modal) modal.classList.add('open');
+    if (inputSender) setTimeout(() => inputSender.focus(), 200);
+  };
+  const closeModal = () => {
+    if (modal) modal.classList.remove('open');
+  };
+
+  if (btnOpenModal) btnOpenModal.addEventListener('click', openModal);
+  if (btnTriggerNewRx) btnTriggerNewRx.addEventListener('click', openModal);
+  if (btnCloseModal) btnCloseModal.addEventListener('click', closeModal);
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+  }
+
+  // Renderizar muro
+  const renderWall = () => {
+    if (countBadge) countBadge.textContent = prescriptions.length;
+
+    grid.innerHTML = prescriptions.map(rx => {
+      const isHighlighted = rx.id === highlightedRxId;
+      return `
+        <article class="prescription-note-card ${isHighlighted ? 'highlighted-new' : ''}" id="card-${rx.id}" data-id="${rx.id}">
+          <div class="rx-card-clip"></div>
+
+          <div class="rx-card-header">
+            <div class="rx-card-brand">
+              <span class="rx-card-cross">✚</span>
+              <div>
+                <div class="rx-card-hosp-name">HOSPITAL GENERAL DE LA ALEGRÍA</div>
+                <div class="rx-card-hosp-sub">Dr. José Medical Center • Urgencias</div>
+              </div>
+            </div>
+            <div class="rx-card-rx-id">
+              <div class="rx-big-symbol">℞</div>
+              <div class="rx-card-id-text">${rx.id}</div>
+            </div>
+          </div>
+
+          <div class="rx-card-meta">
+            <div class="meta-row">
+              <span class="meta-label">PACIENTE:</span>
+              <span class="meta-value patient">Dr. José 🎂</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">MÉDICO REMITENTE:</span>
+              <span class="meta-value">${escapeHtml(rx.sender)} ${rx.relationship ? `(${escapeHtml(rx.relationship)})` : ''}</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">FECHA:</span>
+              <span class="meta-value">${rx.date || 'Hoy'}</span>
+            </div>
+          </div>
+
+          <div class="rx-card-diagnosis-badge">
+            <span class="diag-label">DIAGNÓSTICO CLÍNICO:</span>
+            <span class="diag-text">${escapeHtml(rx.diagnosis)}</span>
+          </div>
+
+          <div class="rx-card-treatment-body">
+            <p class="rx-handwriting-msg">"${escapeHtml(rx.treatment)}"</p>
+          </div>
+
+          ${rx.dose ? `
+            <div class="rx-card-dose">
+              <span class="dose-icon">💊</span>
+              <span class="dose-text"><strong>Posología:</strong> ${escapeHtml(rx.dose)}</span>
+            </div>
+          ` : ''}
+
+          <div class="rx-card-footer">
+            <div class="rx-footer-signature">
+              <div class="rx-sig-text">${escapeHtml(rx.sender)}</div>
+              <div class="rx-sig-line"></div>
+              <div class="rx-sig-author">${escapeHtml(rx.sender)}</div>
+              <div class="rx-sig-role">${escapeHtml(rx.relationship || 'Colega de Vida')}</div>
+            </div>
+
+            <div class="rx-card-seal">
+              <div class="rx-seal-inner">
+                <span>HOSPITAL</span>
+                <span>100% AMOR</span>
+                <span>APROBADO</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="rx-card-actions">
+            <button class="btn-rx-like" data-id="${rx.id}" title="Dar cariño a esta receta">
+              <span class="like-icon">❤️</span>
+              <span class="like-count">${rx.likes || 1}</span>
+            </button>
+            <button class="btn-rx-share-item" data-id="${rx.id}" title="Compartir esta receta por WhatsApp">
+              <span>💬 Compartir</span>
+            </button>
+          </div>
+        </article>
+      `;
+    }).join('');
+
+    // Listener para likes
+    grid.querySelectorAll('.btn-rx-like').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-id');
+        const item = prescriptions.find(p => p.id === id);
+        if (item) {
+          item.likes = (item.likes || 1) + 1;
+          btn.querySelector('.like-count').textContent = item.likes;
+          btn.classList.add('liked');
+          try {
+            localStorage.setItem('drJose_wall_prescriptions', JSON.stringify(prescriptions));
+          } catch (e) {}
+          playMedicalBeep();
+        }
+      });
+    });
+
+    // Listener para compartir receta individual
+    grid.querySelectorAll('.btn-rx-share-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-id');
+        const item = prescriptions.find(p => p.id === id);
+        if (item) {
+          shareSinglePrescription(item);
+        }
+      });
+    });
+  };
+
+  // Función para escapar HTML y prevenir inyecciones
+  function escapeHtml(text) {
+    if (!text) return '';
+    return text
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  // Generar enlace codificado de una receta
+  function generatePrescriptionUrl(rx) {
+    try {
+      const json = JSON.stringify(rx);
+      const encoded = btoa(unescape(encodeURIComponent(json)));
+      const base = window.location.href.split('?')[0].split('#')[0];
+      return `${base}?rx=${encodeURIComponent(encoded)}`;
+    } catch (e) {
+      return window.location.href;
+    }
+  }
+
+  // Compartir receta por WhatsApp
+  function shareSinglePrescription(rx) {
+    const rxUrl = generatePrescriptionUrl(rx);
+    const msg = `📋 *RECETA MÉDICA DE CUMPLEAÑOS PARA EL DR. JOSÉ* 🩺🎂\n\n` +
+                `👨‍⚕️ *De:* ${rx.sender} (${rx.relationship || 'Afecto'})\n` +
+                `🔬 *Diagnóstico:* ${rx.diagnosis}\n` +
+                `📋 *Tratamiento:* "${rx.treatment}"\n` +
+                (rx.dose ? `💊 *Posología:* ${rx.dose}\n\n` : '\n') +
+                `¡Mira la receta completa en el Muro Clínico! 👇\n${rxUrl}`;
+    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
+    window.open(whatsappUrl, '_blank');
+  }
+
+  // Compartir muro general por WhatsApp
+  if (btnShareWall) {
+    btnShareWall.addEventListener('click', () => {
+      const wallUrl = window.location.href.split('?')[0].split('#')[0];
+      const msg = `🏥 *MURO CLÍNICO DE RECETAS MÉDICAS DEL DR. JOSÉ* 📋🩺🎂\n\n` +
+                  `¡Hoy celebramos el cumpleaños del Dr. José! Entra y prescríbele una receta médica con tus mejores deseos, recuerdos y bendiciones 👇✨\n\n` +
+                  `${wallUrl}`;
+      const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
+      window.open(whatsappUrl, '_blank');
+    });
+  }
+
+  // Guardar nueva receta
+  const saveNewPrescription = (shouldShareWhatsApp = false) => {
+    const sender = inputSender ? inputSender.value.trim() : '';
+    const relation = inputRelation ? inputRelation.value.trim() : '';
+    let diagnosis = selectDiagnosis ? selectDiagnosis.value : '';
+    if (diagnosis === '__custom__' && customDiagInput) {
+      diagnosis = customDiagInput.value.trim() || 'Sobredosis de Cariño y Felicidad Inagotable ✨';
+    }
+    const treatment = textTreatment ? textTreatment.value.trim() : '';
+    const dose = inputDose ? inputDose.value.trim() : '';
+
+    if (!sender) {
+      alert('Por favor escribe tu nombre (médico remitente).');
+      if (inputSender) inputSender.focus();
+      return;
+    }
+    if (!treatment) {
+      alert('Por favor escribe tu fórmula o mensaje para el Dr. José.');
+      if (textTreatment) textTreatment.focus();
+      return;
+    }
+
+    const newId = `RX-${Math.floor(1000 + Math.random() * 9000)}`;
+    const today = new Date();
+    const dateStr = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
+
+    const newRx = {
+      id: newId,
+      sender: sender,
+      relationship: relation || 'Amigo(a) Especial',
+      diagnosis: diagnosis,
+      treatment: treatment,
+      dose: dose,
+      date: dateStr,
+      likes: 1
+    };
+
+    prescriptions.unshift(newRx);
+    try {
+      localStorage.setItem('drJose_wall_prescriptions', JSON.stringify(prescriptions));
+    } catch (e) {}
+
+    highlightedRxId = newId;
+    closeModal();
+    renderWall();
+
+    // Scroll suave a la nueva receta y confeti
+    setTimeout(() => {
+      const newCard = document.getElementById(`card-${newId}`);
+      if (newCard) {
+        newCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      triggerHospitalCelebrationConfetti();
+      playHospitalEntranceSound();
+    }, 300);
+
+    // Si eligió compartir de inmediato por WhatsApp
+    if (shouldShareWhatsApp) {
+      setTimeout(() => {
+        shareSinglePrescription(newRx);
+      }, 500);
+    }
+
+    // Reset formulario
+    if (form) form.reset();
+    if (sigPreview) sigPreview.textContent = 'Dr(a). Tu Nombre';
+    if (customDiagInput) customDiagInput.style.display = 'none';
+  };
+
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      saveNewPrescription(false);
+    });
+  }
+
+  if (btnSubmitAndShare) {
+    btnSubmitAndShare.addEventListener('click', () => {
+      saveNewPrescription(true);
+    });
+  }
+
+  // Renderizar al inicializar
+  renderWall();
 }

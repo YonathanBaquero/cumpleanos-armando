@@ -35,26 +35,33 @@ function doGet(e) {
     // Si hay filas (la fila 0 son los encabezados)
     for (var i = 1; i < rows.length; i++) {
       var r = rows[i];
-      if (r[0] || r[2] || r[5]) { // Si tiene ID, Nombre o Mensaje
-        var likedByStr = String(r[8] || '');
-        var likedBy = likedByStr ? likedByStr.split(',').map(function(s){ return s.trim(); }).filter(Boolean) : [];
-        var likesCount = Number(r[7]);
-        if (isNaN(likesCount) || likesCount < likedBy.length) {
-          likesCount = likedBy.length;
-        }
+      if (!r) continue;
 
-        prescriptions.push({
-          id: String(r[0] || ('rx_' + i)),
-          timestamp: String(r[1] || ''),
-          sender: String(r[2] || 'Anónimo'),
-          relationship: String(r[3] || 'Afecto'),
-          diagnosis: String(r[4] || 'Sobredosis de Cariño'),
-          treatment: String(r[5] || ''),
-          dose: String(r[6] || ''),
-          likes: likesCount,
-          likedBy: likedBy
-        });
+      var id = String(r[0] || '').trim();
+      var sender = String(r[2] || '').trim();
+      var treatment = String(r[5] || '').trim();
+
+      // Si la fila fue eliminada o borrada en Google Sheets, ignorarla
+      if (!sender && !treatment) continue;
+
+      var likedByStr = String(r[8] || '').trim();
+      var likedBy = likedByStr ? likedByStr.split(',').map(function(s){ return s.trim(); }).filter(Boolean) : [];
+      var likesCount = Number(r[7]);
+      if (isNaN(likesCount) || likesCount < likedBy.length) {
+        likesCount = likedBy.length;
       }
+
+      prescriptions.push({
+        id: id || ('rx_' + i),
+        timestamp: String(r[1] || ''),
+        sender: sender || 'Anónimo',
+        relationship: String(r[3] || 'Afecto').trim(),
+        diagnosis: String(r[4] || 'Sobredosis de Cariño').trim(),
+        treatment: treatment,
+        dose: String(r[6] || '').trim(),
+        likes: likesCount,
+        likedBy: likedBy
+      });
     }
     
     // Invertir para que los más nuevos aparezcan de primero

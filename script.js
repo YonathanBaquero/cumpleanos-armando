@@ -1523,7 +1523,9 @@ function initPrescriptionWall() {
       dose: dose,
       date: dateStr,
       likes: 0,
-      likedBy: []
+      likedBy: [],
+      isPendingSync: true,
+      createdAt: Date.now()
     };
 
     prescriptions.unshift(newRx);
@@ -1637,27 +1639,33 @@ function initPrescriptionWall() {
             })
             .filter(rx => rx.sender && rx.treatment && !['RX-1001', 'RX-1002', 'RX-1003'].includes(rx.id));
 
-          // Deduplicación inteligente: incorporar las de Google Sheets y notas locales
-          const merged = [];
+          // Google Sheets es la fuente oficial y definitiva de la verdad:
+          // 1. Conservar solo aquellas notas locales recién enviadas desde este dispositivo que aún estén pendientes de sincronizarse (< 30s)
+          const now = Date.now();
+          const finalRxs = [];
           const seenIds = new Set();
 
-          // Primero las de Google Sheets (fuente de verdad oficial con likes y nombres)
+          prescriptions.forEach(localRx => {
+            const lId = String(localRx.id);
+            const inRemote = remoteRxs.some(r => String(r.id) === lId);
+            if (!inRemote && localRx.isPendingSync && localRx.createdAt && (now - localRx.createdAt < 30000)) {
+              if (!seenIds.has(lId)) {
+                seenIds.add(lId);
+                finalRxs.push(localRx);
+              }
+            }
+          });
+
+          // 2. Incorporar todas las filas actuales de Google Sheets (reflejando directamente cualquier edición o eliminación)
           remoteRxs.forEach(r => {
-            if (!seenIds.has(r.id)) {
-              seenIds.add(r.id);
-              merged.push(r);
+            const rId = String(r.id);
+            if (!seenIds.has(rId)) {
+              seenIds.add(rId);
+              finalRxs.push(r);
             }
           });
 
-          // Mantener notas locales recientes que aún no hayan impactado la hoja
-          prescriptions.forEach(l => {
-            if (!seenIds.has(l.id)) {
-              seenIds.add(l.id);
-              merged.push(l);
-            }
-          });
-
-          prescriptions = merged;
+          prescriptions = finalRxs;
           saveLocalPrescriptions();
           renderWall();
         }
@@ -1675,12 +1683,12 @@ function initPrescriptionWall() {
     fetchPrescriptionsFromGoogleSheets(true);
   }
 
-  // Sincronización periódica automática (cada 20 segundos) y al reactivar la pestaña
+  // Sincronización periódica automática (cada 12 segundos) y al reactivar la pestaña
   setInterval(() => {
     if (getGoogleScriptUrl() && !document.hidden) {
       fetchPrescriptionsFromGoogleSheets(true);
     }
-  }, 20000);
+  }, 12000);
 
   document.addEventListener('visibilitychange', () => {
     if (getGoogleScriptUrl() && !document.hidden) {
